@@ -15,6 +15,8 @@ const User = require("./models/user");
 // import authentication library
 const auth = require("./auth");
 
+const Bookmark = require("./models/bookmark");
+
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 
@@ -42,8 +44,30 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+router.get("/title/link", (req, res) => {
+  Bookmark.find({_id: req.query._id}).then((result) => {
+    res.send(result);
+  });
+});
 
+router.get("/title/links", (req, res) => {
+  Bookmark.find({}).then((result) => {
+    res.send(result);
+  });
+});
 
+router.post("/title/edit/add_bookmark", (req, res) => {
+  const newBookmark = Bookmark({
+    parent: null, //TODO 
+    name: req.body.name,
+    url: req.body.url,
+    image: req.body.image 
+  });
+
+  newBookmark.save()
+    .then((bookmark) => res.send(bookmark))
+    .catch((err) => console.log("An error occured while saving"))
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const BookmarkSchema = new mongoose.Schema({
     parent: String,
-    dest: String,
+    url: String,
     name: String,
-    image: Image,  
+    image: String,  
 });
 
 module.exports = mongoose.model("bookmark", BookmarkSchema);
