@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Project Skeleton
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What we provide
 
-## Available Scripts
+- Google Auth (Skeleton.js & auth.js)
+  - Disclaimer: Auth isn't being taught until the second week.
+- Socket Infrastructure (client-socket.js & server-socket.js)
+  - Disclaimer: Socket isn't being taught until the second week.
+- User Model (auth.js & user.js)
 
-In the project directory, you can run:
+## What you need to change
 
-### `npm start`
+- Change the font in utilities.css
+- Change the Frontend CLIENT_ID for Google Auth (Skeleton.js) (we'll talk about it at the end of week 2)
+- Change the Server CLIENT_ID for Google Auth (auth.js) (we'll talk about it at the end of week 2)
+- Change the Database SRV for Atlas (server.js)
+- Change the Database Name for MongoDB (server.js)
+- Add a favicon to your website at the path client/dist/favicon.ico
+- Update website title in client/dist/index.html
+- Update this README file ;)
+- Update the package.json file with your app name :) (line 2)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Socket stuff
+Note: we'll be getting to this in lecture in week 2, so don't worry if you don't know it yet
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- If you're not using realtime updating or don't need server->client communication, you can remove socket entirely! (server-socket.js, client-socket.js, and anything that imports them)
+- If you are using socket, consider what you want to do with the FIXME in server-socket.js
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to integrate into your own project
 
-### `npm run build`
+On GitHub download this repository as a zip file, then extract the files into your own repository.
+Warning: make sure you copy the hidden files too: .babelrc, .gitignore, .npmrc, and .prettierrc
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## don't touch
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+the following files students do not need to edit. feel free to read them if you would like.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+client/src/index.js
+client/src/utilities.js
+client/src/client-socket.js
+server/validator.js
+server/server-socket.js
+.babelrc
+.npmrc
+.prettierrc
+package-lock.json
+webpack.config.js
+```
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Good luck on your project :)
