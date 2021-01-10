@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 
+import { post } from "../../utilities";
+
 import "../../utilities.css";
 import "./Skeleton.css";
 
@@ -11,12 +13,29 @@ class Skeleton extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
-    this.state = {};
+    this.state = {
+      bookmarks: [],
+    };
   }
 
   componentDidMount() {
     // remember -- api calls go here!
   }
+
+  handleSubmit = (event) => {
+    const bookmark = {
+      name: "First bookmark!",
+      url: "google.com",
+      image: null, 
+    }
+
+    console.log("sending to api");
+    post("/api/title/edit/add_bookmark", bookmark)
+      .then((bookmark) => {
+        this.state.bookmarks.push(bookmark);
+        this.setState({ ...this.state, bookmarks: this.state.bookmarks });
+      });
+  };
 
   render() {
     return (
@@ -52,7 +71,15 @@ class Skeleton extends Component {
           <li>Change the Database Name for MongoDB (server.js)</li>
           <li>Add a favicon to your website at the path client/dist/favicon.ico</li>
           <li>Update website title in client/dist/index.html</li>
-        </ul>
+        </ul> 
+        <button 
+          class="button"
+          type="submit"
+          value="Submit"
+          onClick={this.handleSubmit}
+        >
+          Add bookmark
+        </button>
       </>
     );
   }
