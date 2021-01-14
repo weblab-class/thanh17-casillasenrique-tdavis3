@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
 import { post, get } from "../../utilities";
+import Bookmark from "../modules/Bookmark";
 
 class Home extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class Home extends Component {
       // Initialize Default State
       this.state = {
         bookmarks: [],
+        inEditMode: false,
       };
     }
 
@@ -58,6 +60,17 @@ class Home extends Component {
             >
                  Add bookmark
             </button>
+            <div>
+                {this.state.bookmarks.map((bookmark) => {
+                    return <Bookmark 
+                        userId={this.props.userId}
+                        inEditMode={this.state.inEditMode}
+                        url={bookmark.url}
+                        name={bookmark.name}
+                        location={undefined}
+                    />
+                })}
+            </div>
             <div>
                 {JSON.stringify(this.state.bookmarks)}
             </div>
