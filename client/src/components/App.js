@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
-import Skeleton from "./pages/Skeleton.js";
+import Login from "./pages/Login.js";
+import Home from "./pages/Home.js";
+import GoogleLogin, { GoogleLogout } from "react-google-login";
+const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.googleusercontent.com";
 
 import "../utilities.css";
 
@@ -25,6 +28,7 @@ class App extends Component {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
+        console.log("already logged in");
         this.setState({ userId: user._id });
       }
     });
@@ -37,6 +41,7 @@ class App extends Component {
       this.setState({ userId: user._id });
       post("/api/initsocket", { socketid: socket.id });
     });
+    console.log("logged in");
   };
 
   handleLogout = () => {
@@ -45,13 +50,20 @@ class App extends Component {
   };
 
   render() {
+
     return (
       <>
         <Router>
-          <Skeleton
+          <Login 
             path="/"
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
+            userId={this.state.userId}
+          />
+          <Home 
+            path="/home"
+            handleLogout={this.handleLogout}
+            googleClientId={GOOGLE_CLIENT_ID}
             userId={this.state.userId}
           />
           <NotFound default />
