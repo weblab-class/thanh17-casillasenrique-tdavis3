@@ -44,6 +44,7 @@ class Home extends Component {
         <>
             {!this.props.userId && <Redirect to={"/"} noThrow/>}
             <GoogleLogout
+              className="GoogleLogout"
               clientId={this.props.googleClientId}
               buttonText="Logout"
               onLogoutSuccess={this.props.handleLogout}
