@@ -11,8 +11,12 @@ import Bookmark from "./Bookmark";
 //   constructor(props) {
 //     super(props);
 //   }
-const ModalExampleModal = (
-    // bookmarks
+const Group = (
+  {
+    bookmarks,
+    inEditMode,
+    userId
+  }
 ) => {
   const [open, setOpen] = React.useState(false);
 
@@ -34,20 +38,17 @@ const ModalExampleModal = (
               name={"name deez"}
               location={undefined}
             />
-        {/*<Image*/}
-        {/*  size="medium"*/}
-        {/*  src="https://react.semantic-ui.com/images/avatar/large/rachel.png"*/}
-        {/*  wrapped*/}
-        {/*/>*/}
-        {/*//TODO: get the whole bookmark list*/}
-        {/*<Modal.Description>*/}
-        {/*  <Header>Default Profile Image</Header>*/}
-        {/*  <p>*/}
-        {/*    We've found the following gravatar image associated with your e-mail*/}
-        {/*    address. sdfsdfs dsd f*/}
-        {/*  </p>*/}
-        {/*  <p>Is it okay to use this photo?</p>*/}
-        {/*</Modal.Description>*/}
+        <div>
+          {bookmarks.map((bookmark) => {
+            return <Bookmark
+              userId={userId}
+              inEditMode={inEditMode}
+              url={bookmark.url}
+              name={bookmark.name}
+              location={undefined}
+            />
+          })}
+        </div>
       </Modal.Content>
       {/*<Modal.Footer> Yooo</Modal.Footer>*/}
       {/*//TODO: add Title @bottom*/}
@@ -67,4 +68,4 @@ const ModalExampleModal = (
   );
 }
 
-export default ModalExampleModal;
+export default Group;

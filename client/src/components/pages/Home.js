@@ -4,7 +4,7 @@ import {Redirect} from "@reach/router";
 import {post, get} from "../../utilities";
 import Bookmark from "../modules/Bookmark";
 import {Button} from 'semantic-ui-react';
-import ModalExampleModal from "../modules/Group";
+import Group from "../modules/Group";
 import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
 
@@ -58,7 +58,12 @@ class Home extends Component {
                 <div>
                     yo
                 </div>
-                <ModalExampleModal bookmarks={this.state.bookmarks}/>
+              //TODO: filter the bookmarks
+                <Group
+                  bookmarks={this.state.bookmarks}
+                  inEditMode =  {this.state.inEditMode}
+                  userId = {this.props.userId}
+                />
                 <button
                     type="submit"
                     value="Submit"
