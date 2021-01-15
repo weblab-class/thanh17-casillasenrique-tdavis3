@@ -41,6 +41,42 @@ class Home extends Component {
       };
   
     render() {
+        return (
+            <>
+                {!this.props.userId && <Redirect to={"/"} noThrow/>}
+                <GoogleLogout
+                    clientId={this.props.googleClientId}
+                    buttonText="Logout"
+                    onLogoutSuccess={this.props.handleLogout}
+                    onFailure={(err) => console.log(err)}
+                />
+
+                <div>
+                    yo
+                </div>
+                <button
+                    type="submit"
+                    value="Submit"
+                    onClick={this.handleSubmit}
+                >
+                    Add bookmark
+                </button>
+                <div>
+                    {this.state.bookmarks.map((bookmark) => {
+                        return <Bookmark
+                            userId={this.props.userId}
+                            inEditMode={this.state.inEditMode}
+                            url={bookmark.url}
+                            name={bookmark.name}
+                            location={undefined}
+                        />
+                    })}
+                </div>
+                <div>
+                    {JSON.stringify(this.state.bookmarks)}
+                </div>
+            </>
+        );
       return (
         <>
             {!this.props.userId && <Redirect to={"/"} noThrow/>}
@@ -50,12 +86,12 @@ class Home extends Component {
               buttonText="Logout"
               onLogoutSuccess={this.props.handleLogout}
               onFailure={(err) => console.log(err)}
-            /> 
-            
+            />
+
             <div>
-              yo 
+              yo
             </div>
-            <button 
+            <button
                 type="submit"
                 value="Submit"
                 onClick={this.handleSubmit}
@@ -64,7 +100,7 @@ class Home extends Component {
             </button>
             <div>
                 {this.state.bookmarks.map((bookmark) => {
-                    return <Bookmark 
+                    return <Bookmark
                         userId={this.props.userId}
                         inEditMode={this.state.inEditMode}
                         url={bookmark.url}
