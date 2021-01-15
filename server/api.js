@@ -59,7 +59,7 @@ router.get("/title/links", (req, res) => {
 
 router.post("/title/edit/add_group", (req, res) => {
     const newGroup = Group({
-        userId: req.body.userId,  // TODO: Make google Id
+        userId: req.user._id,  // TODO: Make google Id
         name: req.body.name,
         bookmarks: []  // No associated bookmarks upon creation
     });
@@ -68,19 +68,49 @@ router.post("/title/edit/add_group", (req, res) => {
         .catch((err) => console.log("An error occurred while saving"))
 });
 
+router.post("/title/edit/edit_group", (req, res) => {
+    const updatedGroup = Group({
+        // userId: req.user._id,  // TODO: Make google Id
+        name: req.body.name,
+    });
+    Group.updateOne({_id: req.body._id}, updatedGroup)
+        .catch((err) => console.log("An error occurred while editing"));
+});
+
+router.delete("/title/edit/delete_group", (req, res) => {
+    Group.deleteOne({_id: req.body._id})
+        .catch((err) => console.log("An error occurred while deleting"));
+});
+
 router.post("/title/edit/add_bookmark", (req, res) => {
     const newBookmark = Bookmark({
-        userId: req.body.userId,  // TODO: Make google Id
+        userId: req.user._id,
         name: req.body.name,
         url: req.body.url,
         image: req.body.image,
-        userId: req.user._id,
         group: req.body.group
     });
 
     newBookmark.save()
         .then((bookmark) => res.send(bookmark))
         .catch((err) => console.log("An error occurred while saving"))
+});
+
+router.post("/title/edit/edit_bookmark", (req, res) => {
+    const updatedBookmark = Bookmark({
+        // userId: req.user._id,
+        name: req.body.name,
+        url: req.body.url,
+        image: req.body.image,
+        group: req.body.group
+    });
+    Bookmark.updateOne({_id: req.body._id}, updatedBookmark)
+        .catch((err) => console.log("An error occurred while editing"));
+});
+
+router.delete("/title/edit/delete_bookmark", (req, res) => {
+    Bookmark.deleteOne({_id: req.body._id})
+        .catch((err) => console.log("An error occurred while deleting"));
 });
 
 // anything else falls to this "not found" case
