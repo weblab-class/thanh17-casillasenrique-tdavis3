@@ -13,6 +13,7 @@ class Home extends Component {
         super(props);
         // Initialize Default State
         this.state = {
+            groups: [],
             bookmarks: [],
             inEditMode: false,
         };
@@ -44,7 +45,25 @@ class Home extends Component {
             });
     };
 
+    handleSubmitGroup = () => {
+      const group = {
+        userId: String,
+        name: String,
+        bookmarks: [String]
+      }
+
+      console.log("sending group to api")
+      post("/api/title/edit/add_group", group)
+        .then((group)  =>{
+          this.state.groups.push(group);
+          this.setState(({...this.state,groups: this.state.groups}));
+        });
+}
+    // filteredBookmarks = this.state.bookmarks.filter((bookmark) =>{
+    //   return bookmark.group
+    // })
     render() {
+
         return (
             <>
                 {!this.props.userId && <Redirect to={"/"} noThrow/>}
@@ -58,7 +77,7 @@ class Home extends Component {
                 <div>
                     yo
                 </div>
-              //TODO: filter the bookmarks
+
                 <Group
                   bookmarks={this.state.bookmarks}
                   inEditMode =  {this.state.inEditMode}
@@ -71,6 +90,13 @@ class Home extends Component {
                 >
                     Add bookmark
                 </button>
+              <button
+                type="submit"
+                value="Submit"
+                onClick={this.handleSubmitGroup}
+              >
+                Add Group
+              </button>
                 <div>
                     {this.state.bookmarks.map((bookmark) => {
                         return <Bookmark

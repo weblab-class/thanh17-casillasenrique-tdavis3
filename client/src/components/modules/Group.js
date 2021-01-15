@@ -5,7 +5,7 @@
 
 import React, { Component } from "react";
 import "./Group.css";
-import { Button, Header, Image, Modal,Icon } from "semantic-ui-react";
+import { Button, Header, Image, Modal, Icon, Grid } from "semantic-ui-react";
 import Bookmark from "./Bookmark";
 // class Group extends Component {
 //   constructor(props) {
@@ -23,6 +23,7 @@ const Group = (
   return (
     <Modal
       closeIcon
+      size = 'small'
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
@@ -31,24 +32,21 @@ const Group = (
     >
       <Modal.Header>Should probably have a title somewhere</Modal.Header>
       <Modal.Content>
-            <Bookmark
-              userId={"I deez nuts"}
-              inEditMode= {false}
-              url={"youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"}
-              name={"name deez"}
-              location={undefined}
-            />
-        <div>
-          {bookmarks.map((bookmark) => {
-            return <Bookmark
-              userId={userId}
-              inEditMode={inEditMode}
-              url={bookmark.url}
-              name={bookmark.name}
-              location={undefined}
-            />
-          })}
-        </div>
+            {/*//TODO: make into grid*/}
+        <Grid columns={3} className={"group-container"}>
+          <Grid.Row>
+            {bookmarks.map((bookmark) => {
+              return <Grid.Column> <Bookmark
+                userId={userId}
+                inEditMode={inEditMode}
+                url={bookmark.url}
+                name={bookmark.name}
+                location={undefined}
+              /></Grid.Column>
+            })}
+          </Grid.Row>
+
+        </Grid>
       </Modal.Content>
       {/*<Modal.Footer> Yooo</Modal.Footer>*/}
       {/*//TODO: add Title @bottom*/}

@@ -1,4 +1,14 @@
 .modal {
-/*    height: 500px;*/
-/*    width: 500px;*/
+    width: 40vw!important;
+    height: 40vw!important;
+}
+/*.modal:after {*/
+/*    content: "";*/
+/*    display: block!important;*/
+/*    padding-bottom: 100%!important;*/
+/*}*/
+.group-container{
+    /*display: grid;*/
+    /*grid-template-columns: auto auto auto;*/
+    ;
 }
