@@ -4,7 +4,7 @@ import { Redirect } from "@reach/router";
 import { post, get } from "../../utilities";
 import Bookmark from "../modules/Bookmark";
 import { Button } from 'semantic-ui-react';
-
+import ModalExampleModal from "../modules/Group";
 class Home extends Component {
     constructor(props) {
       super(props);
@@ -54,6 +54,7 @@ class Home extends Component {
                 <div>
                     yo
                 </div>
+              <ModalExampleModal bookmarks = {this.state.bookmarks}/>
                 <button
                     type="submit"
                     value="Submit"
