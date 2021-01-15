@@ -34,9 +34,10 @@
     "react-dom": "^16.14.0",
     "react-google-login": "^5.2.1",
     "react-router-dom": "^5.2.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.2",
     "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.1",
-    "url-loader": "^4.1.1"
+    "socket.io-client": "^2.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -52,6 +53,7 @@
     "html-webpack-plugin": "^4.5.0",
     "react-hot-loader": "^4.13.0",
     "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
     "webpack": "^5.11.1",
     "webpack-cli": "^4.3.0",
     "webpack-dev-server": "^3.11.1"

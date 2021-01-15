@@ -61,7 +61,8 @@ router.post("/title/edit/add_bookmark", (req, res) => {
     parent: null, //TODO 
     name: req.body.name,
     url: req.body.url,
-    image: req.body.image 
+    image: req.body.image,
+    userId: req.user._id
   });
 
   newBookmark.save()

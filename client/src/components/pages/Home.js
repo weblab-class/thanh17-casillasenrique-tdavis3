@@ -3,6 +3,7 @@ import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
 import { post, get } from "../../utilities";
 import Bookmark from "../modules/Bookmark";
+import { Button } from 'semantic-ui-react';
 
 class Home extends Component {
     constructor(props) {
@@ -75,6 +76,7 @@ class Home extends Component {
             <div>
                 {JSON.stringify(this.state.bookmarks)}
             </div>
+            <Button>Click Here</Button>
         </>
       );
     }

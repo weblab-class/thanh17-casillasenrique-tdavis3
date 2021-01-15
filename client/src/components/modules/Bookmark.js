@@ -1,6 +1,6 @@
 import React, {useRef, useEffect} from "react";
-import { Button } from 'react-bootstrap';
 import "./Bookmark.css"
+import { Button } from 'semantic-ui-react';
 
 const Bookmark = ({ 
     userId, 
@@ -21,7 +21,7 @@ const Bookmark = ({
 
     return (
         <div>
-            <Button variant="outline-light" className="Bookmark" href={"https://www." + url} target="_blank"></Button>{' '}
+            <Button color="google plus" icon="google" href={"https://www." + url} target="_blank"></Button>
             <div>
                 {name}
             </div>

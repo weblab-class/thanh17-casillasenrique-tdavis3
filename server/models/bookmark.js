@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const BookmarkSchema = new mongoose.Schema({
-    user: String,
+    userId: String,
     url: String,
     name: String,
     image: String,
