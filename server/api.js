@@ -45,14 +45,14 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.get("/title/link", (req, res) => {
+router.get("/title/bookmark", (req, res) => {
     Bookmark.find({_id: req.query._id}).then((result) => {
         res.send(result);
     });
 });
 
-router.get("/title/links", (req, res) => {
-    Bookmark.find({}).then((result) => {
+router.get("/title/bookmarks", (req, res) => {
+    Bookmark.find({userId: req.user._id}).then((result) => {
         res.send(result);
     });
 });

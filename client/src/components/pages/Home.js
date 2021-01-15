@@ -20,7 +20,7 @@ class Home extends Component {
 
     componentDidMount() {
         // remember -- api calls go here!
-        get("/api/title/links").then((bookmarks) => {
+        get("/api/title/bookmarks").then((bookmarks) => {
             let reversedBookmarks = bookmarks.reverse();
             reversedBookmarks.map((bookmark) => {
                 this.setState({bookmarks: this.state.bookmarks.concat([bookmark])});

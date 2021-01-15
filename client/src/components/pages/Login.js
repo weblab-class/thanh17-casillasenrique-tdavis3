@@ -20,29 +20,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    // remember -- api calls go here!
-    get("/api/title/links").then((bookmarks) => {
-      let reversedBookmarks = bookmarks.reverse();
-      reversedBookmarks.map((bookmark) => {
-        this.setState({ bookmarks: this.state.bookmarks.concat([bookmark]) });
-      });
-    });
   }
-
-  handleSubmit = (event) => {
-    const bookmark = {
-      name: "First bookmark!",
-      url: "google.com",
-      image: null, 
-    }
-
-    console.log("sending to api");
-    post("/api/title/edit/add_bookmark", bookmark)
-      .then((bookmark) => {
-        this.state.bookmarks.push(bookmark);
-        this.setState({ ...this.state, bookmarks: this.state.bookmarks });
-      });
-  };
 
   render() {
     return (
