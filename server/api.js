@@ -58,10 +58,11 @@ router.get("/title/links", (req, res) => {
 
 router.post("/title/edit/add_bookmark", (req, res) => {
   const newBookmark = Bookmark({
-    parent: null, //TODO 
+    userId: req.body.userId,  // TODO: Make google Id
     name: req.body.name,
     url: req.body.url,
-    image: req.body.image 
+    image: req.body.image,
+    group: req.body.group
   });
 
   newBookmark.save()
