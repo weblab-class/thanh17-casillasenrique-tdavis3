@@ -3,7 +3,7 @@ import {GoogleLogout} from "react-google-login";
 import {Redirect} from "@reach/router";
 import {post, get} from "../../utilities";
 import Bookmark from "../modules/Bookmark";
-import { Button, Grid } from "semantic-ui-react";
+import { Button, Grid, Image } from "semantic-ui-react";
 import Group from "../modules/Group";
 import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
@@ -73,7 +73,7 @@ class Home extends Component {
                     onLogoutSuccess={this.props.handleLogout}
                     onFailure={(err) => console.log(err)}
                 />
-
+                <Image src={require("../../images/peepoHappy.png")}></Image>
                 <div>
                     yo
                 </div>
