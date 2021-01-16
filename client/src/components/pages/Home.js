@@ -7,6 +7,7 @@ import { Button, Grid, Image } from "semantic-ui-react";
 import Group from "../modules/Group";
 import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
+import EditBar from "../modules/EditBar";
 
 class Home extends Component {
     constructor(props) {
@@ -77,7 +78,7 @@ class Home extends Component {
                 <div>
                     yo
                 </div>
-
+                
                 <Group
                   bookmarks={this.state.bookmarks}
                   inEditMode =  {this.state.inEditMode}
@@ -97,6 +98,7 @@ class Home extends Component {
               >
                 Add Group
               </button>
+              <EditBar handleSubmit={this.handleSubmit}/>
                 <Grid columns={4} className={"group-container"}>
                   <Grid.Row>
                     {this.state.bookmarks.map((bookmark) => {
