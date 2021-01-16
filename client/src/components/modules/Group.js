@@ -7,6 +7,7 @@ import React, { Component } from "react";
 import "./Group.css";
 import { Button, Header, Image, Modal, Icon, Grid } from "semantic-ui-react";
 import Bookmark from "./Bookmark";
+import CollapsedGroup from "./CollapsedGroup";
 // class Group extends Component {
 //   constructor(props) {
 //     super(props);
@@ -26,9 +27,12 @@ const Group = (
       size = 'small'
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
+      //TODO: change open to be boolean that triggers when clicked
       open={open}
       dimmer="blurring"
       trigger={<Button size={"big"}>Show Modal</Button>}
+      // TODO: make trigger to be an icon that has a specific size
+      // trigger={<CollapsedGroup/>}
       centered
     >
       {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}

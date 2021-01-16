@@ -78,7 +78,7 @@ class Home extends Component {
                 <div>
                     yo
                 </div>
-                
+
 
                 <button
                     type="submit"
@@ -97,11 +97,21 @@ class Home extends Component {
               <EditBar handleSubmit={this.handleSubmit}/>
                 <div className={"grid-Home"}>
                   {/*<div className={"content"}>*/}
-                  <Group
-                    bookmarks={this.state.bookmarks}
-                    inEditMode =  {this.state.inEditMode}
-                    userId = {this.props.userId}
-                  />
+                  <div className={"group"}>
+                    <Group
+                      bookmarks={this.state.bookmarks}
+                      inEditMode =  {this.state.inEditMode}
+                      userId = {this.props.userId}
+                    />
+                  </div>
+                  <div className={"group"}>
+                    <Group
+                      bookmarks={this.state.bookmarks}
+                      inEditMode =  {this.state.inEditMode}
+                      userId = {this.props.userId}
+                    />
+                  </div>
+
                     {this.state.bookmarks.map((bookmark) => {
                       return <Bookmark
                         userId={this.props.userId}
@@ -116,8 +126,8 @@ class Home extends Component {
                 <div>
                     {JSON.stringify(this.state.bookmarks)}
                 </div>
-                <NewComponentModal 
-                    trigger={<Button>Create Bookmark</Button>} 
+                <NewComponentModal
+                    trigger={<Button>Create Bookmark</Button>}
                     form={<NewBookmarkForm onSubmit={this.handleSubmit}/>}
                 />
             </div>
