@@ -28,13 +28,13 @@ const Group = (
       onOpen={() => setOpen(true)}
       open={open}
       dimmer="blurring"
-      trigger={<Button>Show Modal</Button>}
+      trigger={<Button size={"big"}>Show Modal</Button>}
       centered
     >
       {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
       {/*<Modal.Content>*/}
         {/*TODO: Make into groups expansions*/}
-        {/*TODO: make grid Expand to next page. State/counter? Tricky*/}
+        {/*TODO: make grid Expand to next page. Filter via passing in page number then map via passing in a page*/}
         <div className={"grid"}>
             {bookmarks.map((bookmark) => {
               return  <Bookmark

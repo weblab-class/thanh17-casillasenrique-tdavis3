@@ -8,7 +8,7 @@ import Group from "../modules/Group";
 import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
 import EditBar from "../modules/EditBar";
-
+import "./Home.css";
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -66,7 +66,7 @@ class Home extends Component {
     render() {
 
         return (
-            <>
+            <div className={"root"}>
                 {!this.props.userId && <Redirect to={"/"} noThrow/>}
                 <GoogleLogout
                     clientId={this.props.googleClientId}
@@ -79,11 +79,7 @@ class Home extends Component {
                     yo
                 </div>
                 
-                <Group
-                  bookmarks={this.state.bookmarks}
-                  inEditMode =  {this.state.inEditMode}
-                  userId = {this.props.userId}
-                />
+
                 <button
                     type="submit"
                     value="Submit"
@@ -99,20 +95,24 @@ class Home extends Component {
                 Add Group
               </button>
               <EditBar handleSubmit={this.handleSubmit}/>
-                <Grid columns={4} className={"group-container"}>
-                  <Grid.Row>
+                <div className={"grid-Home"}>
+                  {/*<div className={"content"}>*/}
+                  <Group
+                    bookmarks={this.state.bookmarks}
+                    inEditMode =  {this.state.inEditMode}
+                    userId = {this.props.userId}
+                  />
                     {this.state.bookmarks.map((bookmark) => {
-                      return <Grid.Column> <Bookmark
+                      return <Bookmark
                         userId={this.props.userId}
                         inEditMode={this.state.inEditMode}
                         url={bookmark.url}
                         name={bookmark.name}
                         location={undefined}
-                      /> </Grid.Column>
+                      />
                     })}
-                  </Grid.Row>
-
-                </Grid>
+                  {/*</div>*/}
+                </div>
                 <div>
                     {JSON.stringify(this.state.bookmarks)}
                 </div>
@@ -120,7 +120,7 @@ class Home extends Component {
                     trigger={<Button>Create Bookmark</Button>} 
                     form={<NewBookmarkForm onSubmit={this.handleSubmit}/>}
                 />
-            </>
+            </div>
         );
     }
 }
