@@ -17,69 +17,82 @@ import {
     Button
   } from 'semantic-ui-react'
    
-const addBookmarkTrigger = (
-    <Dropdown.Item 
-        className="EditBar ui dropdown item" 
-        image={ <img className="u-textCenter EditBar image" src={newBookmark}/>}
-    />
-);
-
-const addGroupTrigger = (
-    <Dropdown.Item 
-        className="EditBar ui dropdown item" 
-        image={ <img className="u-textCenter EditBar image" src={newGroup} />}
-    />
-);
-
-const addFolderTrigger = (
-    <Dropdown.Item 
-        className="EditBar ui dropdown item" 
-        icon={ <img className="u-textCenter EditBar image" src={newFolder} />}
-    />
-);
-
-const addWidgetTrigger = (
-    <Dropdown.Item 
-        className="EditBar ui dropdown item" 
-        icon={ <img className="u-textCenter EditBar image" src={newWidget} />}
-    />
-);
-
 const openedImage = <Image className="EditBar-dropdown-button" src={openedIcon}/>;
 const closedImage = <Image className="EditBar-dropdown-button" src={closedIcon}/>;
 
 const EditBar = ({ handleSubmit }) => {
     
     const [trigger, setTrigger] =  useState(closedImage); 
+    const [modalStates, setModalStates] = useState({
+        bookmarkModalOpened: false,
+        widgetModalOpened: false,
+        folderModalOpened: false,
+        groupModalOpened: false,
+    });
 
     return (
-        <Dropdown 
-            onOpen={() => setTrigger(openedImage)} 
-            onClose={() => setTrigger(closedImage)} 
-            floating 
-            direction="left" 
-            trigger={trigger} 
-            icon={null}
-        >
-        <Dropdown.Menu className="EditBar ui dropdown menu">
+        <>  
+            {/* New Bookmark Form */}
             <NewComponentModal 
-                trigger={addBookmarkTrigger} 
+                isOpen={modalStates.bookmarkModalOpened}
                 form={<NewBookmarkForm onSubmit={handleSubmit}/>}
+                close={() => setModalStates({...modalStates, bookmarkModalOpened: false})}
             />
-            <NewComponentModal
-                trigger={addGroupTrigger}
+
+            {/* New Group Form */}
+            <NewComponentModal 
+                isOpen={modalStates.groupModalOpened}
                 form={<NewBookmarkForm onSubmit={handleSubmit}/>}
+                close={() => setModalStates({...modalStates, groupModalOpened: false})}
             />
-            <NewComponentModal
-                trigger={addFolderTrigger}
+
+            {/* New Folder Form */}
+            <NewComponentModal 
+                isOpen={modalStates.folderModalOpened}
                 form={<NewBookmarkForm onSubmit={handleSubmit}/>}
+                close={() => setModalStates({...modalStates, folderModalOpened: false})}
             />
-            <NewComponentModal
-                trigger={addWidgetTrigger}
+
+            {/* New Folder Form */}
+            <NewComponentModal 
+                isOpen={modalStates.widgetModalOpened}
                 form={<NewBookmarkForm onSubmit={handleSubmit}/>}
+                close={() => setModalStates({...modalStates, widgetModalOpened: false})}
             />
-        </Dropdown.Menu>
-      </Dropdown>
+
+
+            <Dropdown 
+                onOpen={() => setTrigger(openedImage)} 
+                onClose={() => setTrigger(closedImage)} 
+                floating 
+                direction="left" 
+                trigger={trigger} 
+                icon={null}
+            >
+                <Dropdown.Menu className="EditBar ui dropdown menu">
+                    <Dropdown.Item 
+                        className="EditBar ui dropdown item" 
+                        image={ <img className="u-textCenter EditBar image" src={newBookmark} /> }
+                        onClick={() => setModalStates({...modalStates, bookmarkModalOpened: true})}
+                    />            
+                    <Dropdown.Item 
+                        className="EditBar ui dropdown item" 
+                        image={ <img className="u-textCenter EditBar image" src={newGroup} />}
+                        onClick={() => setModalStates({...modalStates, groupModalOpened: true})} 
+                    />      
+                    <Dropdown.Item 
+                        className="EditBar ui dropdown item" 
+                        icon={ <img className="u-textCenter EditBar image" src={newFolder} />}
+                        onClick={() => setModalStates({...modalStates, folderModalOpened: true})}
+                    />
+                    <Dropdown.Item 
+                        className="EditBar ui dropdown item" 
+                        icon={ <img className="u-textCenter EditBar image" src={newWidget} />}
+                        onClick={() => setModalStates({...modalStates, widgetModalOpened: true})}
+                    />
+                </Dropdown.Menu>
+            </Dropdown>
+        </>
     );
 }
 

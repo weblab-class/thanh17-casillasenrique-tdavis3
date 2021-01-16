@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Checkbox, Form, Icon } from "semantic-ui-react";
+import peepo from "../../public/images/peepoHappy.png"
 
-const NewComponentModal = ({ trigger, form }) => {
-    const [open, setOpen] = useState(false);
+import "./NewComponentModal.css";
+const NewComponentModal = ({ isOpen, form, close }) => {
+    //const [open, setOpen] = useState(false);
     
     // const formWithProps = React.Children.map(form.children, child => {
       
@@ -12,32 +14,22 @@ const NewComponentModal = ({ trigger, form }) => {
     //   }
     //   return child;
     // });
-
-    const close = () => {
-      setOpen(false);
-    }
-
-    // useEffect(() => {
-    //   const formWithCloseFunction = React.cloneElement(form, { closeForm: close});
-    //   console.log(form.props);
-    //   console.log(formWithCloseFunction);
-    // });
     
 
     return (
     <Modal
         closeIcon
         dimmer='blurring'
-        onClose={() => setOpen(false)}
+        onClose={() =>  close()}
         onOpen={() => setOpen(true)}
-        open={open}
-        trigger={trigger}
+        open={isOpen}
+        
     >
-      <Modal.Header>Create New Bookmark</Modal.Header>
-      <Modal.Content>
+      <Modal.Header className="NewComponentModal modal">Create New Bookmark</Modal.Header>
+      <Modal.Content className="NewComponentModal modal">
         {React.cloneElement(form, { closeForm: close })}
         {}
-      </Modal.Content>
+      </Modal.Content >
     </Modal>
   );
 };

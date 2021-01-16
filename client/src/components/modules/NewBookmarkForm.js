@@ -26,7 +26,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
   };
 
   return (
-    <Form>
+    <Form inverted>
       <Form.Field>
         <label>URL</label>
         <input 
