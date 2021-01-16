@@ -1,0 +1,15 @@
+.EditBar.ui.dropdown.menu {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    background: rgba(0, 0, 0, 0.87);
+}
+
+
+.EditBar.ui.dropdown.item:hover {
+    background-color: rgb(53, 53, 53) !important;
+  }
+
+.EditBar.image {
+    margin-right: 0 !important;
+}
