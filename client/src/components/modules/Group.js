@@ -32,7 +32,8 @@ const Group = (
     >
       <Modal.Header>Should probably have a title somewhere</Modal.Header>
       <Modal.Content>
-            {/*//TODO: make into grid*/}
+            {/*//TODO: make grid to expand to the whole thing*/}
+        {/*TODO: make grid into only 9. Expand to next page. Tricky*/}
         <Grid columns={3} className={"group-container"}>
           <Grid.Row>
             {bookmarks.map((bookmark) => {
@@ -48,20 +49,8 @@ const Group = (
 
         </Grid>
       </Modal.Content>
-      {/*<Modal.Footer> Yooo</Modal.Footer>*/}
       {/*//TODO: add Title @bottom*/}
-      {/*<Modal.Actions>*/}
-      {/*  <Button color="black" onClick={() => setOpen(false)}>*/}
-      {/*    Nope*/}
-      {/*  </Button>*/}
-      {/*  <Button*/}
-      {/*    content="Yep, that's me"*/}
-      {/*    labelPosition="right"*/}
-      {/*    icon="checkmark"*/}
-      {/*    onClick={() => setOpen(false)}*/}
-      {/*    positive*/}
-      {/*  />*/}
-      {/*</Modal.Actions>*/}
+
     </Modal>
   );
 }
