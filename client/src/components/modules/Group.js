@@ -31,7 +31,7 @@ const Group = (
       trigger={<Button>Show Modal</Button>}
       centered
     >
-      <Modal.Header>Should probably have a title somewhere</Modal.Header>
+      {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
       {/*<Modal.Content>*/}
         {/*TODO: Make into groups expansions*/}
         {/*TODO: make grid Expand to next page. State/counter? Tricky*/}
