@@ -1,7 +1,7 @@
 .modal {
     width: 40vw!important;
     height: 40vw!important;
-    height: 400px;
+    /*height: 400px;*/
     max-height: 100%;
     display: flex!important;
 }
@@ -17,6 +17,8 @@
     grid-gap: 4px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    text-align: center;
+    align-items: center;
 }
 /*.group-container{*/
 /*    !*display: grid;*!*/
