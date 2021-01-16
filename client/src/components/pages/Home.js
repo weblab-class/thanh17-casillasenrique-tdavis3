@@ -74,7 +74,7 @@ class Home extends Component {
                     onLogoutSuccess={this.props.handleLogout}
                     onFailure={(err) => console.log(err)}
                 />
-
+                <Image src={require("../../images/peepoHappy.png")}></Image>
                 <div>
                     yo
                 </div>

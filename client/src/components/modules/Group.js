@@ -22,33 +22,32 @@ const Group = (
 
   return (
     <Modal
-      closeIcon
+      // closeIcon
       size = 'small'
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
       dimmer="blurring"
       trigger={<Button>Show Modal</Button>}
+      centered
     >
       <Modal.Header>Should probably have a title somewhere</Modal.Header>
-      <Modal.Content>
-            {/*//TODO: make grid to expand to the whole thing*/}
-        {/*TODO: make grid into only 9. Expand to next page. Tricky*/}
-        <Grid columns={3} className={"group-container"}>
-          <Grid.Row>
+      {/*<Modal.Content>*/}
+        {/*TODO: Make into groups expansions*/}
+        {/*TODO: make grid Expand to next page. State/counter? Tricky*/}
+        <div className={"grid"}>
             {bookmarks.map((bookmark) => {
-              return <Grid.Column> <Bookmark
+              return  <Bookmark
                 userId={userId}
                 inEditMode={inEditMode}
                 url={bookmark.url}
                 name={bookmark.name}
                 location={undefined}
-              /></Grid.Column>
+              />
             })}
-          </Grid.Row>
 
-        </Grid>
-      </Modal.Content>
+        </div>
+      {/*</Modal.Content>*/}
       {/*//TODO: add Title @bottom*/}
 
     </Modal>
