@@ -24,6 +24,7 @@ const Group = (
   return (
     <Modal
       // closeIcon
+      className="Group modal"
       size = 'small'
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
@@ -39,7 +40,7 @@ const Group = (
       {/*<Modal.Content>*/}
         {/*TODO: Make into groups expansions*/}
         {/*TODO: make grid Expand to next page. Filter via passing in page number then map via passing in a page*/}
-        <div className={"grid"}>
+        <div className="Group grid">
             {bookmarks.map((bookmark) => {
               return  <Bookmark
                 userId={userId}

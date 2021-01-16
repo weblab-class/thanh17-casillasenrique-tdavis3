@@ -1,4 +1,4 @@
-.grid-Home {
+.Home-grid {
     /*position: relative;*/
     height:100%;
     flex: 1;
@@ -17,14 +17,13 @@
     text-align: center;
     align-items: center;
 }
-.group {
+.Home-group {
     grid-area: a;
 }
-.content {
+.Home-content {
 
 }
-.root {
-    isplay: flex;
+.Home-root {
     flex-direction: column;
     height: 100vh;
 }

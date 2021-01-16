@@ -66,7 +66,7 @@ class Home extends Component {
     render() {
 
         return (
-            <div className={"root"}>
+            <div className="Home-root">
                 {!this.props.userId && <Redirect to={"/"} noThrow/>}
                 <GoogleLogout
                     clientId={this.props.googleClientId}
@@ -74,7 +74,6 @@ class Home extends Component {
                     onLogoutSuccess={this.props.handleLogout}
                     onFailure={(err) => console.log(err)}
                 />
-                <Image src={require("../../images/peepoHappy.png")}></Image>
                 <div>
                     yo
                 </div>
@@ -95,16 +94,16 @@ class Home extends Component {
                 Add Group
               </button>
               <EditBar handleSubmit={this.handleSubmit}/>
-                <div className={"grid-Home"}>
+                <div className="Home-grid">
                   {/*<div className={"content"}>*/}
-                  <div className={"group"}>
+                  <div className="Home-group">
                     <Group
                       bookmarks={this.state.bookmarks}
                       inEditMode =  {this.state.inEditMode}
                       userId = {this.props.userId}
                     />
                   </div>
-                  <div className={"group"}>
+                  <div className="Home-group">
                     <Group
                       bookmarks={this.state.bookmarks}
                       inEditMode =  {this.state.inEditMode}

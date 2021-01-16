@@ -1,10 +1,19 @@
 .EditBar.ui.dropdown.menu {
+    height: 250px;
+    width: 100px;
     margin-top: 0;
     margin-bottom: 0;
     margin-right: 0;
+    
+    text-align: center !important;
     background: rgba(0, 0, 0, 0.87);
 }
 
+
+.EditBar.ui.dropdown.item {
+    text-align: center !important;
+    height: 60px !important;
+}
 
 .EditBar.ui.dropdown.item:hover {
     background-color: rgb(53, 53, 53) !important;
@@ -12,4 +21,15 @@
 
 .EditBar.image {
     margin-right: 0 !important;
+    vertical-align: middle;
+    margin: 0 0 !important; 
+}
+
+.EditBar-dropdown-button {
+    width: 50px;
+    height: 50px;
+}
+
+.EditBar-dropdown-button:hover {
+    filter: brightness(75%); 
 }

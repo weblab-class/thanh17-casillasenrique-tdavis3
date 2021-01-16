@@ -1,4 +1,4 @@
-.modal {
+.Group.modal {
     width: 40vw!important;
     height: 40vw!important;
     /*height: 400px;*/
@@ -11,7 +11,7 @@
 /*    padding-bottom: 100%!important;*/
 /*}*/
 
-.grid {
+.Group.grid {
     height:100%;
     display: grid;
     grid-gap: 4px;
