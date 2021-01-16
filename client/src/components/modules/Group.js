@@ -22,7 +22,7 @@ const Group = (
 
   return (
     <Modal
-      closeIcon
+      // closeIcon
       size = 'small'
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
@@ -37,18 +37,17 @@ const Group = (
         {/*TODO: make grid Expand to next page. State/counter? Tricky*/}
         <div className={"grid"}>
             {bookmarks.map((bookmark) => {
-              return <Grid.Column> <Bookmark
+              return  <Bookmark
                 userId={userId}
                 inEditMode={inEditMode}
                 url={bookmark.url}
                 name={bookmark.name}
                 location={undefined}
-              /></Grid.Column>
+              />
             })}
-          </Grid.Row>
 
-        </Grid>
-      </Modal.Content>
+        </div>
+      {/*</Modal.Content>*/}
       {/*//TODO: add Title @bottom*/}
 
     </Modal>
