@@ -3,7 +3,7 @@ import { Loader, Icon, Menu } from "semantic-ui-react";
 import standardIcon from "../../public/images/bookmark.png";
 import fileUpload from "../../public/images/fileUpload.png";
 
-const defaultIconLoader = <div className="ui active centered inline loader"/>;
+const defaultIconLoader = <Loader className="ui active centered inline" size="large"/>;
  
 import "./IconSelect.css";
 
@@ -23,8 +23,9 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
             <div>
             <img 
                 className="NewBookmarkForm-Standard" 
-                src={fileUpload}
+                src={standardIcon}
                 onClick={() => { 
+                    console.log("clicked on standard");
                     onSelect(standardIcon);
                     setSelected("standard"); 
                 }}
@@ -33,7 +34,7 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
             </img>
             </div>
             <div>
-            {defaultLoading ? defaultIconLoader : <img className="NewBookmarkForm-Default" src={fileUpload}/>}
+            {!defaultIcon ? defaultIconLoader : <img className="IconSelect-default" src={defaultIcon}/>}
             </div>
             <div>
             <img className="NewBookmarkForm-Upload" src={fileUpload}/>

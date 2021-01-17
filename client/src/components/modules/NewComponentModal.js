@@ -23,7 +23,7 @@ const NewComponentModal = ({ isOpen, form, close }) => {
         onClose={() =>  close()}
         onOpen={() => setOpen(true)}
         open={isOpen}
-        
+        className='NewComponentModal ui modal'
     >
       <Modal.Header className="NewComponentModal modal">Create New Bookmark</Modal.Header>
       <Modal.Content className="NewComponentModal modal">
