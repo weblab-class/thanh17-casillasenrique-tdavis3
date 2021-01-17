@@ -5,7 +5,8 @@ const GroupSchema = new mongoose.Schema({
     name: String,
     bookmarks: [String],
     customRow: Number,
-    customCol: Number
+    customCol: Number,
+    index: Number
 });
 
 module.exports = mongoose.model("group", GroupSchema);

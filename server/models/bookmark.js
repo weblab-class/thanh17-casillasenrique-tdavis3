@@ -7,7 +7,8 @@ const BookmarkSchema = new mongoose.Schema({
     image: String,
     group: String,
     customRow: Number,
-    customCol: Number
+    customCol: Number,
+    index: Number
 });
 
 module.exports = mongoose.model("bookmark", BookmarkSchema);

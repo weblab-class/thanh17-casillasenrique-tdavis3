@@ -32,14 +32,13 @@ class Home extends Component {
 
     handleSubmit = ({ url, bookmarkName }) => {
         console.log(this.state.bookmarks);
-        const maxRow = Math.max(0,...this.state.bookmarks.map( e=> e.customRow ? e.customRow: 0),
-          ...this.state.groups.map(e=> e.customRow ? e.customRow+1 : 0));
-        const maxCol = Math.max(0,...this.state.bookmarks.map(e=> e.customCol ? e.customCol:0),
-          ...this.state.groups.map(e=> e.customCol? e.customCol +1:0))
-        const newRow = maxCol % (4+1) === 0? maxRow +1 : maxRow;
-        const newCol = (maxCol) %(4+1) +1;
-        console.log("newRow " + maxRow +"newCol: " + maxCol + "finalRow: " +
-          newRow + "finalCol: " + newCol);
+
+      const maxIndex = Math.max(0,...this.state.bookmarks.map( e=> e.index ? e.index: 0),
+        ...this.state.groups.map(e=> e.index ? e.index : 0));
+
+      const newRow = Math.floor(maxIndex/4)+1;
+      const newCol = maxIndex%4 +1;
+      console.log("newRow" + newRow + "finalCol: " + newCol);
         const bookmark = {
             name: bookmarkName,
             url: url,
@@ -47,6 +46,7 @@ class Home extends Component {
             group: null,
             customRow: newRow,
             customCol: newCol,
+            index: maxIndex +1
         }
 
         console.log("sending to api");
@@ -126,8 +126,8 @@ class Home extends Component {
                   {/*</div>*/}
 
                     {this.state.bookmarks.map((bookmark) => {
-                      return <div style ={{gridRow: `${bookmark.customRow}/${bookmark.customRow+2}`,
-                        gridColumn: `${bookmark.customCol}/${bookmark.customCol+2}`}}>
+                      return <div style ={{gridRow: `${bookmark.customRow}/${bookmark.customRow+1}`,
+                        gridColumn: `${bookmark.customCol}/${bookmark.customCol+1}`}}>
                         <Bookmark
                         userId={this.props.userId}
                         inEditMode={this.state.inEditMode}

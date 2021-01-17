@@ -90,7 +90,8 @@ router.post("/title/edit/add_bookmark", (req, res) => {
         image: req.body.image,
         group: req.body.group,
         customRow: req.body.customRow,
-        customCol: req.body.customCol
+        customCol: req.body.customCol,
+        index: req.body.index
     });
 
     newBookmark.save()
