@@ -89,3 +89,11 @@ form {
 .u-link:hover {
   color: var(--primary--dim);
 }
+
+.u-grow {
+  transition: all .2s ease-in-out; 
+}
+
+.u-grow:hover {
+  transform: scale(1.2); 
+}
