@@ -88,7 +88,9 @@ router.post("/title/edit/add_bookmark", (req, res) => {
         name: req.body.name,
         url: req.body.url,
         image: req.body.image,
-        group: req.body.group
+        group: req.body.group,
+        customRow: req.body.customRow,
+        customCol: req.body.customCol
     });
 
     newBookmark.save()

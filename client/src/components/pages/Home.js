@@ -31,11 +31,22 @@ class Home extends Component {
     }
 
     handleSubmit = ({ url, bookmarkName }) => {
+        console.log(this.state.bookmarks);
+        const maxRow = Math.max(0,...this.state.bookmarks.map( e=> e.customRow ? e.customRow: 0),
+          ...this.state.groups.map(e=> e.customRow ? e.customRow+1 : 0));
+        const maxCol = Math.max(0,...this.state.bookmarks.map(e=> e.customCol ? e.customCol:0),
+          ...this.state.groups.map(e=> e.customCol? e.customCol +1:0))
+        const newRow = maxCol % (4+1) === 0? maxRow +1 : maxRow;
+        const newCol = (maxCol) %(4+1) +1;
+        console.log("newRow " + maxRow +"newCol: " + maxCol + "finalRow: " +
+          newRow + "finalCol: " + newCol);
         const bookmark = {
             name: bookmarkName,
             url: url,
             image: null,
-            group: null
+            group: null,
+            customRow: newRow,
+            customCol: newCol,
         }
 
         console.log("sending to api");
@@ -94,31 +105,36 @@ class Home extends Component {
                 Add Group
               </button>
               <EditBar handleSubmit={this.handleSubmit}/>
-                <div className="Home-grid">
+                {/*<div className="Home-grid" style={{gridTemplateAreas: "'. . . .' '. . . .' '. . . .' '. . . .'"}}>*/}
+                  <div className="Home-grid" >
+
                   {/*<div className={"content"}>*/}
-                  <div className="Home-group">
-                    <Group
-                      bookmarks={this.state.bookmarks}
-                      inEditMode =  {this.state.inEditMode}
-                      userId = {this.props.userId}
-                    />
-                  </div>
-                  <div className={"group"}>
-                    <Group
-                      bookmarks={this.state.bookmarks}
-                      inEditMode =  {this.state.inEditMode}
-                      userId = {this.props.userId}
-                    />
-                  </div>
+                  {/*<div className="Home-group" style ={{gridRow: `${2}/${2+2}`,*/}
+                  {/*  gridColumn: `${3}/${3+2}`}}>*/}
+                  {/*  <Group*/}
+                  {/*    bookmarks={this.state.bookmarks}*/}
+                  {/*    inEditMode =  {this.state.inEditMode}*/}
+                  {/*    userId = {this.props.userId}*/}
+                  {/*  />*/}
+                  {/*</div>*/}
+                  {/*<div className={"group"}>*/}
+                  {/*  <Group*/}
+                  {/*    bookmarks={this.state.bookmarks}*/}
+                  {/*    inEditMode =  {this.state.inEditMode}*/}
+                  {/*    userId = {this.props.userId}*/}
+                  {/*  />*/}
+                  {/*</div>*/}
 
                     {this.state.bookmarks.map((bookmark) => {
-                      return <Bookmark
+                      return <div style ={{gridRow: `${bookmark.customRow}/${bookmark.customRow+2}`,
+                        gridColumn: `${bookmark.customCol}/${bookmark.customCol+2}`}}>
+                        <Bookmark
                         userId={this.props.userId}
                         inEditMode={this.state.inEditMode}
                         url={bookmark.url}
                         name={bookmark.name}
                         location={undefined}
-                      />
+                      /> </div>
                     })}
                   {/*</div>*/}
                 </div>
