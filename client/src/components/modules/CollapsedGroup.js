@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react';
 
 const CollapsedGroup = ({
 
-                  }) => {
+                 onClick }) => {
 
   // useEffect(() => {
   //   watchBookmark();
@@ -16,7 +16,7 @@ const CollapsedGroup = ({
   // }
 
   return (
-      <Button size={"big"}>Show Modal</Button>
+      <Button size={"big"} onClick={onClick}>Show Modal</Button>
   );
 }
 

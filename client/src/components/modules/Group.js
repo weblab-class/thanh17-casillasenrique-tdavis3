@@ -31,9 +31,9 @@ const Group = (
       //TODO: change open to be boolean that triggers when clicked
       open={open}
       dimmer="blurring"
-      trigger={<Button size={"big"}>Show Modal</Button>}
+      //trigger={<Button size={"big"}>Show Modal</Button>}
       // TODO: make trigger to be an icon that has a specific size
-      // trigger={<CollapsedGroup/>}
+      trigger={<CollapsedGroup onClick={() => setOpen(true)}/>}
       centered
     >
       {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
