@@ -26,7 +26,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
   };
 
   return (
-    <Form inverted>
+    <Form size="huge" inverted>
       <Form.Field>
         <label>URL</label>
         <input 
@@ -46,6 +46,9 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
         />
       </Form.Field>
       <Button 
+        inverted
+        primary
+        size="huge"
         type="button"
         onClick={handleSubmit}
       >

@@ -1,6 +1,54 @@
-.Bookmark {
-    background-size: cover;
-    display: inline-block;
-    height: 50px;
-    width: 50px;
+.Bookmark-container {
+  width: 6vw;
+  height: 5vw;
+ 
+}
+
+.Bookmark-button {
+  width: 5.5vw;
+  height: 5.5vw;
+  background: transparent;
+  border: none !important;
+  border-radius: 10%;
+
+}
+
+.Bookmark-button:hover {
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  border: none !important;
+  border-radius: 10%;
+}
+
+.Bookmark-button:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+  /* outline: thin dotted; */
+  outline: none;
+}
+
+.Bookmark-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 7vw;
+}
+
+
+.Bookmark-image {
+  width: 5vw;
+  height: 5vw; 
+}
+
+.Bookmark-image:hover {
+  animation: test 0.3s 1 forwards;
+}
+
+@keyframes test {
+  0% {
+    /*transform: rotate(360deg);*/
+    
   }
+  100% {
+    transform: scale(1.1);
+    
+  }
+}
