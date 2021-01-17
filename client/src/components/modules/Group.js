@@ -28,11 +28,9 @@ const Group = (
       size = 'small'
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
-      //TODO: change open to be boolean that triggers when clicked
       open={open}
       dimmer="blurring"
       //trigger={<Button size={"big"}>Show Modal</Button>}
-      // TODO: make trigger to be an icon that has a specific size
       trigger={<CollapsedGroup onClick={() => setOpen(true)}/>}
       centered
     >

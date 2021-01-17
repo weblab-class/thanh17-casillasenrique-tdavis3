@@ -9,6 +9,7 @@ import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
+import CollapsedGroup from "../modules/CollapsedGroup";
 const screenWidth = 6;
 class Home extends Component {
     constructor(props) {
@@ -59,10 +60,19 @@ class Home extends Component {
     };
 
     handleSubmitGroup = () => {
+      const maxIndex = Math.max(0,...this.state.bookmarks.map( e=> e.index ? e.index: 0),
+        ...this.state.groups.map(e=> e.index ? e.index : 0));
+
+      const newRow = Math.floor(maxIndex/screenWidth)+1;
+      const newCol = maxIndex%screenWidth +1;
+      console.log("newRow" + newRow + "finalCol: " + newCol);
       const group = {
         userId: String,
         name: String,
-        bookmarks: [String]
+        bookmarks: [String],
+        customRow: newRow,
+        customCol: newCol,
+        index: maxIndex +1
       }
 
       console.log("sending group to api")
@@ -110,22 +120,33 @@ class Home extends Component {
                   <div className="Home-grid" >
 
                   {/*<div className={"content"}>*/}
-                  <div className="Home-group" style ={{gridRow: `${1}/${1+2}`,
-                    gridColumn: `${1}/${1+2}`}}>
+                  <div className="Home-group" style ={{gridRow: `${2}/${2+1}`,
+                    gridColumn: `${3}/${3+1}`}}>
                     <Group
                       bookmarks={this.state.bookmarks}
                       inEditMode =  {this.state.inEditMode}
                       userId = {this.props.userId}
                     />
                   </div>
-                  {/*<div className={"group"}>*/}
+                  {/*Hard coded Group*/}
+                    {/*<div className={"group"}>*/}
                   {/*  <Group*/}
                   {/*    bookmarks={this.state.bookmarks}*/}
                   {/*    inEditMode =  {this.state.inEditMode}*/}
                   {/*    userId = {this.props.userId}*/}
                   {/*  />*/}
                   {/*</div>*/}
-
+                  {/*Group Mapping*/}
+                    {this.state.groups.map((group) => {
+                      return <div style ={{gridRow: `${group.customRow}/${group.customRow+1}`,
+                        gridColumn: `${group.customCol}/${group.customCol+1}`}}>
+                        <CollapsedGroup
+                          userId={this.props.userId}
+                          inEditMode={this.state.inEditMode}
+                          name={group.name}
+                          location={undefined}
+                        /> </div>
+                    })}
                     {this.state.bookmarks.map((bookmark) => {
                       return <div style ={{gridRow: `${bookmark.customRow}/${bookmark.customRow+1}`,
                         gridColumn: `${bookmark.customCol}/${bookmark.customCol+1}`}}>
