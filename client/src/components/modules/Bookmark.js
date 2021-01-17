@@ -21,7 +21,8 @@ const Bookmark = ({
 
     return (
         <div>
-            <Button color="google plus" icon="google" href={url} target="_blank"></Button>
+            <button href={url} target="_blank"><img src={`https://www.google.com/s2/favicons?domain=${(url) && url.replace('https://www.','')}`} alt="my image" /></button>
+            {/* <Button color="google plus" icon="instagram" href={url} target="_blank"></Button> */}
             <div>
                 {name}
             </div>
