@@ -27,9 +27,11 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
 
   return (
     <Form size="huge" inverted>
-      <Header as='h1' inverted color="grey">First Header</Header>
+      <div style = {{textAlign: "center"}}>
+        <Header as='h1' inverted color="grey">Add New Group!</Header>
+      </div>
       <Form.Field>
-        <label style={{textAlign: "center"}}>Group Name</label>
+        <label style={{textAlign: "center", padding: "5% 0 1% 0"}}>Group Name</label>
         <input
           placeholder={PLACEHOLDER_NAME}
           name="groupName"
@@ -37,7 +39,7 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
           value={state.bookmarkName}
         />
       </Form.Field>
-      <div style={{textAlign: "center"}}>
+      <div style={{textAlign: "center", padding: "5%"}}>
       <Form.Button
         inverted
         primary
