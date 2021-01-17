@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Modal, Checkbox, Form, Icon } from "semantic-ui-react";
+import { Form, Icon, Menu } from "semantic-ui-react";
+import IconSelect from "./IconSelect";
 
 const PLACEHOLDER_URL = "https://www.google.com/";
 const PLACEHOLDER_NAME = "Google";
@@ -9,6 +10,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
   const [state, setState] = useState({
     url: "",
     bookmarkName: "",
+    icon: "",
   });
 
   const handleChange = (event) => { 
@@ -45,15 +47,25 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
           value={state.bookmarkName} 
         />
       </Form.Field>
-      <Button 
+      <Form.Field>
+        <label>Select Icon</label>
+        <IconSelect 
+          onSelect={(iconSelection) => {
+            setState({...state, icon: iconSelection});
+          }}
+          defaultIcon={null}
+        />
+      </Form.Field>
+      <Form.Button 
         inverted
         primary
         size="huge"
         type="button"
         onClick={handleSubmit}
+        disabled={state.url === "" || state.bookmarkName === ""}
       >
         Create Bookmark
-      </Button>
+      </Form.Button>
     </Form>
   );
 };
