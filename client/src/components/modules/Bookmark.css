@@ -29,13 +29,22 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: 7vw;
+  align-items: center;
+  width: 8vw;
+  text-align: center;
+  justify-content: center;
+  font-size: 1.5vw;
+  margin: auto;
 }
 
 
 .Bookmark-image {
-  width: 5vw;
-  height: 5vw; 
+  width: 4vw;
+  height: 4vw;
+  /*width: 120%;*/
+  /*height: 120%;*/
+  margin: auto;
+
 }
 
 .Bookmark-image:hover {

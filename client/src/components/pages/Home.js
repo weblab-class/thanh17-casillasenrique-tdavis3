@@ -9,6 +9,7 @@ import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
+const screenWidth = 6;
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -36,8 +37,8 @@ class Home extends Component {
       const maxIndex = Math.max(0,...this.state.bookmarks.map( e=> e.index ? e.index: 0),
         ...this.state.groups.map(e=> e.index ? e.index : 0));
 
-      const newRow = Math.floor(maxIndex/4)+1;
-      const newCol = maxIndex%4 +1;
+      const newRow = Math.floor(maxIndex/screenWidth)+1;
+      const newCol = maxIndex%screenWidth +1;
       console.log("newRow" + newRow + "finalCol: " + newCol);
         const bookmark = {
             name: bookmarkName,

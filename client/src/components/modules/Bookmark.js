@@ -27,10 +27,12 @@ const Bookmark = ({
             <form action={url} target="_blank">
                 <button className="Bookmark-button u-flex-alignCenter" type="submit" >
                     <img className="Bookmark-image u-flex-alignCenter " src={FAVICON_URL + ((url) && url.replace('https://www.',''))}/>
-                    <div className="Bookmark-text-container u-flex-alignCenter">
-                        <p className="Bookmark-text u-flex-alignCenter u-bold">{name}</p>
-                    </div>
+                    {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
+
+                    {/*</div>*/}
                 </button>
+                <p className="Bookmark-text u-bold ">{name}</p>
+
             </form>   
 
     );
