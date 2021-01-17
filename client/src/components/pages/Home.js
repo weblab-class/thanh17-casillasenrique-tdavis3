@@ -103,7 +103,7 @@ class Home extends Component {
                       userId = {this.props.userId}
                     />
                   </div>
-                  <div className="Home-group">
+                  <div className={"group"}>
                     <Group
                       bookmarks={this.state.bookmarks}
                       inEditMode =  {this.state.inEditMode}

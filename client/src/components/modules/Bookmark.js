@@ -2,6 +2,8 @@ import React, {useRef, useEffect} from "react";
 import "./Bookmark.css"
 import { Button } from 'semantic-ui-react';
 
+const FAVICON_URL="https://www.google.com/s2/favicons?domain=";
+
 const Bookmark = ({ 
     userId, 
     inEditMode, 
@@ -21,13 +23,17 @@ const Bookmark = ({
 
     return (
         <div>
-            <button href={url} target="_blank"><img src={`https://www.google.com/s2/favicons?domain=${(url) && url.replace('https://www.','')}`} alt="my image" /></button>
+            <form action={url} target="_blank">
+                <button type="submit" >
+                    
+                    <img src={FAVICON_URL + ((url) && url.replace('https://www.',''))}/>
+                </button>
+            </form>
             {/* <Button color="google plus" icon="instagram" href={url} target="_blank"></Button> */}
             <div>
                 {name}
             </div>
-        </div>
-        
+        </div>   
     );
 }
 
