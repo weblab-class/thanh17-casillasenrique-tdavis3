@@ -25,7 +25,6 @@ const NewComponentModal = ({ isOpen, form, close }) => {
         open={isOpen}
         className='NewComponentModal ui modal'
     >
-      <Modal.Header className="NewComponentModal modal">Create New Bookmark</Modal.Header>
       <Modal.Content className="NewComponentModal modal">
         {React.cloneElement(form, { closeForm: close })}
         {}

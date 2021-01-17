@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Icon, Menu } from "semantic-ui-react";
+import { Form, Icon, Menu, Header } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
 const PLACEHOLDER_NAME = "Group69";
 
@@ -27,6 +27,7 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
 
   return (
     <Form size="huge" inverted>
+      <Header as='h1' inverted color="grey">First Header</Header>
       <Form.Field>
         <label style={{textAlign: "center"}}>Group Name</label>
         <input

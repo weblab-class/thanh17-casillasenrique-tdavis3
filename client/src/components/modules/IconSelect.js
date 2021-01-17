@@ -10,7 +10,6 @@ import "./IconSelect.css";
 const IconSelect = ({ onSelect, defaultIcon }) => {
 
     const [selected, setSelected] = useState("standard");
-    const [defaultLoading, setDefaultLoading] = useState(true);
 
     useEffect(() => {
         if (defaultIcon) {

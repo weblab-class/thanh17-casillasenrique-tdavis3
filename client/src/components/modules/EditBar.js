@@ -7,6 +7,7 @@ import newBookmark from "../../public/images/New_Bookmark.png";
 import newGroup from "../../public/images/New_Group.png";
 import newFolder from "../../public/images/New_Folder.png";
 import newWidget from "../../public/images/New_Widget.png";
+import NewGroupForm from "../modules/NewGroupForm";
 
 import "./EditBar.css";
 import "../../utilities.css";
@@ -42,7 +43,7 @@ const EditBar = ({ handleSubmit }) => {
             {/* New Group Form */}
             <NewComponentModal 
                 isOpen={modalStates.groupModalOpened}
-                form={<NewBookmarkForm onSubmit={handleSubmit}/>}
+                form={<NewGroupForm onSubmit={handleSubmit}/>}
                 close={() => setModalStates({...modalStates, groupModalOpened: false})}
             />
 

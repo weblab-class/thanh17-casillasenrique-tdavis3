@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Icon, Menu } from "semantic-ui-react";
+import { Form, Icon, Menu, Header } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
 const PLACEHOLDER_URL = "https://www.google.com/";
 const PLACEHOLDER_NAME = "Google";
@@ -48,6 +48,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
   
   return (
     <Form size="huge" inverted style={{backgroundColor: "rgb(39, 39, 39) !important"}}>
+      <Header as='h1' inverted color="grey">First Header</Header>
       <Form.Field>
         <label>URL</label>
         <input 

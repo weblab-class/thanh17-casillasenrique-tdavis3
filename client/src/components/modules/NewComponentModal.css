@@ -2,6 +2,7 @@
 .NewComponentModal.modal {
     background-color: rgb(39, 39, 39) !important;
     color: rgba(236, 236, 236, 0.986) !important;
+    border-radius: 20px !important;
 }
 
 .NewComponentModal.ui.modal {
