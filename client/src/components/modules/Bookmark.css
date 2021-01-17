@@ -17,6 +17,7 @@
   /* background-color: rgba(0, 0, 0, 0.2); */
   border: none !important;
   border-radius: 10%;
+  cursor: pointer;
 }
 
 .Bookmark-button:focus {
