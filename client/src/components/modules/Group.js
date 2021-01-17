@@ -31,7 +31,7 @@ const Group = (
       open={open}
       dimmer="blurring"
       //trigger={<Button size={"big"}>Show Modal</Button>}
-      trigger={<CollapsedGroup onClick={() => setOpen(true)}/>}
+      trigger={<CollapsedGroup name="Test Group" bookmarkIcons={bookmarks.map((bookmark) => bookmark.image)} onClick={() => setOpen(true)}/>}
       centered
     >
       {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
