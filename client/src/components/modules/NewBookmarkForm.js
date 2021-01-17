@@ -48,44 +48,60 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
   
   return (
     <Form size="huge" inverted style={{backgroundColor: "rgb(39, 39, 39) !important"}}>
-      <Header as='h1' inverted color="grey">First Header</Header>
-      <Form.Field>
-        <label>URL</label>
-        <input 
-          placeholder={PLACEHOLDER_URL}
-          name="url"
-          onChange={handleChange}
-          value={state.url}
+      <div style={{textAlign:"center"}}>
+        <Header as='h1' inverted color="grey">Add a Bookmark!</Header>
+      </div>
+
+      <div style={{textAlign:"center"}}>
+        <Form.Field>
+          <label style = {{padding: "5% 0 1% 0"}}>URL</label>
+          <input
+            placeholder={PLACEHOLDER_URL}
+            name="url"
+            onChange={handleChange}
+            value={state.url}
           />
-      </Form.Field>
-      <Form.Field>
-        <label>Bookmark Name</label>
-        <input 
-          placeholder={PLACEHOLDER_NAME} 
-          name="bookmarkName" 
-          onChange={handleChange}
-          value={state.bookmarkName} 
-        />
-      </Form.Field>
-      <Form.Field>
-        <label>Select Icon</label>
-        <IconSelect 
-          onSelect={(iconSelection) => {
-            setState({...state, icon: iconSelection});
-          }}
-          defaultIcon={state.defaultIconURL}
-        />
-      </Form.Field>
-      <Form.Button 
-        inverted
-        primary
-        size="huge"
-        type="button"
-        onClick={handleSubmit}
-        disabled={state.url === "" || state.bookmarkName === ""}
-      >
-        Create Bookmark
-      </Form.Button>
+        </Form.Field>
+      </div>
+
+      <div style={{textAlign:"center"}}>
+        <Form.Field>
+          <label style = {{padding: "5% 0 1% 0"}}>Bookmark Name</label>
+          <input
+            placeholder={PLACEHOLDER_NAME}
+            name="bookmarkName"
+            onChange={handleChange}
+            value={state.bookmarkName}
+          />
+        </Form.Field>
+      </div>
+
+      <div style={{textAlign:"center"}}>
+        <Form.Field>
+          <label style = {{padding: "5% 0 1% 0"}}>Select Icon</label>
+          <IconSelect
+            onSelect={(iconSelection) => {
+              setState({...state, icon: iconSelection});
+            }}
+            defaultIcon={state.defaultIconURL}
+          />
+        </Form.Field>
+      </div>
+
+      <div style={{textAlign:"center", padding: "5%"}}>
+        <Form.Button
+          inverted
+          primary
+          size="huge"
+          type="button"
+          // color= "#1F2322"
+          onClick={handleSubmit}
+          disabled={state.url === "" || state.bookmarkName === ""}
+        >
+          Create Bookmark
+        </Form.Button>
+      </div>
+
     </Form>
   );
 };

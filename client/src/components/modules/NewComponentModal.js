@@ -24,6 +24,7 @@ const NewComponentModal = ({ isOpen, form, close }) => {
         onOpen={() => setOpen(true)}
         open={isOpen}
         className='NewComponentModal ui modal'
+        size={"mini"}
     >
       <Modal.Content className="NewComponentModal modal">
         {React.cloneElement(form, { closeForm: close })}
