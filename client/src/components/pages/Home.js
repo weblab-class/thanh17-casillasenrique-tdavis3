@@ -110,14 +110,14 @@ class Home extends Component {
                   <div className="Home-grid" >
 
                   {/*<div className={"content"}>*/}
-                  {/*<div className="Home-group" style ={{gridRow: `${2}/${2+2}`,*/}
-                  {/*  gridColumn: `${3}/${3+2}`}}>*/}
-                  {/*  <Group*/}
-                  {/*    bookmarks={this.state.bookmarks}*/}
-                  {/*    inEditMode =  {this.state.inEditMode}*/}
-                  {/*    userId = {this.props.userId}*/}
-                  {/*  />*/}
-                  {/*</div>*/}
+                  <div className="Home-group" style ={{gridRow: `${1}/${1+2}`,
+                    gridColumn: `${1}/${1+2}`}}>
+                    <Group
+                      bookmarks={this.state.bookmarks}
+                      inEditMode =  {this.state.inEditMode}
+                      userId = {this.props.userId}
+                    />
+                  </div>
                   {/*<div className={"group"}>*/}
                   {/*  <Group*/}
                   {/*    bookmarks={this.state.bookmarks}*/}

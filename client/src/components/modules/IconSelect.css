@@ -1,5 +1,7 @@
 .IconSelect-container {
     display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
 }
+

@@ -3,7 +3,7 @@ import { Loader, Icon, Menu } from "semantic-ui-react";
 import standardIcon from "../../public/images/bookmark.png";
 import fileUpload from "../../public/images/fileUpload.png";
 
-const defaultIconLoader = <Loader active/>;
+const defaultIconLoader = <div className="ui active centered inline loader"/>;
  
 import "./IconSelect.css";
 
@@ -33,10 +33,10 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
             </img>
             </div>
             <div>
-            {defaultLoading ? defaultIconLoader : <img className="NewBookmarkForm-Default" src={fileUpload}></img>}
+            {defaultLoading ? defaultIconLoader : <img className="NewBookmarkForm-Default" src={fileUpload}/>}
             </div>
             <div>
-            <img className="NewBookmarkForm-Upload" src={fileUpload}></img>
+            <img className="NewBookmarkForm-Upload" src={fileUpload}/>
             </div>
         </div>
     );

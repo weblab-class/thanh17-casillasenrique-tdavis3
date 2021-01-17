@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Form, Icon, Menu } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
-
 const PLACEHOLDER_URL = "https://www.google.com/";
 const PLACEHOLDER_NAME = "Google";
 

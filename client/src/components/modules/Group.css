@@ -6,7 +6,10 @@
     display: flex!important;
     background-color: rgba(0, 0, 0, 0.6) !important;
     color: white;
+    border-radius: 10%!important;
 }
+
+/*.dimmer { background-color: white!}*/
 /*.modal:after {*/
 /*    content: "";*/
 /*    display: block!important;*/
