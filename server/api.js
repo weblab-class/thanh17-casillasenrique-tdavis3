@@ -72,6 +72,10 @@ router.post("/title/edit/edit_group", (req, res) => {
     const updatedGroup = Group({
         // userId: req.user._id,  // TODO: Make google Id
         name: req.body.name,
+        bookmarks: [String],
+        customRow: req.body.customRow,
+        customCol: req.body.customCol,
+        index: req.body.index
     });
     Group.updateOne({_id: req.body._id}, updatedGroup)
         .catch((err) => console.log("An error occurred while editing"));
