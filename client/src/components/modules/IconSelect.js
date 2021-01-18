@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Loader, Icon, Menu } from "semantic-ui-react";
-import standardIcon from "../../public/images/bookmark.png";
+import standardIcon from "../../public/images/globe.png";
 import fileUpload from "../../public/images/fileUpload.png";
 import "./IconSelect.css";
 
 const defaultIconLoader = (
-  <Loader className="ui active centered inline" size="large">
-    <text fontSize={1}>Enter a URL</text>
+  <Loader className="ui active centered inline" size="small">
+    <p className="IconSelect-default-loader">Enter a URL</p>
   </Loader>
 );
 
@@ -22,7 +22,6 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
   const [uploaded, setUploaded] = useState(false);
 
   useEffect(() => {
-    console.log("refreshing");
     if (selected !== "upload") {
       setUploaded(false) 
     }
@@ -75,7 +74,7 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
               type="file" 
               id="fileElem" 
               accept="image/*" 
-              class="IconSelect-invisibleInput"
+              className="IconSelect-invisibleInput"
               onChange={(event)=> { 
                 console.log("uploaded image: " + document.getElementById("fileElem").files[0]); 
                 onSelect(document.getElementById("fileElem").files[0]);

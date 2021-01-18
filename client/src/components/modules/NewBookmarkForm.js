@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Icon, Menu, Header } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
+import standardIcon from "../../public/images/globe.png";
 const PLACEHOLDER_URL = "https://www.google.com/";
 const PLACEHOLDER_NAME = "Google";
 const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
@@ -12,7 +13,7 @@ const URL_REGEX =
 const initialState = {
   url: "",
   bookmarkName: "",
-  icon: "",
+  icon: standardIcon,
   defaultIconURL: undefined,
 };
 

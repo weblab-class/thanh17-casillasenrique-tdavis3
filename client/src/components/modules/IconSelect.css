@@ -20,7 +20,7 @@
 .IconSelect-option-selected {
   width: 4.5vw;
   height: 4.5vw;
-  border: solid 2px rgb(132, 171, 255);
+  border: solid 3px rgb(80,185,235);
   border-radius: 20%;
   padding: 2% 0;
 }
@@ -41,4 +41,8 @@
 .IconSelect-fileUploadImage {
   width: 3vw;
   height: 3vw;
+}
+
+.IconSelect-default-loader {
+  font-size: small;
 }
