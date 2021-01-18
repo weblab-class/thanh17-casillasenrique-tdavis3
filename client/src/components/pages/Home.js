@@ -23,11 +23,15 @@ const Home = (props) => {
   });
 
   useEffect(() => {
-    get("/api/title/bookmarks")
+    get("/api/bookmarks")
       .then((bookmarks) => {
-        setState({ ...state, bookmarks: bookmarks });
+        get("/api/groups")
+          .then((groups) => {
+            setState({ ...state, groups: groups, bookmarks: bookmarks });
+          })
+          .catch((e) => console.log("error occurred when fetching groups: " + e));
       })
-      .catch((e) => console.log("error occurred " + e));
+      .catch((e) => console.log("error occurred when fetching bookmarks: " + e));
   }, []);
 
   const handleCreateBookmark = ({ url, bookmarkName, icon }) => {
@@ -52,7 +56,7 @@ const Home = (props) => {
     };
 
     console.log("sending bookmark to api");
-    post("/api/title/edit/add_bookmark", bookmark).then((bookmark) => {
+    post("/api/edit/add_bookmark", bookmark).then((bookmark) => {
       console.log(bookmark.image);
       state.bookmarks.push(bookmark);
       setState({ ...state, bookmarks: state.bookmarks });
@@ -78,7 +82,7 @@ const Home = (props) => {
     };
 
     console.log("sending group to api");
-    post("/api/title/edit/add_group", group).then((group) => {
+    post("/api/edit/add_group", group).then((group) => {
       console.log("returned group after api post: " + group.bookmarks + " empty list: " + []);
       state.groups.push(group);
       setState({ ...state, groups: state.groups });

@@ -45,19 +45,25 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.get("/title/bookmark", (req, res) => {
+router.get("/bookmark", (req, res) => {
     Bookmark.find({_id: req.query._id}).then((result) => {
         res.send(result);
     });
 });
 
-router.get("/title/bookmarks", (req, res) => {
+router.get("/bookmarks", (req, res) => {
     Bookmark.find({userId: req.user._id}).then((result) => {
         res.send(result);
     });
 });
 
-router.post("/title/edit/add_group", (req, res) => {
+router.get("/groups", (req, res) => {
+    Group.find({userId: req.user._id}).then((result) => {
+        res.send(result);
+    });
+});
+
+router.post("/edit/add_group", (req, res) => {
     console.log(req.body);
     const newGroup = Group({
         userId: req.user._id, 
@@ -68,17 +74,14 @@ router.post("/title/edit/add_group", (req, res) => {
         bookmarks: [],
     });
 
-    console.log("wtf");
-    console.log( {newGroup});
     newGroup.save()
         .then((group) => { 
-            console.log(group.name)
             res.send(group);  
         })
         .catch((err) => console.log("An error occurred while saving"))
 });
 
-router.post("/title/edit/edit_group", (req, res) => {
+router.post("/edit/edit_group", (req, res) => {
     const updatedGroup = Group({
         // userId: req.user._id,  // TODO: Make google Id
         name: req.body.name,
@@ -91,12 +94,12 @@ router.post("/title/edit/edit_group", (req, res) => {
         .catch((err) => console.log("An error occurred while editing"));
 });
 
-router.delete("/title/edit/delete_group", (req, res) => {
+router.delete("/edit/delete_group", (req, res) => {
     Group.deleteOne({_id: req.body._id})
         .catch((err) => console.log("An error occurred while deleting"));
 });
 
-router.post("/title/edit/add_bookmark", (req, res) => {
+router.post("/edit/add_bookmark", (req, res) => {
     const newBookmark = Bookmark({
         userId: req.user._id,
         name: req.body.name,
@@ -113,7 +116,7 @@ router.post("/title/edit/add_bookmark", (req, res) => {
         .catch((err) => console.log("An error occurred while saving"))
 });
 
-router.post("/title/edit/edit_bookmark", (req, res) => {
+router.post("/edit/edit_bookmark", (req, res) => {
     const updatedBookmark = Bookmark({
         // userId: req.user._id,
         name: req.body.name,
@@ -125,7 +128,7 @@ router.post("/title/edit/edit_bookmark", (req, res) => {
         .catch((err) => console.log("An error occurred while editing"));
 });
 
-router.delete("/title/edit/delete_bookmark", (req, res) => {
+router.delete("/edit/delete_bookmark", (req, res) => {
     Bookmark.deleteOne({_id: req.body._id})
         .catch((err) => console.log("An error occurred while deleting"));
 });
