@@ -6,7 +6,7 @@ import "./IconSelect.css";
 
 const defaultIconLoader = (
   <Loader className="ui active centered inline" size="large">
-    Enter a URL
+    <text fontSize={1}>Enter a URL</text>
   </Loader>
 );
 
@@ -24,6 +24,7 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
     <div className="IconSelect-container">
       <div className={"IconSelect-standard" + (selected === "standard" ? "-selected" : "")}>
         <img
+          className={"bookmarkImage"}
           src={standardIcon}
           onClick={() => {
             console.log("clicked on standard");
@@ -32,12 +33,14 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
           }}
         />
       </div>
-      <div>
+      <div >
         {!defaultIcon ? (
           defaultIconLoader
         ) : (
           <img
-            className="IconSelect-default"
+            style={{width: "4vw",
+              height: "4vw", borderRadius: "20%"}}
+            className= {"IconSelect-default" + (selected === "default" ? "-selected" : "")}
             src={defaultIcon}
             onClick={() => {
               console.log("clicked on default");
@@ -48,8 +51,8 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
         )}
       </div>
       <div>
-        <button type="file" accept="image/*">
-          <img className="NewBookmarkForm-Upload" src={fileUpload} />
+        <button type="file" >
+          <img className= {"NewBookmarkForm-Upload"} src={fileUpload} />
         </button>
       </div>
     </div>

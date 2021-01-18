@@ -6,21 +6,45 @@
 }
 
 .IconSelect-default {
-  width: 100px;
-  height: 100px;
+  width: 4vw;
+  height: 4vw;
 }
 
 .IconSelect-default-selected {
+  width: 4vw;
+  height: 4vw;
+  border: solid 2px rgb(132, 171, 255);
+  border-radius: 20%;
 }
 
 .IconSelect-standard {
-  width: 100px;
-  height: 120px;
+  width: 4vw;
+  height: 4vw;
+  /*object-fit: contain;*/
+  padding: 2% 0;
 }
 
 .IconSelect-standard-selected {
-  width: 100px;
-  height: 120px;
+  width: 4vw;
+  height: 4vw;
   border: solid 2px rgb(132, 171, 255);
-  border-radius: 10%;
+  border-radius: 20%;
+  /*object-fit: contain;*/
+  padding: 2% 0;
+  /*vertical-align:center*/
+
+
 }
+
+.bookmarkImage {
+  width: 3vw;
+  height: 3vw;
+  /*padding: 5% 0;*/
+  /*object-fit: contain;*/
+
+}
+.NewBookmarkForm-Upload {
+  width: 3vw;
+  height: 3vw;
+}
+
