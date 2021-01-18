@@ -9,6 +9,8 @@ import "./Login.css";
 //TODO: REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "896967920126-0399u048v37e7g5v5di98ueh38njq1jt.apps.googleusercontent.com";
 
+
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +22,10 @@ class Login extends Component {
 
   componentDidMount() {}
 
+  /**
+   *
+   * @returns {JSX.Element} a Rendering of the Login page.
+   */
   render() {
     return (
       <div className={"root"}>

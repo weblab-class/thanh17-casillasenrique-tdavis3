@@ -10,12 +10,24 @@ import NewComponentModal from "../modules/NewComponentModal";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
 import CollapsedGroup from "../modules/CollapsedGroup";
-const SCREEN_WIDTH = 6;
+const SCREEN_WIDTH = 8;
 
 //@param userId
 //@param handleLogout
+/**
+ * @param props I don't actually know lmao
+ * @returns {JSX.Element} the home screen with all the shitz in it
+ * @constructor wtf would this be?
+ */
 const Home = (props) => {
   // Initialize Default State
+  /**
+   *  @state groups: the list of groups that the user has created
+   *  @state bookmarks: the list of bookmarks that the user has created
+   *  @state inEditMode: a boolean value indicating whether the homepage is in
+   *      edit mode
+   *
+   */
   const [state, setState] = useState({
     groups: [],
     bookmarks: [],
@@ -34,14 +46,25 @@ const Home = (props) => {
       .catch((e) => console.log("error occurred when fetching bookmarks: " + e));
   }, []);
 
-  const handleCreateBookmark = ({ url, bookmarkName, icon }) => {
-    //TODO @thanh_n probably should consolidate this logic into a function
+  const findMaxIndex = () => {
     const maxIndex = Math.max(
       0,
       ...state.bookmarks.map((e) => (e.index ? e.index : 0)),
       ...state.groups.map((e) => (e.index ? e.index : 0))
     );
 
+    return maxIndex;
+  }
+
+
+  /** Creates a new bookmark on the home screen given the url, bookmark name, and icon desired
+   *
+   * @param url the url of the new bookmark to be added
+   * @param bookmarkName the name of the bookmark to be added
+   * @param icon the desired icon of the new bookmark
+   */
+  const handleCreateBookmark = ({ url, bookmarkName, icon }) => {
+    const maxIndex = findMaxIndex();
     const newRow = Math.floor(maxIndex / SCREEN_WIDTH) + 1;
     const newCol = (maxIndex % SCREEN_WIDTH) + 1;
     console.log("newRow" + newRow + "finalCol: " + newCol);
@@ -63,13 +86,15 @@ const Home = (props) => {
     });
   };
 
+  /** Creates a new group to display on the home screen given a user's input.
+   *  The given group will be places at the next available index
+   *
+   * @param groupName The name that the user designate for the new group
+   *
+   *
+   */
   const handleCreateGroup = ({ groupName }) => {
-    const maxIndex = Math.max(
-      0,
-      ...state.bookmarks.map((e) => (e.index ? e.index : 0)),
-      ...state.groups.map((e) => (e.index ? e.index : 0))
-    );
-
+    const maxIndex = findMaxIndex();
     const newRow = Math.floor(maxIndex / SCREEN_WIDTH) + 1;
     const newCol = (maxIndex % SCREEN_WIDTH) + 1;
     console.log("newRow" + newRow + "finalCol: " + newCol);
@@ -92,6 +117,8 @@ const Home = (props) => {
   return (
     <div className="Home-root">
       {!props.userId && <Redirect to={"/"} noThrow />}
+
+      {/*The logout button*/}
       <GoogleLogout
         clientId={props.googleClientId}
         buttonText="Logout"
@@ -99,23 +126,27 @@ const Home = (props) => {
         onFailure={(err) => console.log(err)}
       />
 
-      <EditBar handleCreateBookmark={handleCreateBookmark} handleCreateGroup={handleCreateGroup} />
+      {/*The freaking bookmark bar*/}
+      <EditBar
+        handleCreateBookmark={handleCreateBookmark}
+        handleCreateGroup={handleCreateGroup} />
 
       <div className="Home-grid">
-        <div
-          className="Home-group"
-          // what are these? magic numbers?
-          style={{ gridRow: `${2}/${2 + 1}`, gridColumn: `${3}/${3 + 1}` }}
-        >
-          {/*Hard-coded group*/}
-          <Group
-            bookmarks={state.bookmarks}
-            inEditMode={state.inEditMode}
-            userId={props.userId}
-            name="Test Group"
-          />
-        </div>
+        {/*<div*/}
+        {/*  className="Home-group"*/}
+        {/*  // what are these? magic numbers?*/}
+        {/*  style={{ gridRow: `${2}/${2 + 1}`, gridColumn: `${3}/${3 + 1}` }}*/}
+        {/*>*/}
+        {/*  /!*Hard-coded group*!/*/}
+        {/*  <Group*/}
+        {/*    bookmarks={state.bookmarks}*/}
+        {/*    inEditMode={state.inEditMode}*/}
+        {/*    userId={props.userId}*/}
+        {/*    name="Test Group"*/}
+        {/*  />*/}
+        {/*</div>*/}
 
+        {/*Render all of the damn groups*/}
         {state.groups.map((group) => {
           return (
             <div
@@ -134,6 +165,8 @@ const Home = (props) => {
             </div>
           );
         })}
+
+        {/*Render all of the damn bookmarks*/}
         {state.bookmarks.map((bookmark) => {
           return (
             <div
