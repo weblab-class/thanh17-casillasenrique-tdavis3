@@ -10,8 +10,7 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
   });
 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.value })
-    console.log(state);
+    setState({ groupName: event.target.value })
   };
 
   const handleSubmit = () => {

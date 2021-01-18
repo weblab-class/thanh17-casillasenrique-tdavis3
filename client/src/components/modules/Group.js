@@ -16,7 +16,8 @@ const Group = (
   {
     bookmarks,
     inEditMode,
-    userId
+    userId,
+    name,
   }
 ) => {
   const [open, setOpen] = React.useState(false);
@@ -31,9 +32,10 @@ const Group = (
       open={open}
       dimmer="blurring"
       //trigger={<Button size={"big"}>Show Modal</Button>}
-      trigger={<CollapsedGroup name="Test Group" bookmarkIcons={bookmarks.map((bookmark) => bookmark.image)} onClick={() => setOpen(true)}/>}
+      trigger={<CollapsedGroup name={name} bookmarkIcons={bookmarks.map((bookmark) => bookmark.image)} onClick={() => setOpen(true)}/>}
       centered
     >
+      {console.log("bookmarks:" + bookmarks)}
       {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
       {/*<Modal.Content>*/}
         {/*TODO: Make into groups expansions*/}
@@ -41,6 +43,7 @@ const Group = (
         <div className="Group grid">
             {bookmarks.map((bookmark) => {
               return  <Bookmark
+                key={bookmark._id}
                 userId={userId}
                 inEditMode={inEditMode}
                 url={bookmark.url}

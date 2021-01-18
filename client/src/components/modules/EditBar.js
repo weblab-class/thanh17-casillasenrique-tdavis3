@@ -21,7 +21,7 @@ import {
 const openedImage = <Image className="EditBar-dropdown-button" src={openedIcon}/>;
 const closedImage = <Image className="EditBar-dropdown-button" src={closedIcon}/>;
 
-const EditBar = ({ handleSubmit }) => {
+const EditBar = ({ handleCreateBookmark, handleCreateGroup }) => {
     
     const [trigger, setTrigger] =  useState(closedImage); 
     const [modalStates, setModalStates] = useState({
@@ -36,28 +36,28 @@ const EditBar = ({ handleSubmit }) => {
             {/* New Bookmark Form */}
             <NewComponentModal 
                 isOpen={modalStates.bookmarkModalOpened}
-                form={<NewBookmarkForm onSubmit={handleSubmit}/>}
+                form={<NewBookmarkForm onSubmit={handleCreateBookmark}/>}
                 close={() => setModalStates({...modalStates, bookmarkModalOpened: false})}
             />
 
             {/* New Group Form */}
             <NewComponentModal 
                 isOpen={modalStates.groupModalOpened}
-                form={<NewGroupForm onSubmit={handleSubmit}/>}
+                form={<NewGroupForm onSubmit={handleCreateGroup}/>}
                 close={() => setModalStates({...modalStates, groupModalOpened: false})}
             />
 
             {/* New Folder Form */}
             <NewComponentModal 
                 isOpen={modalStates.folderModalOpened}
-                form={<NewBookmarkForm onSubmit={handleSubmit}/>}
+                form={<NewBookmarkForm onSubmit={handleCreateBookmark}/>}
                 close={() => setModalStates({...modalStates, folderModalOpened: false})}
             />
 
             {/* New Folder Form */}
             <NewComponentModal 
                 isOpen={modalStates.widgetModalOpened}
-                form={<NewBookmarkForm onSubmit={handleSubmit}/>}
+                form={<NewBookmarkForm onSubmit={handleCreateBookmark}/>}
                 close={() => setModalStates({...modalStates, widgetModalOpened: false})}
             />
 

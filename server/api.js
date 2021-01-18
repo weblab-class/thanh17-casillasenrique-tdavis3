@@ -58,13 +58,23 @@ router.get("/title/bookmarks", (req, res) => {
 });
 
 router.post("/title/edit/add_group", (req, res) => {
+    console.log(req.body);
     const newGroup = Group({
-        userId: req.user._id,  // TODO: Make google Id
+        userId: req.user._id, 
         name: req.body.name,
-        bookmarks: []  // No associated bookmarks upon creation
+        customRow: req.body.customRow,
+        customCol: req.body.customCol,
+        index: req.body.index,
+        bookmarks: [],
     });
+
+    console.log("wtf");
+    console.log( {newGroup});
     newGroup.save()
-        .then((group) => res.send(group))
+        .then((group) => { 
+            console.log(group.name)
+            res.send(group);  
+        })
         .catch((err) => console.log("An error occurred while saving"))
 });
 

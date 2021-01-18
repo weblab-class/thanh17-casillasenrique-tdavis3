@@ -34,7 +34,6 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
       setState({...state, defaultIconURL: location, url: targetValue});
     } else {
       setState({ ...state, [targetName]: targetValue })
-      console.log(state);
     }
   };
 
