@@ -134,7 +134,7 @@ const Home = (props) => {
       <div className="Home-grid">
         {/*<div*/}
         {/*  className="Home-group"*/}
-        {/*  // what are these? magic numbers?*/}
+        {/*  // what are these? mag ic numbers?*/}
         {/*  style={{ gridRow: `${2}/${2 + 1}`, gridColumn: `${3}/${3 + 1}` }}*/}
         {/*>*/}
         {/*  /!*Hard-coded group*!/*/}

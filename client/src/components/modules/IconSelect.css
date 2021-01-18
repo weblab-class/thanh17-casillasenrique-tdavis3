@@ -8,13 +8,17 @@
 .IconSelect-option {
   width: 4.5vw;
   height: 4.5vw;
-  padding: 2% 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .IconSelect-option:hover {
   border: solid 2px rgb(199, 199, 199);
   border-radius: 20%;
-  padding: 2% 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .IconSelect-option-selected {
@@ -22,7 +26,9 @@
   height: 4.5vw;
   border: solid 3px rgb(80,185,235);
   border-radius: 20%;
-  padding: 2% 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .IconSelect-bookmarkImage {

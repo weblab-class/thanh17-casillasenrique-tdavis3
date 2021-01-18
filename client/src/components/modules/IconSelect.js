@@ -30,15 +30,19 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
   return (
     <div className="IconSelect-container">
       <div className={"IconSelect-option" + (selected === "standard" ? "-selected" : "")}>
-        <img
-          className={"IconSelect-bookmarkImage"}
-          src={standardIcon}
-          onClick={() => {
-            console.log("clicked on standard");
-            onSelect(standardIcon);
-            setSelected("standard");
-          }}
-        />
+        <div style={{display: "flex", alignItems: "center", justifyContent:"space-around",
+        flexDirection: "column"}}>
+          <img
+            className={"IconSelect-bookmarkImage"}
+            src={standardIcon}
+            onClick={() => {
+              console.log("clicked on standard");
+              onSelect(standardIcon);
+              setSelected("standard");
+            }}
+          />
+        </div>
+
       </div>
       <div >
         {!defaultIcon ? (

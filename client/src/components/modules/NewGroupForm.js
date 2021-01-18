@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Icon, Menu, Header } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
-const PLACEHOLDER_NAME = "Group69";
+const PLACEHOLDER_NAME = "Group 1";
 
 /** A bookmark form to be used for handling the creating of a new group
  *
