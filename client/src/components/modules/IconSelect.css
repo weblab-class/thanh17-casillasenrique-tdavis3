@@ -5,46 +5,40 @@
   align-items: center;
 }
 
-.IconSelect-default {
-  width: 4vw;
-  height: 4vw;
-}
-
-.IconSelect-default-selected {
-  width: 4vw;
-  height: 4vw;
-  border: solid 2px rgb(132, 171, 255);
-  border-radius: 20%;
-}
-
-.IconSelect-standard {
-  width: 4vw;
-  height: 4vw;
-  /*object-fit: contain;*/
+.IconSelect-option {
+  width: 4.5vw;
+  height: 4.5vw;
   padding: 2% 0;
 }
 
-.IconSelect-standard-selected {
-  width: 4vw;
-  height: 4vw;
+.IconSelect-option:hover {
+  border: solid 2px rgb(199, 199, 199);
+  border-radius: 20%;
+  padding: 2% 0;
+}
+
+.IconSelect-option-selected {
+  width: 4.5vw;
+  height: 4.5vw;
   border: solid 2px rgb(132, 171, 255);
   border-radius: 20%;
-  /*object-fit: contain;*/
   padding: 2% 0;
-  /*vertical-align:center*/
-
-
 }
 
-.bookmarkImage {
-  width: 3vw;
-  height: 3vw;
-  /*padding: 5% 0;*/
-  /*object-fit: contain;*/
-
-}
-.NewBookmarkForm-Upload {
+.IconSelect-bookmarkImage {
   width: 3vw;
   height: 3vw;
 }
 
+.IconSelect-invisibleInput {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.IconSelect-fileUploadImage {
+  width: 3vw;
+  height: 3vw;
+}

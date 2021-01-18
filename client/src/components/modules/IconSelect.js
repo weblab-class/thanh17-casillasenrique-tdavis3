@@ -19,12 +19,20 @@ const defaultIconLoader = (
  */
 const IconSelect = ({ onSelect, defaultIcon }) => {
   const [selected, setSelected] = useState("standard");
+  const [uploaded, setUploaded] = useState(false);
+
+  useEffect(() => {
+    console.log("refreshing");
+    if (selected !== "upload") {
+      setUploaded(false) 
+    }
+  }, [selected])
 
   return (
     <div className="IconSelect-container">
-      <div className={"IconSelect-standard" + (selected === "standard" ? "-selected" : "")}>
+      <div className={"IconSelect-option" + (selected === "standard" ? "-selected" : "")}>
         <img
-          className={"bookmarkImage"}
+          className={"IconSelect-bookmarkImage"}
           src={standardIcon}
           onClick={() => {
             console.log("clicked on standard");
@@ -37,24 +45,45 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
         {!defaultIcon ? (
           defaultIconLoader
         ) : (
-          <img
-            style={{width: "4vw",
+          <div className= {"IconSelect-option" + (selected === "default" ? "-selected" : "")}>
+            <img 
+              style={{width: "4vw",
               height: "4vw", borderRadius: "20%"}}
-            className= {"IconSelect-default" + (selected === "default" ? "-selected" : "")}
-            src={defaultIcon}
-            onClick={() => {
-              console.log("clicked on default");
-              onSelect(defaultIcon);
-              setSelected("default");
-            }}
-          />
+              src={defaultIcon}
+              onClick={() => {
+                console.log("clicked on default");
+                onSelect(defaultIcon);
+                setSelected("default");
+              }}
+            />
+          </div>
         )}
       </div>
-      <div>
-        <button type="file" >
-          <img className= {"NewBookmarkForm-Upload"} src={fileUpload} />
-        </button>
-      </div>
+          <label 
+            className={"IconSelect-option" + ((selected === "upload") ? "-selected" : "")}
+            onClick={() => {
+                console.log("clicked on default");
+                setSelected("upload");
+                console.log(document.getElementById("fileElem").files[0]);
+            }}
+          >
+            <img 
+              src={(uploaded && document.getElementById("fileElem").files.length > 0) ? URL.createObjectURL(document.getElementById("fileElem").files[0]) : fileUpload} 
+              className="IconSelect-fileUploadImage"
+            />
+            <input 
+              type="file" 
+              id="fileElem" 
+              accept="image/*" 
+              class="IconSelect-invisibleInput"
+              onChange={(event)=> { 
+                console.log("uploaded image: " + document.getElementById("fileElem").files[0]); 
+                onSelect(document.getElementById("fileElem").files[0]);
+                setUploaded(true);
+              }
+            }/>
+        </label>
+
     </div>
   );
 };
