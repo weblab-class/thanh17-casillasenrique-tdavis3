@@ -2,33 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Loader, Icon, Menu } from "semantic-ui-react";
 import standardIcon from "../../public/images/bookmark.png";
 import fileUpload from "../../public/images/fileUpload.png";
+import "./IconSelect.css";
 
 const defaultIconLoader = <Loader className="ui active centered inline" size="large">Enter a URL</Loader>;
  
-import "./IconSelect.css";
+
+
+
 
 const IconSelect = ({ onSelect, defaultIcon }) => {
 
     const [selected, setSelected] = useState("standard");
 
-    // useEffect(() => {
-    //     if (defaultIcon) {
-    //         setDefaultLoading(false);
-    //     }
-    // }, [defaultIcon, selected]);
-
     return (
         <div className="IconSelect-container">
-            <div>
+            <div className={"IconSelect-standard" + ((selected === "standard") ? "-selected" : "")}>
             <img 
-                className="NewBookmarkForm-Standard" 
+                 
                 src={standardIcon}
                 onClick={() => { 
                     console.log("clicked on standard");
                     onSelect(standardIcon);
                     setSelected("standard"); 
                 }}
-                style={(selected === "standard") ? {width: "300px"}  :  {}}
             >
             </img>
             </div>
@@ -45,7 +41,9 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
                 />}
             </div>
             <div>
-            <img className="NewBookmarkForm-Upload" src={fileUpload}/>
+                <button type="file" accept="image/*">
+                    <img className="NewBookmarkForm-Upload" src={fileUpload}/> 
+                </button>
             </div>
         </div>
     );
