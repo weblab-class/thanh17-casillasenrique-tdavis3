@@ -4,7 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import Login from "./pages/Login.js";
 import Home from "./pages/Home.js";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
-const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "896967920126-0399u048v37e7g5v5di98ueh38njq1jt.apps.googleusercontent.com";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 import "../utilities.css";
