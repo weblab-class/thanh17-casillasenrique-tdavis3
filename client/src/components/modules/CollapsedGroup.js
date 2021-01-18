@@ -3,6 +3,14 @@ import "./Bookmark.css";
 import { Button, Icon } from "semantic-ui-react";
 import "./CollapsedGroup.css";
 
+/**
+ *
+ * @param name
+ * @param bookmarkIcons
+ * @param onClick
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const CollapsedGroup = ({ name, bookmarkIcons, onClick }) => {
   return (
     <div className=" u-grow">

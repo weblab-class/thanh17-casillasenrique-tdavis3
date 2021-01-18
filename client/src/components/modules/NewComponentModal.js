@@ -3,6 +3,15 @@ import { Button, Modal, Checkbox, Form, Icon } from "semantic-ui-react";
 import peepo from "../../public/images/peepoHappy.png";
 
 import "./NewComponentModal.css";
+
+/** A modal component that takes in a specific form for a new group, bookmark, etc. and turn it into a modal
+ *
+ * @param isOpen boolean indicating whether the modal is open
+ * @param form the specific form that is used for the modal (i.e. newGroup, newBookmark, etc.)
+ * @param close properties passed through that is a function to close the modal
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const NewComponentModal = ({ isOpen, form, close }) => {
   //const [open, setOpen] = useState(false);
 

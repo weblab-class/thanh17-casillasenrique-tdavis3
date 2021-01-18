@@ -3,16 +3,30 @@ import { Form, Icon, Menu, Header } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
 const PLACEHOLDER_NAME = "Group69";
 
+/** A bookmark form to be used for handling the creating of a new group
+ *
+ * @param onSubmit callback functions that handles the creation of a new group on the home screen on submit
+ * @param closeForm callback functions that handles closing the group form
+ * @returns {JSX.Element} A group form that has options for name
+ * @constructor
+ */
 const NewGroupForm = ({ onSubmit, closeForm }) => {
 
   const [state, setState] = useState({
     groupName: "",
   });
 
+  /** Handle the changes that occur while interacting with the new group form
+   *
+   * @param event The event is when the name of the group changes
+   */
   const handleChange = (event) => {
     setState({ groupName: event.target.value })
   };
 
+  /** Submits the form to make a new group
+   *
+   */
   const handleSubmit = () => {
     onSubmit && onSubmit(state);
     closeForm();

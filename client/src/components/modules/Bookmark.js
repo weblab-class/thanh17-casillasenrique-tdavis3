@@ -5,6 +5,18 @@ import { Button } from "semantic-ui-react";
 
 const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
 
+/** A bookmark object that takes in urls and all properties that exist for a bookmark and render
+ * it
+ *
+ * @param userId ID of the Google user
+ * @param inEditMode boolean value indicating whether the bookmark is in edit mode or not
+ * @param url the url for the specific bookmark
+ * @param name the custom name label for the bookmark
+ * @param image the image representing the icon of the bookmark
+ * @param location the location of the bookmark
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Bookmark = ({ userId, inEditMode, url, name, image, location }) => {
   useEffect(() => {
     watchBookmark();

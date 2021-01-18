@@ -16,9 +16,22 @@ const initialState = {
   defaultIconURL: undefined,
 };
 
+/** A bookmark form to be used for handling the creating of a new bookmark
+ *
+ * @param onSubmit callback functions that handles the creation of a new bookmark on the home screen on submit
+ * @param closeForm callback functions that handles closing the bookmark form
+ * @returns {JSX.Element} A bookmark form that has options for URLs, name, and icons
+ * @constructor
+ */
 const NewBookmarkForm = ({ onSubmit, closeForm }) => {
   const [state, setState] = useState(initialState);
 
+  /** Handle the changes that occur while interacting with the new bookmark form
+   *
+   * @param event The specific event defined with a name indicating what change has occurred
+   * when interacting with the form and the specific value indicating the updated states
+   * to be made
+   */
   const handleChange = (event) => {
     const targetName = event.target.name;
     const targetValue = event.target.value;
@@ -36,11 +49,15 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
     }
   };
 
+  /** Submits the form to make a new bookmark
+   *
+   */
   const handleSubmit = () => {
     onSubmit && onSubmit(state);
     closeForm();
     setState(initialState);
   };
+
 
   return (
     <Form size="big" inverted style={{ backgroundColor: "rgb(39, 39, 39) !important" }}>
@@ -50,7 +67,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
         </Header>
       </div>
 
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" }} >
         <Form.Field>
           <label style={{ padding: "5% 0 1% 0" }}>URL</label>
           <input

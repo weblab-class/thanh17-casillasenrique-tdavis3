@@ -10,6 +10,13 @@ const defaultIconLoader = (
   </Loader>
 );
 
+/**
+ *
+ * @param onSelect callback that is used when user select certain icons
+ * @param defaultIcon The default Icon that is used for a bookmark
+ * @returns {JSX.Element} selections of icons to choose from for the bookmark
+ * @constructor
+ */
 const IconSelect = ({ onSelect, defaultIcon }) => {
   const [selected, setSelected] = useState("standard");
 

@@ -17,6 +17,13 @@ import { Dropdown, Image, Button } from "semantic-ui-react";
 const openedImage = <Image className="EditBar-dropdown-button" src={openedIcon} />;
 const closedImage = <Image className="EditBar-dropdown-button" src={closedIcon} />;
 
+/**
+ *
+ * @param handleCreateBookmark callback function that creates a bookmark per the client
+ * @param handleCreateGroup callback function that creates a new group per the client
+ * @returns {JSX.Element} A Dropdown edit bar that expands to give use options to interact with the elements
+ * @constructor
+ */
 const EditBar = ({ handleCreateBookmark, handleCreateGroup }) => {
   const [trigger, setTrigger] = useState(closedImage);
   const [modalStates, setModalStates] = useState({
