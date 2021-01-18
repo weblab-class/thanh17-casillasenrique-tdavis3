@@ -6,9 +6,7 @@ const PLACEHOLDER_NAME = "Group69";
 const NewGroupForm = ({ onSubmit, closeForm }) => {
 
   const [state, setState] = useState({
-    url: "",
-    bookmarkName: "",
-    icon: "",
+    groupName: "",
   });
 
   const handleChange = (event) => {
@@ -20,8 +18,7 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
     onSubmit && onSubmit(state);
     closeForm();
     setState({
-      url: "",
-      bookmarkName: "",
+      groupName: ""
     });
   };
 
@@ -36,7 +33,7 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
           placeholder={PLACEHOLDER_NAME}
           name="groupName"
           onChange={handleChange}
-          value={state.bookmarkName}
+          value={state.groupName}
         />
       </Form.Field>
       <div style={{textAlign: "center", padding: "5%"}}>
@@ -46,7 +43,7 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
         size="huge"
         type="button"
         onClick={handleSubmit}
-        disabled={state.url === "" || state.bookmarkName === ""}
+        disabled={state.groupName === ""}
       >
         Create Group
       </Form.Button>
