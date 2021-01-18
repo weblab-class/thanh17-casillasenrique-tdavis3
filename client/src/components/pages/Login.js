@@ -8,7 +8,7 @@ import { post, get } from "../../utilities";
 import "../../utilities.css";
 import "./Login.css"
 //TODO: REPLACE WITH YOUR OWN CLIENT_ID
-const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "896967920126-0399u048v37e7g5v5di98ueh38njq1jt.apps.googleusercontent.com";
 
 class Login extends Component {
   constructor(props) {
