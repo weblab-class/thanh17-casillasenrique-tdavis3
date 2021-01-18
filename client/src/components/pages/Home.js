@@ -32,7 +32,7 @@ class Home extends Component {
         });
     }
 
-    handleSubmit = ({ url, bookmarkName }) => {
+    handleSubmit = ({ url, bookmarkName, icon }) => {
         console.log(this.state.bookmarks);
 
       const maxIndex = Math.max(0,...this.state.bookmarks.map( e=> e.index ? e.index: 0),
@@ -44,7 +44,7 @@ class Home extends Component {
         const bookmark = {
             name: bookmarkName,
             url: url,
-            image: null,
+            image: icon,
             group: null,
             customRow: newRow,
             customCol: newCol,
@@ -54,6 +54,7 @@ class Home extends Component {
         console.log("sending to api");
         post("/api/title/edit/add_bookmark", bookmark)
             .then((bookmark) => {
+                console.log(bookmark.image);
                 this.state.bookmarks.push(bookmark);
                 this.setState({...this.state, bookmarks: this.state.bookmarks});
             });
@@ -156,6 +157,7 @@ class Home extends Component {
                         url={bookmark.url}
                         name={bookmark.name}
                         location={undefined}
+                        image={bookmark.image}
                       /> </div>
                     })}
                   {/*</div>*/}

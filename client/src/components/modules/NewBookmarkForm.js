@@ -47,7 +47,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
 
   
   return (
-    <Form size="huge" inverted style={{backgroundColor: "rgb(39, 39, 39) !important"}}>
+    <Form size="big" inverted style={{backgroundColor: "rgb(39, 39, 39) !important"}}>
       <div style={{textAlign:"center"}}>
         <Header as='h1' inverted color="grey">Add a Bookmark!</Header>
       </div>
@@ -81,6 +81,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
           <label style = {{padding: "5% 0 1% 0"}}>Select Icon</label>
           <IconSelect
             onSelect={(iconSelection) => {
+              console.log("in new bookmark form" + iconSelection);
               setState({...state, icon: iconSelection});
             }}
             defaultIcon={state.defaultIconURL}

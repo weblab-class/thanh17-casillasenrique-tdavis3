@@ -46,6 +46,7 @@ const Group = (
                 url={bookmark.url}
                 name={bookmark.name}
                 location={undefined}
+                image={bookmark.image}
               />
             })}
 
