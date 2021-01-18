@@ -17,7 +17,7 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
     onSubmit && onSubmit(state);
     closeForm();
     setState({
-      groupName: ""
+      groupName: "",
     });
   };
 

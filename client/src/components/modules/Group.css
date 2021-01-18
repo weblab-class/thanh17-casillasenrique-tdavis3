@@ -1,12 +1,12 @@
 .Group.modal {
-    width: 40vw!important;
-    height: 40vw!important;
-    /*height: 400px;*/
-    max-height: 100%;
-    display: flex!important;
-    background-color: rgba(0, 0, 0, 0.6) !important;
-    color: white;
-    border-radius: 10%!important;
+  width: 40vw !important;
+  height: 40vw !important;
+  /*height: 400px;*/
+  max-height: 100%;
+  display: flex !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  color: white;
+  border-radius: 10% !important;
 }
 
 /*.dimmer { background-color: white!}*/
@@ -17,13 +17,13 @@
 /*}*/
 
 .Group.grid {
-    height:100%;
-    display: grid;
-    grid-gap: 4px;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    text-align: center;
-    align-items: center;
+  height: 100%;
+  display: grid;
+  grid-gap: 4px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  text-align: center;
+  align-items: center;
 }
 /*.group-container{*/
 /*    !*display: grid;*!*/

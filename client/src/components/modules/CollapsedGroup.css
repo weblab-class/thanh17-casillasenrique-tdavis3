@@ -1,32 +1,32 @@
 .CollapsedGroup.grid {
-    height:100%;
-    display: grid;
-    grid-gap: 4px;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    text-align: center;
-    align-items: center;
+  height: 100%;
+  display: grid;
+  grid-gap: 4px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  text-align: center;
+  align-items: center;
 }
 
 .CollapsedGroup-button {
-    background-color: rgba(0, 0, 0, 0.8);
-    width: 8vw;
-    height: 8vw;
-    border: none !important;
-    border-radius: 15%;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 8vw;
+  height: 8vw;
+  border: none !important;
+  border-radius: 15%;
 }
 
 .CollapsedGroup-button:hover {
-    cursor: pointer;
-  }
-  
+  cursor: pointer;
+}
+
 .CollapsedGroup-button:focus {
-    background-color: rgba(0, 0, 0, 0.7);
-    /* outline: thin dotted; */
-    outline: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* outline: thin dotted; */
+  outline: none;
 }
 
 .CollapsedGroup-minimizedIcon {
-    width: 1vw;
-    height: 1vw;
+  width: 1vw;
+  height: 1vw;
 }

@@ -99,10 +99,7 @@ const Home = (props) => {
         onFailure={(err) => console.log(err)}
       />
 
-      <EditBar
-        handleCreateBookmark={handleCreateBookmark}
-        handleCreateGroup={handleCreateGroup}
-      />
+      <EditBar handleCreateBookmark={handleCreateBookmark} handleCreateGroup={handleCreateGroup} />
 
       <div className="Home-grid">
         <div
@@ -118,10 +115,10 @@ const Home = (props) => {
             name="Test Group"
           />
         </div>
-        
+
         {state.groups.map((group) => {
           return (
-            <div 
+            <div
               key={group._id}
               style={{
                 gridRow: `${group.customRow}/${group.customRow + 1}`,

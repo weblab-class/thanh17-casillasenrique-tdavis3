@@ -1,5 +1,3 @@
-
-
 //TODO: install semantic UI
 //
 
@@ -12,53 +10,52 @@ import CollapsedGroup from "./CollapsedGroup";
 //   constructor(props) {
 //     super(props);
 //   }
-const Group = (
-  {
-    bookmarks,
-    inEditMode,
-    userId,
-    name,
-  }
-) => {
+const Group = ({ bookmarks, inEditMode, userId, name }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <Modal
       // closeIcon
       className="Group modal"
-      size = 'small'
+      size="small"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
       dimmer="blurring"
       //trigger={<Button size={"big"}>Show Modal</Button>}
-      trigger={<CollapsedGroup name={name} bookmarkIcons={bookmarks.map((bookmark) => bookmark.image)} onClick={() => setOpen(true)}/>}
+      trigger={
+        <CollapsedGroup
+          name={name}
+          bookmarkIcons={bookmarks.map((bookmark) => bookmark.image)}
+          onClick={() => setOpen(true)}
+        />
+      }
       centered
     >
       {console.log("bookmarks:" + bookmarks)}
       {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
       {/*<Modal.Content>*/}
-        {/*TODO: Make into groups expansions*/}
-        {/*TODO: make grid Expand to next page. Filter via passing in page number then map via passing in a page*/}
-        <div className="Group grid">
-            {bookmarks.map((bookmark) => {
-              return  <Bookmark
-                key={bookmark._id}
-                userId={userId}
-                inEditMode={inEditMode}
-                url={bookmark.url}
-                name={bookmark.name}
-                location={undefined}
-                image={bookmark.image}
-              />
-            })}
-
-        </div>
+      {/*TODO: Make into groups expansions*/}
+      {/*TODO: make grid Expand to next page. Filter via passing in page number then map via passing in a page*/}
+      <div className="Group grid">
+        {bookmarks.map((bookmark) => {
+          return (
+            <Bookmark
+              key={bookmark._id}
+              userId={userId}
+              inEditMode={inEditMode}
+              url={bookmark.url}
+              name={bookmark.name}
+              location={undefined}
+              image={bookmark.image}
+            />
+          );
+        })}
+      </div>
       {/*</Modal.Content>*/}
       {/*//TODO: add Title @bottom*/}
-
     </Modal>
   );
-}
+};
 
 export default Group;

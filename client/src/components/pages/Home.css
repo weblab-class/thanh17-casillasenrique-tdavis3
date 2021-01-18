@@ -1,33 +1,31 @@
 .Home-grid {
-    /*position: relative;*/
-    height:100%;
-    flex: 1;
-    /*width: 100%;*/
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    /*grid-template-areas:*/
-    /*    "a a . ."*/
-    /*    "a a . ."*/
-    /*    ". . . ."*/
-    /*    ". . . .";*/
-    /*grid-template-areas: "a a a" "b c c" "b c c";*/
-    display: grid;
-    grid-gap: 4px;
-    text-align: center;
-    align-items: center;
-    width: 96%;
-
+  /*position: relative;*/
+  height: 100%;
+  flex: 1;
+  /*width: 100%;*/
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  /*grid-template-areas:*/
+  /*    "a a . ."*/
+  /*    "a a . ."*/
+  /*    ". . . ."*/
+  /*    ". . . .";*/
+  /*grid-template-areas: "a a a" "b c c" "b c c";*/
+  display: grid;
+  grid-gap: 4px;
+  text-align: center;
+  align-items: center;
+  width: 96%;
 }
 .Home-group {
-    /*grid-area: a;*/
-    /*grid-row: 2 /4;*/
-    /*grid-column: 2/4;*/
+  /*grid-area: a;*/
+  /*grid-row: 2 /4;*/
+  /*grid-column: 2/4;*/
 }
 .Home-content {
-
 }
 .Home-root {
-    flex-direction: column;
-    height: 100vh;
-    background-image: url("../../public/images/background.jpg");
+  flex-direction: column;
+  height: 100vh;
+  background-image: url("../../public/images/background.jpg");
 }

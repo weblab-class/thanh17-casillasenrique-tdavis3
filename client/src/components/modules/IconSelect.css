@@ -1,28 +1,26 @@
 .IconSelect-container {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
 }
 
 .IconSelect-default {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
 }
 
-.IconSelect-default-selected{
-
-
+.IconSelect-default-selected {
 }
 
 .IconSelect-standard {
-    width: 100px;
-    height: 120px;
+  width: 100px;
+  height: 120px;
 }
 
-.IconSelect-standard-selected{
-    width: 100px;
-    height: 120px;
-    border: solid 2px rgb(132, 171, 255);
-    border-radius: 10%;
+.IconSelect-standard-selected {
+  width: 100px;
+  height: 120px;
+  border: solid 2px rgb(132, 171, 255);
+  border-radius: 10%;
 }

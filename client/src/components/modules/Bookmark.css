@@ -1,7 +1,6 @@
 .Bookmark-container {
   width: 6vw;
   height: 5vw;
- 
 }
 
 .Bookmark-button {
@@ -10,7 +9,6 @@
   background: transparent;
   border: none !important;
   border-radius: 10%;
-
 }
 
 .Bookmark-button:hover {
@@ -39,7 +37,6 @@
   color: white;
 }
 
-
 .Bookmark-image {
   width: 3.5vw;
   height: 3.5vw;
@@ -49,5 +46,5 @@
 }
 
 .Bookmark-image:hover {
-  margin: auto
+  margin: auto;
 }

@@ -41,7 +41,7 @@ class App extends Component {
     post("/api/login", { token: userToken }).then((user) => {
       this.setState({ userId: user._id });
       post("/api/initsocket", { socketid: socket.id });
-    });    
+    });
   };
 
   handleLogout = () => {
@@ -50,17 +50,16 @@ class App extends Component {
   };
 
   render() {
-
     return (
       <>
         <Router>
-          <Login 
+          <Login
             path="/"
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
             userId={this.state.userId}
           />
-          <Home 
+          <Home
             path="/home"
             handleLogout={this.handleLogout}
             googleClientId={GOOGLE_CLIENT_ID}
