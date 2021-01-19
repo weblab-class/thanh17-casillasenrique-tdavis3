@@ -27,6 +27,7 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
     }
     if (selected === "default" && defaultIcon === undefined) {
       console.log("changing selection as default url doesnt exist anymore")
+      onSelect(standardIcon, "ICON");
       setSelected("standard");
     }
   }, [selected, defaultIcon]);
