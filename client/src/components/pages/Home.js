@@ -138,12 +138,14 @@ const Home = (props) => {
       </div>
 
       <div className="Home-toggleEdit">
-          <Button toggle={state.inEditMode} onClick={() => setState({...state, inEditMode: !state.inEditMode})} circular inverted size="huge" animated="vertical">
+          <Button toggle={state.inEditMode} onClick={() => setState({...state, inEditMode: !state.inEditMode})}  inverted size="huge" animated="vertical">
+            <div className={"icon-button"}>
             <Button.Content visible >
-              <div className={"icon-button"}>
+
                 <Icon  name="edit"/>
-              </div>
+
               </Button.Content>
+            </div>
             <Button.Content hidden>Edit</Button.Content>
           </Button>
       </div>

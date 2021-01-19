@@ -25,8 +25,16 @@
 }
 
 .EditBar-dropdown-button {
-  width: 5vh;
-  height: 5vh;
+
+  width: 4.5em!important;
+  height: 4em!important;
+  text-align: center!important;
+  display: flex!important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center!important;
+  border: solid 2px white;
+  border-radius: 5%;
 }
 
 /* .EditBar-dropdown-button:hover {

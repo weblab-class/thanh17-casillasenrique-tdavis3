@@ -8,14 +8,16 @@ import newGroup from "../../public/images/New_Group.png";
 import newFolder from "../../public/images/New_Folder.png";
 import newWidget from "../../public/images/New_Widget.png";
 import NewGroupForm from "../modules/NewGroupForm";
-
+import NewFolderForm from "./NewFolderForm";
 import "./EditBar.css";
 import "../../utilities.css";
 
 import { Dropdown, Image, Button, Icon  } from "semantic-ui-react";
 
-const openedImage = <Image className="EditBar-dropdown-button u-grow" src={openedIcon} />;
-const closedImage = <Image className="EditBar-dropdown-button u-grow" src={closedIcon} />;
+// const openedImage = <Image className="EditBar-dropdown-button u-grow" src={openedIcon} />;
+const openedImage = <div className="EditBar-dropdown-button u-grow"><Icon name={"angle up"} inverted={true} size={"big"}/></div>
+const closedImage = <div className="EditBar-dropdown-button u-grow"><Icon name={"angle down"} inverted={true} size={"big"}/> </div>
+// const closedImage = <Image className="EditBar-dropdown-button u-grow" src={closedIcon} />;
 const testButton =  <Button circular inverted size="huge" animated="vertical">
                       <Button.Content visible><Icon name="add"/></Button.Content>
                       <Button.Content hidden>New</Button.Content>
@@ -56,7 +58,7 @@ const EditBar = ({ handleCreateBookmark, handleCreateGroup }) => {
       {/* New Folder Form */}
       <NewComponentModal
         isOpen={modalStates.folderModalOpened}
-        form={<NewBookmarkForm onSubmit={handleCreateBookmark} />}
+        form={<NewFolderForm onSubmit={handleCreateBookmark} />}
         close={() => setModalStates({ ...modalStates, folderModalOpened: false })}
       />
 
@@ -73,7 +75,8 @@ const EditBar = ({ handleCreateBookmark, handleCreateGroup }) => {
         floating
         direction="left"
         trigger={trigger}
-        icon={null}
+
+        // icon={null}
       >
         <Dropdown.Menu className="EditBar ui dropdown menu">
           <Dropdown.Item
