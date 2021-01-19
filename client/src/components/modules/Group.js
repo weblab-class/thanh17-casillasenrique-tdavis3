@@ -50,7 +50,8 @@ const Group = ({ bookmarks, inEditMode, userId, name }) => {
               url={bookmark.url}
               name={bookmark.name}
               location={undefined}
-              image={bookmark.image}
+              icon={bookmark.icon}
+              customIcon={bookmark.customIcon}
             />
           );
         })}

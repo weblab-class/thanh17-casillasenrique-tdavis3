@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Bookmark.css";
 import "../../utilities.css";
 import { Button } from "semantic-ui-react";
+import globe from "../../public/images/globe.png";
 
 const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
 
@@ -17,7 +18,19 @@ const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
  * @returns {JSX.Element}
  * @constructor
  */
-const Bookmark = ({ inEditMode, url, name, image, location, onRemove }) => {
+const Bookmark = ({ inEditMode, url, name, icon, customIcon, location, onRemove }) => {
+
+  const [displayedIcon, setDisplayedIcon] = useState(globe);
+
+  useEffect(() => {
+    if (customIcon) {
+      console.log(customIcon);
+      setDisplayedIcon(URL.createObjectURL(customIcon));
+    } else {
+      setDisplayedIcon(icon);
+    }
+  });
+
   useEffect(() => {
     watchBookmark();
   }, [inEditMode]);
@@ -28,7 +41,7 @@ const Bookmark = ({ inEditMode, url, name, image, location, onRemove }) => {
     <>
       <form action={url} target="_blank">
         <button disabled={inEditMode} className="Bookmark-button u-flex-alignCenter" type="submit">
-          <img className="Bookmark-image u-flex-alignCenter u-grow" src={image} />
+          <img className="Bookmark-image u-flex-alignCenter u-grow" src={displayedIcon} />
           {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
 
           {/*</div>*/}

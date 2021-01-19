@@ -64,24 +64,25 @@ const Home = (props) => {
    * @param bookmarkName the name of the bookmark to be added
    * @param icon the desired icon of the new bookmark
    */
-  const handleCreateBookmark = ({ url, bookmarkName, icon }) => {
+  const handleCreateBookmark = ({ url, bookmarkName, icon, customIcon }) => {
     const maxIndex = findMaxIndex();
     const newRow = Math.floor(maxIndex / SCREEN_WIDTH) + 1;
     const newCol = (maxIndex % SCREEN_WIDTH) + 1;
     console.log("newRow" + newRow + "finalCol: " + newCol);
+    console.log("custom icon: " + customIcon);
     const bookmark = {
       name: bookmarkName,
       url: url,
-      image: icon,
+      icon: icon,
+      customIcon: customIcon,
       group: null,
       customRow: newRow,
       customCol: newCol,
       index: maxIndex + 1,
     };
 
-    console.log("sending bookmark to api");
+    console.log("sending bookmark to api with customIcon " + customIcon);
     post("/api/edit/add_bookmark", bookmark).then((bookmark) => {
-      console.log(bookmark.image);
       state.bookmarks.push(bookmark);
       setState({ ...state, bookmarks: state.bookmarks });
     });
@@ -201,7 +202,8 @@ const Home = (props) => {
                 url={bookmark.url}
                 name={bookmark.name}
                 location={undefined}
-                image={bookmark.image}
+                icon={bookmark.icon}
+                customIcon={bookmark.customIcon}
                 onRemove={() => handleRemoveBookmark(bookmark._id)}
               />{" "}
             </div>

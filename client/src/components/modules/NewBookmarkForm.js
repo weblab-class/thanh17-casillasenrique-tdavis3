@@ -14,6 +14,7 @@ const initialState = {
   url: "",
   bookmarkName: "",
   icon: standardIcon,
+  customIcon: undefined,
   defaultIconURL: undefined,
 };
 
@@ -96,9 +97,14 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
         <Form.Field>
           <label style={{ padding: "5% 0 1% 0" }}>Select Icon</label>
           <IconSelect
-            onSelect={(iconSelection) => {
-              console.log("in new bookmark form" + iconSelection);
-              setState({ ...state, icon: iconSelection });
+            onSelect={(iconSelection, type) => {
+              if (type === "ICON") {
+                console.log("set to use icon");
+                setState({ ...state, icon: iconSelection, customIcon: null });
+              } else if (type === "FILE") {
+                console.log("set to use file");
+                setState({ ...state, icon: null, customIcon: iconSelection });
+              }
             }}
             defaultIcon={state.defaultIconURL}
           />

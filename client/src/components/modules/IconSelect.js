@@ -37,7 +37,7 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
             src={standardIcon}
             onClick={() => {
               console.log("clicked on standard");
-              onSelect(standardIcon);
+              onSelect(standardIcon, "ICON");
               setSelected("standard");
             }}
           />
@@ -55,7 +55,7 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
               src={defaultIcon}
               onClick={() => {
                 console.log("clicked on default");
-                onSelect(defaultIcon);
+                onSelect(defaultIcon, "ICON");
                 setSelected("default");
               }}
             />
@@ -81,7 +81,7 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
               className="IconSelect-invisibleInput"
               onChange={(event)=> { 
                 console.log("uploaded image: " + document.getElementById("fileElem").files[0]); 
-                onSelect(document.getElementById("fileElem").files[0]);
+                onSelect(document.getElementById("fileElem").files[0], "FILE");
                 setUploaded(true);
               }
             }/>

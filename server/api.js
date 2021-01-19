@@ -108,7 +108,8 @@ router.post("/edit/add_bookmark", (req, res) => {
     userId: req.user._id,
     name: req.body.name,
     url: req.body.url,
-    image: req.body.image,
+    icon: req.body.icon,
+    customIcon: req.body.customIcon,
     group: req.body.group,
     customRow: req.body.customRow,
     customCol: req.body.customCol,
@@ -126,7 +127,7 @@ router.post("/edit/edit_bookmark", (req, res) => {
     // userId: req.user._id,
     name: req.body.name,
     url: req.body.url,
-    image: req.body.image,
+    icon: req.body.icon,
     group: req.body.group,
   });
   Bookmark.updateOne({ _id: req.body._id }, updatedBookmark).catch((err) =>
