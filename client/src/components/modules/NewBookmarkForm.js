@@ -119,7 +119,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
           type="button"
           // color= "#1F2322"
           onClick={handleSubmit}
-          disabled={state.url === "" || state.bookmarkName === ""}
+          disabled={state.url === "" || state.bookmarkName === "" || !state.url.match(URL_REGEX)}
         >
           Create Bookmark
         </Form.Button>

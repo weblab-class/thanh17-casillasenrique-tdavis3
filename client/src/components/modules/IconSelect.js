@@ -25,7 +25,11 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
     if (selected !== "upload") {
       setUploaded(false) 
     }
-  }, [selected])
+    if (selected === "default" && defaultIcon === undefined) {
+      console.log("changing selection as default url doesnt exist anymore")
+      setSelected("standard");
+    }
+  }, [selected, defaultIcon]);
 
   return (
     <div className="IconSelect-container">
