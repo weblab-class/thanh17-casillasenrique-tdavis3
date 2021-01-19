@@ -37,8 +37,10 @@
 .Home-toggleEdit {
   position:absolute;
   height: 5%;
-  top:2vh;
+  top:2%;
   right:10vh;
+  display: flex;
+  justify-content: center;
 }
 
 .Home-edit-dropdown {
@@ -50,4 +52,14 @@
 
 .Home-top {
   height: 5%;
+}
+
+.icon-button {
+  display: flex!important;
+  justify-content: space-around!important;
+  /*flex-direction: row;*/
+  align-items: center!important;
+  text-align: center!important;
+  padding-left: 2px;
+
 }

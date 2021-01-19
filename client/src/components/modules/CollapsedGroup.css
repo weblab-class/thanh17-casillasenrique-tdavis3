@@ -9,11 +9,12 @@
 }
 
 .CollapsedGroup-button {
-  background-color: rgba(0, 0, 0, 0.8);
-  width: 8vw;
-  height: 8vw;
+  background-color: #1F222280;
+  width: 4.5vw;
+  height: 4.5vw;
   border: none !important;
   border-radius: 15%;
+  /*border-color: white;*/
 }
 
 .CollapsedGroup-button:hover {
@@ -27,6 +28,6 @@
 }
 
 .CollapsedGroup-minimizedIcon {
-  width: 1vw;
-  height: 1vw;
+  width: .75vw;
+  height: .75vw;
 }
