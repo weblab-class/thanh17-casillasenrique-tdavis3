@@ -127,9 +127,11 @@ const Home = (props) => {
       />
 
       {/*The freaking bookmark bar*/}
-      <EditBar
-        handleCreateBookmark={handleCreateBookmark}
-        handleCreateGroup={handleCreateGroup} />
+      <div className={"edit"}>
+        <EditBar
+          handleCreateBookmark={handleCreateBookmark}
+          handleCreateGroup={handleCreateGroup}/>
+      </div>
 
       <div className="Home-grid">
         {/*<div*/}

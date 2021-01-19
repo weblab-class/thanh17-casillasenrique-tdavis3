@@ -29,3 +29,9 @@
   height: 100vh;
   background-image: url("../../public/images/background.jpg");
 }
+
+.edit {
+  position:absolute;
+  top:0;
+  right:0;
+}

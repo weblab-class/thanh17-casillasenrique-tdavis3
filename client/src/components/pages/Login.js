@@ -29,7 +29,7 @@ class Login extends Component {
   render() {
     return (
       <div className={"root"}>
-        <div className={"title"}>MarkX</div>
+        <div className={"title"}>MarcX</div>
         <div className={"description"}>This is our home now.</div>
         <div className={"loginButton"}>
           {this.props.userId ? (
