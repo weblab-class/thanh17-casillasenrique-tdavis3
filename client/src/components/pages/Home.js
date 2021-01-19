@@ -115,6 +115,11 @@ const Home = (props) => {
     });
   };
 
+  const handleRemoveBookmark = (_id) => {
+    const newBookmarks = state.bookmarks.filter(bookmark => bookmark._id !== _id);
+    setState({...state, bookmarks: newBookmarks});
+  }
+
   return (
     <div className="Home-root" style={{backgroundImage: `url(${Background})`}}>
       {!props.userId && <Redirect to={"/"} noThrow />}
@@ -130,7 +135,7 @@ const Home = (props) => {
       </div>
 
       <div className="Home-toggleEdit">
-        <Button circular inverted size="huge" animated="vertical">
+        <Button toggle={state.inEditMode} onClick={() => setState({...state, inEditMode: !state.inEditMode})} circular inverted size="huge" animated="vertical">
           <Button.Content visible><Icon name="edit"/></Button.Content>
           <Button.Content hidden>Edit</Button.Content>
         </Button>
@@ -195,6 +200,7 @@ const Home = (props) => {
                 name={bookmark.name}
                 location={undefined}
                 image={bookmark.image}
+                onRemove={() => handleRemoveBookmark(bookmark._id)}
               />{" "}
             </div>
           );
