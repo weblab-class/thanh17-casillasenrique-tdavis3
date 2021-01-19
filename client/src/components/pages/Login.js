@@ -3,7 +3,7 @@ import GoogleLogin from "react-google-login";
 import { Redirect } from "@reach/router";
 
 import { post, get } from "../../utilities";
-
+import Background from "../../public/images/backgroundRed.jpg";
 import "../../utilities.css";
 import "./Login.css";
 //TODO: REPLACE WITH YOUR OWN CLIENT_ID
@@ -28,7 +28,7 @@ class Login extends Component {
    */
   render() {
     return (
-      <div className={"root"}>
+      <div className={"root"} style={{backgroundImage: `url(${Background})`}}>
         <div className={"title"}>MarcX</div>
         <div className={"description"}>This is our home now.</div>
         <div className={"loginButton"}>

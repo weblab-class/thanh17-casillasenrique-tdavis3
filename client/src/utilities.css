@@ -32,11 +32,15 @@
 }
 
 body {
+  /*height: 100vh;*/
   margin: 0;
   padding: 0;
   /*font-family: "Roboto", sans-serif;*/
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 300;
+  /*background-image: url("./public/images/backgroundGreen.jpg");*/
+  /*background-size: cover;*/
+  /*background-repeat: no-repeat;*/
 }
 
 form {

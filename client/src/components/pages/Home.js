@@ -9,6 +9,7 @@ import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
+import Background from "../../public/images/backgroundRed.jpg";
 import CollapsedGroup from "../modules/CollapsedGroup";
 const SCREEN_WIDTH = 8;
 
@@ -115,16 +116,19 @@ const Home = (props) => {
   };
 
   return (
-    <div className="Home-root">
+    <div className="Home-root" style={{backgroundImage: `url(${Background})`}}>
       {!props.userId && <Redirect to={"/"} noThrow />}
 
       {/*The logout button*/}
-      <GoogleLogout
-        clientId={props.googleClientId}
-        buttonText="Logout"
-        onLogoutSuccess={props.handleLogout}
-        onFailure={(err) => console.log(err)}
-      />
+      <div className={"top"}>
+        <GoogleLogout
+          clientId={props.googleClientId}
+          buttonText="Logout"
+          onLogoutSuccess={props.handleLogout}
+          onFailure={(err) => console.log(err)}
+        />
+      </div>
+
 
       {/*The freaking bookmark bar*/}
       <div className={"edit"}>
