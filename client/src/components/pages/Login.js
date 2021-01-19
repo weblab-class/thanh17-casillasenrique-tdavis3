@@ -37,7 +37,8 @@ class Login extends Component {
           ) : (
             <GoogleLogin
               clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login"
+              buttonText="Sign in with Google"
+              style={{color: "blue!important"}}
               onSuccess={this.props.handleLogin}
               onFailure={(err) => console.log(err)}
             />
