@@ -3,7 +3,7 @@ import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
 import { post, get } from "../../utilities";
 import Bookmark from "../modules/Bookmark";
-import { Button, Grid, Image } from "semantic-ui-react";
+import { Button, Grid, Icon } from "semantic-ui-react";
 import Group from "../modules/Group";
 import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
@@ -120,7 +120,7 @@ const Home = (props) => {
       {!props.userId && <Redirect to={"/"} noThrow />}
 
       {/*The logout button*/}
-      <div className={"top"}>
+      <div className={"Home-top"}>
         <GoogleLogout
           clientId={props.googleClientId}
           buttonText="Logout"
@@ -129,9 +129,15 @@ const Home = (props) => {
         />
       </div>
 
+      <div className="Home-toggleEdit">
+        <Button circular inverted size="huge" animated="vertical">
+          <Button.Content visible><Icon name="edit"/></Button.Content>
+          <Button.Content hidden>Edit</Button.Content>
+        </Button>
+      </div>
 
       {/*The freaking bookmark bar*/}
-      <div className={"edit"}>
+      <div className={"Home-edit-dropdown"}>
         <EditBar
           handleCreateBookmark={handleCreateBookmark}
           handleCreateGroup={handleCreateGroup}/>

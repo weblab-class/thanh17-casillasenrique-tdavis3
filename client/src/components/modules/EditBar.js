@@ -12,10 +12,14 @@ import NewGroupForm from "../modules/NewGroupForm";
 import "./EditBar.css";
 import "../../utilities.css";
 
-import { Dropdown, Image, Button } from "semantic-ui-react";
+import { Dropdown, Image, Button, Icon  } from "semantic-ui-react";
 
-const openedImage = <Image className="EditBar-dropdown-button" src={openedIcon} />;
-const closedImage = <Image className="EditBar-dropdown-button" src={closedIcon} />;
+const openedImage = <Image className="EditBar-dropdown-button u-grow" src={openedIcon} />;
+const closedImage = <Image className="EditBar-dropdown-button u-grow" src={closedIcon} />;
+const testButton =  <Button circular inverted size="huge" animated="vertical">
+                      <Button.Content visible><Icon name="add"/></Button.Content>
+                      <Button.Content hidden>New</Button.Content>
+                    </Button>;
 
 /**
  *

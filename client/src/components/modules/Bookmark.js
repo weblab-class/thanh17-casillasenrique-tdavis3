@@ -17,12 +17,11 @@ const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
  * @returns {JSX.Element}
  * @constructor
  */
-const Bookmark = ({ userId, inEditMode, url, name, image, location }) => {
+const Bookmark = ({ inEditMode, url, name, image, location }) => {
   useEffect(() => {
     watchBookmark();
   }, [inEditMode]);
 
-  // Draws a board to the canvas
   const watchBookmark = () => {};
 
   return (

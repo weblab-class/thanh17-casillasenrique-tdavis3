@@ -34,12 +34,20 @@
   background-repeat: no-repeat;
 }
 
-.edit {
+.Home-toggleEdit {
   position:absolute;
   height: 5%;
-  top:0;
-  right:0;
+  top:2vh;
+  right:10vh;
 }
-.top {
+
+.Home-edit-dropdown {
+  position: absolute;
+  height: 5%;
+  top:2vh;
+  right:2vh;
+}
+
+.Home-top {
   height: 5%;
 }

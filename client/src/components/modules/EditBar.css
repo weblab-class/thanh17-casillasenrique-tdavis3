@@ -25,10 +25,10 @@
 }
 
 .EditBar-dropdown-button {
-  width: 50px;
-  height: 50px;
+  width: 5vh;
+  height: 5vh;
 }
 
-.EditBar-dropdown-button:hover {
-  filter: brightness(75%);
-}
+/* .EditBar-dropdown-button:hover {
+  filter: brightness(95%);
+} */
