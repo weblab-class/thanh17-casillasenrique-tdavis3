@@ -61,7 +61,7 @@ const Bookmark = ({inEditMode, url, name, icon, customIcon, location, onRemove})
 
     return (
         <>
-            <form action={url} target="_blank">
+            <form action={"http://www."+url.replace(new RegExp("((http|https)://)?(www.)?"),"")} target="_blank">
                 <button disabled={inEditMode} className="Bookmark-button u-flex-alignCenter" type="submit"
                         onContextMenu={(e) => {
                             e.preventDefault()

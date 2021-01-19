@@ -6,7 +6,7 @@ const PLACEHOLDER_URL = "https://www.google.com/";
 const PLACEHOLDER_NAME = "Google";
 const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
 const URL_REGEX =
-  "((http|https)://)(www.)?" +
+  "((http|https)://)?(www.)?" +
   "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]" +
   "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
 
@@ -37,14 +37,12 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
   const handleChange = (event) => {
     const targetName = event.target.name;
     const targetValue = event.target.value;
-
+    let location = undefined;
     if (targetName === "url") {
-      let location = undefined;
       if (targetValue.match(URL_REGEX)) {
-        console.log(targetValue.replace("https://www.", ""));
-        location = FAVICON_URL + targetValue.replace("https://www.", "");
-        console.log("setting default icon url to " + location);
+        location = FAVICON_URL + targetValue;
       }
+
       setState({ ...state, defaultIconURL: location, url: targetValue });
     } else {
       setState({ ...state, [targetName]: targetValue });
@@ -119,7 +117,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
           type="button"
           // color= "#1F2322"
           onClick={handleSubmit}
-          disabled={state.url === "" || state.bookmarkName === "" || !state.url.match(URL_REGEX)}
+          disabled={state.url === "" || state.bookmarkName === ""}
         >
           Create Bookmark
         </Form.Button>
