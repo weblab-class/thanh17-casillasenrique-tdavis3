@@ -1,7 +1,10 @@
 .root {
   /*flex-direction: column;*/
   height: 100vh;
-
+  /*background-size: 100%;*/
+  /*background-position: 0 50vh;*/
+  /*background-size: cover;*/
+  /*background-repeat: no-repeat;*/
 }
 .title {
   position: fixed;

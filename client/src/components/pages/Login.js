@@ -3,7 +3,7 @@ import GoogleLogin from "react-google-login";
 import { Redirect } from "@reach/router";
 
 import { post, get } from "../../utilities";
-import Background from "../../public/images/backgroundRed.jpg";
+import Background from "../../public/images/backgroundBlue.jpg";
 import "../../utilities.css";
 import "./Login.css";
 import { init } from "ityped";

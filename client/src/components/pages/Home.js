@@ -9,7 +9,7 @@ import NewBookmarkForm from "../modules/NewBookmarkForm";
 import NewComponentModal from "../modules/NewComponentModal";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
-import Background from "../../public/images/backgroundRed.jpg";
+import Background from "../../public/images/background.jpg";
 import CollapsedGroup from "../modules/CollapsedGroup";
 const SCREEN_WIDTH = 8;
 
