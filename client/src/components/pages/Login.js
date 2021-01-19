@@ -6,7 +6,7 @@ import { post, get } from "../../utilities";
 import Background from "../../public/images/backgroundRed.jpg";
 import "../../utilities.css";
 import "./Login.css";
-//TODO: REPLACE WITH YOUR OWN CLIENT_ID
+import { init } from "ityped";
 const GOOGLE_CLIENT_ID = "896967920126-0399u048v37e7g5v5di98ueh38njq1jt.apps.googleusercontent.com";
 
 
@@ -20,7 +20,16 @@ class Login extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const myElement = document.querySelector("#myElement");
+
+    init(myElement, {
+      showCursor: false,
+      typeSpeed:  100,
+      disableBackTyping: true,
+      strings: ["Your bookmarks", "Your groups", "Your widgets", "Your new home."]
+    });
+  }
 
   /**
    *
@@ -30,7 +39,8 @@ class Login extends Component {
     return (
       <div className={"root"} style={{backgroundImage: `url(${Background})`}}>
         <div className={"title"}>MarcX</div>
-        <div className={"description"}>This is our home now.</div>
+        <div className={"description"}><div id="myElement"/></div>
+
         <div className={"loginButton"}>
           {this.props.userId ? (
             <Redirect to={"/home"} noThrow />
