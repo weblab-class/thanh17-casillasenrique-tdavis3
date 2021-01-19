@@ -137,10 +137,14 @@ const Home = (props) => {
       </div>
 
       <div className="Home-toggleEdit">
-        <Button toggle={state.inEditMode} onClick={() => setState({...state, inEditMode: !state.inEditMode})} circular inverted size="huge" animated="vertical">
-          <Button.Content visible><Icon name="edit"/></Button.Content>
-          <Button.Content hidden>Edit</Button.Content>
-        </Button>
+          <Button toggle={state.inEditMode} onClick={() => setState({...state, inEditMode: !state.inEditMode})} circular inverted size="huge" animated="vertical">
+            <Button.Content visible >
+              <div className={"icon-button"}>
+                <Icon  name="edit"/>
+              </div>
+              </Button.Content>
+            <Button.Content hidden>Edit</Button.Content>
+          </Button>
       </div>
 
       {/*The freaking bookmark bar*/}
@@ -151,19 +155,19 @@ const Home = (props) => {
       </div>
 
       <div className="Home-grid">
-        {/*<div*/}
-        {/*  className="Home-group"*/}
-        {/*  // what are these? mag ic numbers?*/}
-        {/*  style={{ gridRow: `${2}/${2 + 1}`, gridColumn: `${3}/${3 + 1}` }}*/}
-        {/*>*/}
-        {/*  /!*Hard-coded group*!/*/}
-        {/*  <Group*/}
-        {/*    bookmarks={state.bookmarks}*/}
-        {/*    inEditMode={state.inEditMode}*/}
-        {/*    userId={props.userId}*/}
-        {/*    name="Test Group"*/}
-        {/*  />*/}
-        {/*</div>*/}
+        <div
+          className="Home-group"
+          // what are these? mag ic numbers?
+          style={{ gridRow: `${2}/${2 + 1}`, gridColumn: `${3}/${3 + 1}` }}
+        >
+          {/*Hard-coded group*/}
+          <Group
+            bookmarks={state.bookmarks}
+            inEditMode={state.inEditMode}
+            userId={props.userId}
+            name="Test Group"
+          />
+        </div>
 
         {/*Render all of the damn groups*/}
         {state.groups.map((group) => {
