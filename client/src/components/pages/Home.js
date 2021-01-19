@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
-import { post, get } from "../../utilities";
+import { post, get, del } from "../../utilities";
 import Bookmark from "../modules/Bookmark";
 import { Button, Grid, Icon } from "semantic-ui-react";
 import Group from "../modules/Group";
@@ -118,6 +118,8 @@ const Home = (props) => {
   const handleRemoveBookmark = (_id) => {
     const newBookmarks = state.bookmarks.filter(bookmark => bookmark._id !== _id);
     setState({...state, bookmarks: newBookmarks});
+    
+    del("/api/edit/delete_bookmark", {_id})
   }
 
   return (
