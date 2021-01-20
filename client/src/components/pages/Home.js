@@ -8,6 +8,8 @@ import Group from "../modules/Group";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
 import Background from "../../public/images/background.jpg";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 const SCREEN_WIDTH = 8;
 
 //@param userId
