@@ -55,13 +55,16 @@ router.get("/bookmark", (req, res) => {
 
 router.get("/bookmarks", (req, res) => {
     // console.log("user: ", req.user);
-    Bookmark.find({userId: req.user._id}).then((result) => {
-        result = result.map(bookmark => {
-            const decodedIcon = bookmark.customIcon.toString();
-            return {...bookmark, customIcon: decodedIcon}
-        });
-        console.log("result here: ", result);
-        res.send(result);
+    let updatedResult = undefined;
+    Bookmark.find({userId: req.user._id}).lean()
+        .then((result) => {
+            updatedResult = result.map(bookmark => {
+                const decodedIcon = bookmark.customIcon.toString();
+                bookmark.customIcon = decodedIcon;
+                return bookmark;
+            });
+        console.log("result here: ", updatedResult);
+        res.send(updatedResult);
     });
 });
 

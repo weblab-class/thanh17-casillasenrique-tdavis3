@@ -30,7 +30,7 @@ const Group = ({ bookmarks, inEditMode, userId, name }) => {
       trigger={
         <CollapsedGroup
           name={name}
-          bookmarkIcons={bookmarks.map((bookmark) => { return (bookmark.customIcon) ? URL.createObjectURL(bookmark.customIcon) : bookmark.icon})}
+          bookmarkIcons={bookmarks.map((bookmark) => { return bookmark.customIcon /*(bookmark.customIcon) ? URL.createObjectURL(bookmark.customIcon) : bookmark.icon*/})}
           onClick={() => setOpen(true)}
         />
       }

@@ -28,8 +28,8 @@ const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, cus
 
     useEffect(() => {
         if (customIcon) {
-            console.log(customIcon);
-            setDisplayedIcon(URL.createObjectURL(customIcon));
+            console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon);
+            setDisplayedIcon(customIcon);
         } else {
             setDisplayedIcon(icon);
         }

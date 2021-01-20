@@ -44,7 +44,7 @@ const Home = (props) => {
           .catch((e) => console.log("error occurred when fetching groups: " + e));
       })
       .catch((e) => console.log("error occurred when fetching bookmarks: " + e));
-  }, [state]);
+  }, []);
 
   const findMaxIndex = () => {
     return Math.max(
@@ -82,9 +82,11 @@ const Home = (props) => {
       index: maxIndex + 1,
     };
 
+    const tempDisplayedBookmark = {...bookmark, customIcon: imageBuffer};
+
     // console.log("sending bookmark to api with customIcon " + imageBuffer);
     post("/api/edit/add_bookmark", bookmark).then((bookmark) => {
-      state.bookmarks.push(bookmark);
+      state.bookmarks.push(tempDisplayedBookmark);
       setState({ ...state, bookmarks: state.bookmarks });
     });
   };
