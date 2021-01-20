@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
-import { post, get, del } from "../../utilities";
+import { del, get, post } from "../../utilities";
 import Bookmark from "../modules/Bookmark";
-import { Button, Grid, Icon } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import Group from "../modules/Group";
-import NewBookmarkForm from "../modules/NewBookmarkForm";
-import NewComponentModal from "../modules/NewComponentModal";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
 import Background from "../../public/images/background.jpg";
-import CollapsedGroup from "../modules/CollapsedGroup";
+import { DndProvider, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 const SCREEN_WIDTH = 8;
 
 //@param userId
@@ -48,13 +48,11 @@ const Home = (props) => {
   }, []);
 
   const findMaxIndex = () => {
-    const maxIndex = Math.max(
+    return Math.max(
       0,
       ...state.bookmarks.map((e) => (e.index ? e.index : 0)),
       ...state.groups.map((e) => (e.index ? e.index : 0))
     );
-
-    return maxIndex;
   }
 
 
@@ -123,6 +121,16 @@ const Home = (props) => {
     del("/api/edit/delete_bookmark", {_id})
   }
 
+  // const moveBookmark = (_id,x,y) => {
+  //   const bookmark = this.state.bookmarks.filter((bookmark) => bookmark._id === _id);
+  //   //TODO: change the bookmark's location to the new one
+  //
+  //   //bookmark[row_index].row = new row
+  //   // handleRemoveBookmark(_id)
+  //
+  // }
+
+
   return (
     <div className="Home-root" style={{backgroundImage: `url(${Background})`}}>
       {!props.userId && <Redirect to={"/"} noThrow />}
@@ -156,7 +164,10 @@ const Home = (props) => {
           handleCreateBookmark={handleCreateBookmark}
           handleCreateGroup={handleCreateGroup}/>
       </div>
-
+      <DndProvider backend = {HTML5Backend}>
+        {/*{console.log("YOOOOOOOO")}*/}
+        {/*{console.log(state.bookmarks)}*/}
+        {/*<Board bookmarks={state.bookmarks} groups={state.groups}/>*/}
       <div className="Home-grid">
         <div
           className="Home-group"
@@ -175,6 +186,7 @@ const Home = (props) => {
         {/*Render all of the damn groups*/}
         {state.groups.map((group) => {
           return (
+            //TODO: pass in row and column and index into group
             <div
               key={group._id}
               style={{
@@ -210,14 +222,23 @@ const Home = (props) => {
                 location={undefined}
                 icon={bookmark.icon}
                 customIcon={bookmark.customIcon}
+                customRow = {bookmark.customRow}
+                customCol={bookmark.customCol}
+                index={bookmark.index}
                 onRemove={() => handleRemoveBookmark(bookmark._id)}
               />{" "}
             </div>
           );
         })}
       </div>
+      </DndProvider>
     </div>
   );
 };
 
 export default Home;
+
+export const ItemTypes = {
+  BOOKMARK : "bookmark",
+  GROUP: "group"
+}

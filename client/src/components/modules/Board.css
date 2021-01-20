@@ -1,0 +1,13 @@
+.grid-individual {
+    width: 12.5%;
+    height:12.5%;
+    /*background-color: #396dff;*/
+    outline:solid;
+
+}
+.whole-board {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
