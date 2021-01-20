@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
-import { post, get, del } from "../../utilities";
+import {post, get, del, readFileAsync} from "../../utilities";
 import Bookmark from "../modules/Bookmark";
-import { Button, Grid, Icon } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import Group from "../modules/Group";
-import NewBookmarkForm from "../modules/NewBookmarkForm";
-import NewComponentModal from "../modules/NewComponentModal";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
 import Background from "../../public/images/background.jpg";
-import CollapsedGroup from "../modules/CollapsedGroup";
 const SCREEN_WIDTH = 8;
 
 //@param userId
@@ -45,7 +42,7 @@ const Home = (props) => {
           .catch((e) => console.log("error occurred when fetching groups: " + e));
       })
       .catch((e) => console.log("error occurred when fetching bookmarks: " + e));
-  }, []);
+  }, [state]);
 
   const findMaxIndex = () => {
     const maxIndex = Math.max(
@@ -64,24 +61,28 @@ const Home = (props) => {
    * @param bookmarkName the name of the bookmark to be added
    * @param icon the desired icon of the new bookmark
    */
-  const handleCreateBookmark = ({ url, bookmarkName, icon, customIcon }) => {
+  const handleCreateBookmark = async ({ url, bookmarkName, icon, customIcon })  => {
     const maxIndex = findMaxIndex();
     const newRow = Math.floor(maxIndex / SCREEN_WIDTH) + 1;
     const newCol = (maxIndex % SCREEN_WIDTH) + 1;
     console.log("newRow" + newRow + "finalCol: " + newCol);
-    console.log("custom icon: " + customIcon);
+    // Load the image --------
+    let imageBuffer = await readFileAsync(customIcon);
+    // console.log("imageBuffer: ", imageBuffer);
+    // -----------
     const bookmark = {
       name: bookmarkName,
       url: url,
       icon: icon,
-      customIcon: customIcon,
+      // customIcon: new TextDecoder().decode(imageBuffer),  // converts ArrayBuffer to string
+      customIcon: imageBuffer,
       group: null,
       customRow: newRow,
       customCol: newCol,
       index: maxIndex + 1,
     };
 
-    console.log("sending bookmark to api with customIcon " + customIcon);
+    // console.log("sending bookmark to api with customIcon " + imageBuffer);
     post("/api/edit/add_bookmark", bookmark).then((bookmark) => {
       state.bookmarks.push(bookmark);
       setState({ ...state, bookmarks: state.bookmarks });
@@ -119,7 +120,7 @@ const Home = (props) => {
   const handleRemoveBookmark = (_id) => {
     const newBookmarks = state.bookmarks.filter(bookmark => bookmark._id !== _id);
     setState({...state, bookmarks: newBookmarks});
-    
+
     del("/api/edit/delete_bookmark", {_id})
   }
 
@@ -173,10 +174,10 @@ const Home = (props) => {
         </div>
 
         {/*Render all of the damn groups*/}
-        {state.groups.map((group) => {
+        {state.groups.map((group, index) => {
           return (
             <div
-              key={group._id}
+              key={index}
               style={{
                 gridRow: `${group.customRow}/${group.customRow + 1}`,
                 gridColumn: `${group.customCol}/${group.customCol + 1}`,
@@ -193,10 +194,10 @@ const Home = (props) => {
         })}
 
         {/*Render all of the damn bookmarks*/}
-        {state.bookmarks.map((bookmark) => {
+        {state.bookmarks.map((bookmark, index) => {
           return (
             <div
-              key={bookmark._id}
+              key={index}
               style={{
                 gridRow: `${bookmark.customRow}/${bookmark.customRow + 1}`,
                 gridColumn: `${bookmark.customCol}/${bookmark.customCol + 1}`,
