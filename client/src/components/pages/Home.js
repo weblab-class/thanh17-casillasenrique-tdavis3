@@ -45,13 +45,11 @@ const Home = (props) => {
   }, [state]);
 
   const findMaxIndex = () => {
-    const maxIndex = Math.max(
+    return Math.max(
       0,
       ...state.bookmarks.map((e) => (e.index ? e.index : 0)),
       ...state.groups.map((e) => (e.index ? e.index : 0))
     );
-
-    return maxIndex;
   }
 
 
@@ -120,7 +118,7 @@ const Home = (props) => {
   const handleRemoveBookmark = (_id) => {
     const newBookmarks = state.bookmarks.filter(bookmark => bookmark._id !== _id);
     setState({...state, bookmarks: newBookmarks});
-
+    
     del("/api/edit/delete_bookmark", {_id})
   }
 
@@ -157,7 +155,10 @@ const Home = (props) => {
           handleCreateBookmark={handleCreateBookmark}
           handleCreateGroup={handleCreateGroup}/>
       </div>
-
+      <DndProvider backend = {HTML5Backend}>
+        {/*{console.log("YOOOOOOOO")}*/}
+        {/*{console.log(state.bookmarks)}*/}
+        {/*<Board bookmarks={state.bookmarks} groups={state.groups}/>*/}
       <div className="Home-grid">
         <div
           className="Home-group"
@@ -211,14 +212,23 @@ const Home = (props) => {
                 location={undefined}
                 icon={bookmark.icon}
                 customIcon={bookmark.customIcon}
+                customRow = {bookmark.customRow}
+                customCol={bookmark.customCol}
+                index={bookmark.index}
                 onRemove={() => handleRemoveBookmark(bookmark._id)}
               />{" "}
             </div>
           );
         })}
       </div>
+      </DndProvider>
     </div>
   );
 };
 
 export default Home;
+
+export const ItemTypes = {
+  BOOKMARK : "bookmark",
+  GROUP: "group"
+}

@@ -3,6 +3,8 @@ import "./Bookmark.css";
 import "../../utilities.css";
 import {Button, Menu, Popup} from "semantic-ui-react";
 import globe from "../../public/images/globe.png";
+import { useDrag } from "react-dnd";
+import { ItemTypes } from "../pages/Home";
 
 const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
 
@@ -18,7 +20,7 @@ const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
  * @returns {JSX.Element}
  * @constructor
  */
-const Bookmark = ({inEditMode, url, name, icon, customIcon, location, onRemove}) => {
+const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, customRow, customCol, index, onRemove}) => {
 
     const contextRef = useRef()
     const [open, setOpen] = useState(false)
@@ -59,8 +61,23 @@ const Bookmark = ({inEditMode, url, name, icon, customIcon, location, onRemove})
         }
     }
 
+  /**
+   * Turns a Bookmark into a dragable component
+   */
+  const [{isDragging}, drag] = useDrag({
+        item: {
+          type: ItemTypes.BOOKMARK,
+          id: userId,
+          customRow: customRow,
+          customCol: customCol,
+          index: index
+        },
+        collect: monitor => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    })
     return (
-        <>
+        <div>
             <form action={"http://www."+url.replace(new RegExp("((http|https)://)?(www.)?"),"")} target="_blank">
                 <button disabled={inEditMode} className="Bookmark-button u-flex-alignCenter" type="submit"
                         onContextMenu={(e) => {
@@ -68,10 +85,19 @@ const Bookmark = ({inEditMode, url, name, icon, customIcon, location, onRemove})
                             contextRef.current = createContextFromEvent(e)
                             setOpen(true)
                         }}>
-                    <img className="Bookmark-image u-flex-alignCenter u-grow" src={displayedIcon}/>
-                    {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
+                    <div ref={drag}
+                         style={{
+                             opacity: isDragging ? 0.5 : 1,
+                             fontSize: 25,
+                             fontWeight: 'bold',
+                             cursor: 'move',
+                         }}>
+                        <img className="Bookmark-image u-flex-alignCenter u-grow" src={displayedIcon}/>
+                        {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
 
-                    {/*</div>*/}
+                        {/*</div>*/}
+                    </div>
+
                 </button>
                 <p className="Bookmark-text u-bold ">{name}</p>
             </form>
@@ -102,7 +128,7 @@ const Bookmark = ({inEditMode, url, name, icon, customIcon, location, onRemove})
                 onClick={onRemove}
             />
             }
-        </>
+        </div>
     );
 };
 
