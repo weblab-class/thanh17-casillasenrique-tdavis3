@@ -131,16 +131,15 @@ const Home = (props) => {
 
   }
   //TODO: better handled with _id?
-  const handleMoveGroup = (oldIndex,index) => {
-    const group = state.groups.filter((group) => group.index === oldIndex);
+  const handleMoveGroup = (_id,index) => {
+    const group = state.groups.filter((group) => group._id === _id);
 
     group[0].index = index;
-    const newGroupList = state.groups.filter((group) => group.index !== index).concat(group[0]);
-    console.log(newGroupList);
-    //TODO: render and send the thing??
-    post("/api/edit/edit_group").then(()=>{
-      setState({...state, groups: newGroupList});
-    })
+    const newGroupList = state.groups.filter((group) => group._id !== _id).concat(group[0]);
+    // console.log(newGroupList);
+    // console.log(group)
+    post("/api/edit/edit_group",  {_id: _id,index: index});
+    setState({...state, groups: newGroupList});
 
   }
 

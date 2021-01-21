@@ -7,24 +7,16 @@ import Group from "./Group";
 import "./Grid.css"
 
 const Grid = ({handleMoveGroup, index, element, type, userId, inEditMode}) => {
-  // const moveElement = (item,x,y) => {
-  //   // const element = this.state.bookmarks.filter((bookmark) => bookmark._id === _id);
-  //   //TODO: change the bookmark's location to the new one
-  //
-  //   //bookmark[row_index].row = new row
-  //   // handleRemoveBookmark(_id)
-  //
-  // }
-  // /**
-  //  * Drop location for elements
-  //  */
 
+  // useEffect(() => {
+  // },[])
+  //
   const [{ isOver }, drop] = useDrop({
     accept: [ItemTypes.BOOKMARK, ItemTypes.GROUP],
     drop: (item) =>
       //TODO: replace with _id?
-      handleMoveGroup(item.index,index),
-    // console.log(item.index),
+      handleMoveGroup(item._id,index),
+    // console.log(item),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
@@ -32,6 +24,7 @@ const Grid = ({handleMoveGroup, index, element, type, userId, inEditMode}) => {
 
   return (
     <div
+      // key = { element && element.index}
       className={"grid-individual"}
       ref={drop}
       style={{
@@ -61,6 +54,7 @@ const Grid = ({handleMoveGroup, index, element, type, userId, inEditMode}) => {
       {/*  />*/}
       {/*)}*/}
       {type === ItemTypes.BOOKMARK? <Bookmark
+        _id = {element._id}
         userId={userId}
         inEditMode={inEditMode}
         url={element.url}
@@ -74,6 +68,7 @@ const Grid = ({handleMoveGroup, index, element, type, userId, inEditMode}) => {
       /> : null}
       {type === ItemTypes.GROUP?
       <Group
+        _id = {element._id}
         bookmarks={element.bookmarks}
         inEditMode={inEditMode}
         userId={userId}

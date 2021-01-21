@@ -94,15 +94,17 @@ router.post("/edit/add_group", (req, res) => {
 });
 
 router.post("/edit/edit_group", (req, res) => {
-    const updatedGroup = Group({
-        // userId: req.user._id,  // TODO: Make google Id
-        name: req.body.name,
-        bookmarks: [String],
-        customRow: req.body.customRow,
-        customCol: req.body.customCol,
-        index: req.body.index,
-    });
-    Group.updateOne({_id: req.body._id}, updatedGroup).catch((err) =>
+    // console.log("REQUEST BITCH", req);
+    // const updatedGroup = Group({
+    //     userId: req.user._id,  // TODO: Make google Id
+    //     name: req.body.name,
+    //     bookmarks: [String],
+    //     customRow: req.body.customRow,
+    //     customCol: req.body.customCol,
+    //     index: req.body.index,
+    // });
+    console.log(req.body.index)
+    Group.updateOne({_id: req.body._id}, { $set: { index: req.body.index } }).catch((err) =>
         console.log("An error occurred while editing")
     );
 });

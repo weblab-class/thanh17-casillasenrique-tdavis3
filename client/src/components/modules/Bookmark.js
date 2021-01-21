@@ -20,7 +20,7 @@ const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
  * @returns {JSX.Element}
  * @constructor
  */
-const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, customRow, customCol, index, onRemove}) => {
+const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, customRow, customCol, index, onRemove, _id}) => {
 
     const contextRef = useRef()
     const [open, setOpen] = useState(false)
@@ -67,7 +67,7 @@ const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, cus
   const [{isDragging}, drag] = useDrag({
         item: {
           type: ItemTypes.BOOKMARK,
-          id: userId,
+          _id: _id,
           // customRow: customRow,
           // customCol: customCol,
           index: index

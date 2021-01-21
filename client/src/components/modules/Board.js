@@ -26,7 +26,7 @@ const Board = ({handleMoveGroup,inEditMode,userId, bookmarks, groups }) =>{
     }
 
     setState({squares: tempSquares})
-  },[bookmarks]);
+  },[bookmarks,groups]);
 
 
   const addGrid = (i, bookmarks, groups) => {
@@ -62,7 +62,7 @@ const Board = ({handleMoveGroup,inEditMode,userId, bookmarks, groups }) =>{
   return (
 
     <DndProvider backend = {HTML5Backend}>
-    <div className={"whole-board"}>
+    <div className={"whole-board"} key = {groups}>
       {/*{console.log("board")}*/}
       {/*{console.log(squares)}*/}
       {state.squares}

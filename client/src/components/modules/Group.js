@@ -11,6 +11,7 @@ import { ItemTypes } from "../pages/Home";
 
 /** Creates a group object given all of the properties of the group and its identification
  *
+ * @param _id ID of group
  * @param bookmarks the list of bookmarks for the given group
  * @param inEditMode boolean indicating whether the specific group is in edit mode or not
  * @param userId the Google ID that correspond to the group owner
@@ -19,14 +20,15 @@ import { ItemTypes } from "../pages/Home";
  * @returns {JSX.Element}
  * @constructor
  */
-const Group = ({ bookmarks, inEditMode, userId, name,index }) => {
+const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
   const [open, setOpen] = React.useState(false);
 
   const [{isDragging}, drag] = useDrag({
     item: {
       type: ItemTypes.GROUP,
-      id: userId,
+      _id: _id,
       // customRow: 0,
+      inEditMode: inEditMode,
       // customCol: 0,
       index: index
     },
