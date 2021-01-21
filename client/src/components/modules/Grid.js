@@ -6,7 +6,7 @@ import Bookmark from "./Bookmark";
 import Group from "./Group";
 import "./Grid.css"
 
-const Grid = ({handleMoveGroup, index, element, type, userId, inEditMode}) => {
+const Grid = ({handleMoveBookmark,handleMoveGroup, index, element, type, userId, inEditMode}) => {
 
   // useEffect(() => {
   // },[])
@@ -15,7 +15,8 @@ const Grid = ({handleMoveGroup, index, element, type, userId, inEditMode}) => {
     accept: [ItemTypes.BOOKMARK, ItemTypes.GROUP],
     drop: (item) =>
       //TODO: replace with _id?
-      handleMoveGroup(item._id,index),
+      item.type === ItemTypes.GROUP ? handleMoveGroup(item._id,index):
+        handleMoveBookmark(item._id,index),
     // console.log(item),
     collect: monitor => ({
       isOver: !!monitor.isOver(),

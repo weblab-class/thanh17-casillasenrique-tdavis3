@@ -143,6 +143,19 @@ const Home = (props) => {
 
   }
 
+  const handleMoveBookmark = (_id,index) => {
+    const bookmark = state.bookmarks.filter((bookmark) => bookmark._id === _id);
+
+    bookmark[0].index = index;
+    const newBookmarkList = state.bookmarks.filter((bookmark) => bookmark._id !== _id)
+      .concat(bookmark[0]);
+    // console.log(newGroupList);
+    // console.log(group)
+    post("/api/edit/edit_bookmark",  {_id: _id,index: index});
+    setState({...state, bookmarks: newBookmarkList});
+
+  }
+
 
   return (
     <div className="Home-root" style={{backgroundImage: `url(${Background})`}}>
@@ -186,6 +199,7 @@ const Home = (props) => {
                bookmarks={state.bookmarks}
                groups={state.groups}
                handleMoveGroup = {handleMoveGroup}
+               handleMoveBookmark = {handleMoveBookmark}
                 />
 
     </div>

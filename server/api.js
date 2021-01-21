@@ -136,14 +136,14 @@ router.post("/edit/add_bookmark", (req, res) => {
 });
 
 router.post("/edit/edit_bookmark", (req, res) => {
-    const updatedBookmark = Bookmark({
-        // userId: req.user._id,
-        name: req.body.name,
-        url: req.body.url,
-        icon: req.body.icon,
-        group: req.body.group,
-    });
-    Bookmark.updateOne({_id: req.body._id}, updatedBookmark).catch((err) =>
+    // const updatedBookmark = Bookmark({
+    //     // userId: req.user._id,
+    //     name: req.body.name,
+    //     url: req.body.url,
+    //     icon: req.body.icon,
+    //     group: req.body.group,
+    // });
+    Bookmark.updateOne({_id: req.body._id}, { $set: { index: req.body.index } }).catch((err) =>
         console.log("An error occurred while editing")
     );
 });
