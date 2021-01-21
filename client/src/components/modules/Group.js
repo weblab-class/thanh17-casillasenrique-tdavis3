@@ -6,6 +6,8 @@ import "./Group.css";
 import { Button, Header, Image, Modal, Icon, Grid } from "semantic-ui-react";
 import Bookmark from "./Bookmark";
 import CollapsedGroup from "./CollapsedGroup";
+import { useDrag } from "react-dnd";
+import { ItemTypes } from "../pages/Home";
 
 /** Creates a group object given all of the properties of the group and its identification
  *
@@ -13,11 +15,25 @@ import CollapsedGroup from "./CollapsedGroup";
  * @param inEditMode boolean indicating whether the specific group is in edit mode or not
  * @param userId the Google ID that correspond to the group owner
  * @param name name of the group
+ * @param index index location of the group element
  * @returns {JSX.Element}
  * @constructor
  */
-const Group = ({ bookmarks, inEditMode, userId, name }) => {
+const Group = ({ bookmarks, inEditMode, userId, name,index }) => {
   const [open, setOpen] = React.useState(false);
+
+  const [{isDragging}, drag] = useDrag({
+    item: {
+      type: ItemTypes.GROUP,
+      id: userId,
+      // customRow: 0,
+      // customCol: 0,
+      index: index
+    },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  })
 
   return (
     <Modal
@@ -28,19 +44,27 @@ const Group = ({ bookmarks, inEditMode, userId, name }) => {
       open={open}
       dimmer="blurring"
       trigger={
+        <div ref={drag}
+        style={{
+        opacity: isDragging ? 0 : 1,
+        fontSize: 25,
+        fontWeight: 'bold',
+        cursor: 'move',
+      }} >
         <CollapsedGroup
           name={name}
           bookmarkIcons={bookmarks.map((bookmark) => { return bookmark.customIcon /*(bookmark.customIcon) ? URL.createObjectURL(bookmark.customIcon) : bookmark.icon*/})}
           onClick={() => setOpen(true)}
         />
+        </div>
       }
       centered
     >
-      {console.log("bookmarks:" + bookmarks)}
+      {/*{console.log("bookmarks:" + bookmarks)}*/}
       {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
       {/*<Modal.Content>*/}
       {/*TODO: make grid Expand to next page. Filter via passing in page number then map via passing in a page*/}
-      <div className="Group grid">
+      <div className="Group grid" >
         {bookmarks.map((bookmark) => {
           return (
             <Bookmark

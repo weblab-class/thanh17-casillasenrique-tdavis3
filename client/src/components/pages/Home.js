@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
 import {post, get, del, readFileAsync} from "../../utilities";
@@ -10,6 +10,7 @@ import "./Home.css";
 import Background from "../../public/images/background.jpg";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import Board from "../modules/Board";
 const SCREEN_WIDTH = 8;
 
 //@param userId
@@ -48,7 +49,7 @@ const Home = (props) => {
 
   const findMaxIndex = () => {
     return Math.max(
-      0,
+      -1,
       ...state.bookmarks.map((e) => (e.index ? e.index : 0)),
       ...state.groups.map((e) => (e.index ? e.index : 0))
     );
@@ -62,12 +63,12 @@ const Home = (props) => {
    * @param icon the desired icon of the new bookmark
    */
   const handleCreateBookmark = async ({ url, bookmarkName, icon, customIcon })  => {
-    const maxIndex = findMaxIndex();
-    const newRow = Math.floor(maxIndex / SCREEN_WIDTH) + 1;
-    const newCol = (maxIndex % SCREEN_WIDTH) + 1;
+    const maxIndex = findMaxIndex() +1;
+    const newRow = Math.floor(maxIndex / (SCREEN_WIDTH));
+    const newCol = maxIndex % (SCREEN_WIDTH);
     console.log("newRow" + newRow + "finalCol: " + newCol);
     // Load the image --------
-    let imageBuffer = await readFileAsync(customIcon);
+    let imageBuffer = customIcon ? await readFileAsync(customIcon): "";
     // console.log("imageBuffer: ", imageBuffer);
     // -----------
     const bookmark = {
@@ -79,7 +80,7 @@ const Home = (props) => {
       group: null,
       customRow: newRow,
       customCol: newCol,
-      index: maxIndex + 1,
+      index: maxIndex,
     };
 
     const tempDisplayedBookmark = {...bookmark, customIcon: imageBuffer};
@@ -91,6 +92,7 @@ const Home = (props) => {
     });
   };
 
+  //TODO: Live update?
   /** Creates a new group to display on the home screen given a user's input.
    *  The given group will be places at the next available index
    *
@@ -99,16 +101,16 @@ const Home = (props) => {
    *
    */
   const handleCreateGroup = ({ groupName }) => {
-    const maxIndex = findMaxIndex();
-    const newRow = Math.floor(maxIndex / SCREEN_WIDTH) + 1;
-    const newCol = (maxIndex % SCREEN_WIDTH) + 1;
+    const maxIndex = findMaxIndex() +1;
+    const newRow = Math.floor(maxIndex / (SCREEN_WIDTH));
+    const newCol = maxIndex % (SCREEN_WIDTH);
     console.log("newRow" + newRow + "finalCol: " + newCol);
     console.log("name " + groupName);
     const group = {
       name: groupName,
       customRow: newRow,
       customCol: newCol,
-      index: maxIndex + 1,
+      index: maxIndex,
     };
 
     console.log("sending group to api");
@@ -125,6 +127,23 @@ const Home = (props) => {
     
     del("/api/edit/delete_bookmark", {_id})
   }
+  const handleMoveElement = (_id, index) => {
+
+  }
+  //TODO: better handled with _id?
+  const handleMoveGroup = (oldIndex,index) => {
+    const group = state.groups.filter((group) => group.index === oldIndex);
+
+    group[0].index = index;
+    const newGroupList = state.groups.filter((group) => group.index !== index).concat(group[0]);
+    console.log(newGroupList);
+    //TODO: render and send the thing??
+    post("/api/edit/edit_group").then(()=>{
+      setState({...state, groups: newGroupList});
+    })
+
+  }
+
 
   return (
     <div className="Home-root" style={{backgroundImage: `url(${Background})`}}>
@@ -138,12 +157,10 @@ const Home = (props) => {
           onLogoutSuccess={props.handleLogout}
           onFailure={(err) => console.log(err)}
         />
-      </div>
-
-      <div className="Home-toggleEdit">
+        <div className="Home-toggleEdit">
           <Button toggle={state.inEditMode} onClick={() => setState({...state, inEditMode: !state.inEditMode})}  inverted size="huge" animated="vertical">
             <div className={"icon-button"}>
-            <Button.Content visible >
+              <Button.Content visible >
 
                 <Icon  name="edit"/>
 
@@ -151,81 +168,27 @@ const Home = (props) => {
             </div>
             <Button.Content hidden>Edit</Button.Content>
           </Button>
-      </div>
-
-      {/*The freaking bookmark bar*/}
-      <div className={"Home-edit-dropdown"}>
-        <EditBar
-          handleCreateBookmark={handleCreateBookmark}
-          handleCreateGroup={handleCreateGroup}/>
-      </div>
-      <DndProvider backend = {HTML5Backend}>
-        {/*{console.log("YOOOOOOOO")}*/}
-        {/*{console.log(state.bookmarks)}*/}
-        {/*<Board bookmarks={state.bookmarks} groups={state.groups}/>*/}
-      <div className="Home-grid">
-        <div
-          className="Home-group"
-          // what are these? mag ic numbers?
-          style={{ gridRow: `${2}/${2 + 1}`, gridColumn: `${3}/${3 + 1}` }}
-        >
-          {/*Hard-coded group*/}
-          <Group
-            bookmarks={state.bookmarks}
-            inEditMode={state.inEditMode}
-            userId={props.userId}
-            name="Test Group"
-          />
         </div>
 
-        {/*Render all of the damn groups*/}
-        {state.groups.map((group, index) => {
-          return (
-            <div
-              key={index}
-              style={{
-                gridRow: `${group.customRow}/${group.customRow + 1}`,
-                gridColumn: `${group.customCol}/${group.customCol + 1}`,
-              }}
-            >
-              <Group
-                userId={props.userId}
-                inEditMode={state.inEditMode}
-                name={group.name}
-                bookmarks={group.bookmarks}
-              />
-            </div>
-          );
-        })}
-
-        {/*Render all of the damn bookmarks*/}
-        {state.bookmarks.map((bookmark, index) => {
-          return (
-            <div
-              key={index}
-              style={{
-                gridRow: `${bookmark.customRow}/${bookmark.customRow + 1}`,
-                gridColumn: `${bookmark.customCol}/${bookmark.customCol + 1}`,
-              }}
-            >
-              <Bookmark
-                userId={props.userId}
-                inEditMode={state.inEditMode}
-                url={bookmark.url}
-                name={bookmark.name}
-                location={undefined}
-                icon={bookmark.icon}
-                customIcon={bookmark.customIcon}
-                customRow = {bookmark.customRow}
-                customCol={bookmark.customCol}
-                index={bookmark.index}
-                onRemove={() => handleRemoveBookmark(bookmark._id)}
-              />{" "}
-            </div>
-          );
-        })}
+        {/*The freaking bookmark bar*/}
+        <div className={"Home-edit-dropdown"}>
+          <EditBar
+            handleCreateBookmark={handleCreateBookmark}
+            handleCreateGroup={handleCreateGroup}/>
+        </div>
       </div>
-      </DndProvider>
+
+
+        {/*{console.log("YOOOOOOOO")}*/}
+        {/*{console.log(state.bookmarks)}*/}
+        <Board
+               userId={props.userId}
+               inEditMode = {state.inEditMode}
+               bookmarks={state.bookmarks}
+               groups={state.groups}
+               handleMoveGroup = {handleMoveGroup}
+                />
+
     </div>
   );
 };

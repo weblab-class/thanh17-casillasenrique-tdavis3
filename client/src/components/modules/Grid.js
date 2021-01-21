@@ -1,28 +1,30 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from "react";
 import "../../utilities.css";
 import { useDrop } from 'react-dnd'
-import { ItemTypes, moveElement } from "../pages/Home";
+import { ItemTypes } from "../pages/Home";
 import Bookmark from "./Bookmark";
 import Group from "./Group";
-const Grid = ({ x, y, element }) => {
+import "./Grid.css"
 
-
-
-  // const moveBookmark = (_id,x,y) => {
-  //   const bookmark = this.state.bookmarks.filter((bookmark) => bookmark._id === _id);
+const Grid = ({handleMoveGroup, index, element, type, userId, inEditMode}) => {
+  // const moveElement = (item,x,y) => {
+  //   // const element = this.state.bookmarks.filter((bookmark) => bookmark._id === _id);
   //   //TODO: change the bookmark's location to the new one
   //
   //   //bookmark[row_index].row = new row
   //   // handleRemoveBookmark(_id)
   //
   // }
-  /**
-   * Drop location for elements
-   */
+  // /**
+  //  * Drop location for elements
+  //  */
+
   const [{ isOver }, drop] = useDrop({
-    accept: ItemTypes.BOOKMARK,
-    drop: (item,monitor) =>
-      moveElement(item,x, y),
+    accept: [ItemTypes.BOOKMARK, ItemTypes.GROUP],
+    drop: (item) =>
+      //TODO: replace with _id?
+      handleMoveGroup(item.index,index),
+    // console.log(item.index),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
@@ -30,11 +32,18 @@ const Grid = ({ x, y, element }) => {
 
   return (
     <div
+      className={"grid-individual"}
+      ref={drop}
       style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        opacity: isOver ? '0.8': '0'
+        width: "12.5%",
+        height:"17%",
+        /*background-color: #396dff;*/
+        outline: "white solid",
+        display: "flex",
+        alignItems: "center",
+        textAlign: "center",
+        justifyContent: "center",
+        backgroundColor: isOver? "white": "transparent"
       }}
     >
       {/*{isOver && (*/}
@@ -51,7 +60,27 @@ const Grid = ({ x, y, element }) => {
       {/*    }}*/}
       {/*  />*/}
       {/*)}*/}
-      {element}
+      {type === ItemTypes.BOOKMARK? <Bookmark
+        userId={userId}
+        inEditMode={inEditMode}
+        url={element.url}
+        name={element.name}
+        icon={element.icon}
+        customIcon={element.customIcon}
+        customRow = {element.customRow}
+        customCol={element.customCol}
+        index={element.index}
+        // onRemove={() => handleRemoveBookmark(bookmark._id)}
+      /> : null}
+      {type === ItemTypes.GROUP?
+      <Group
+        bookmarks={element.bookmarks}
+        inEditMode={inEditMode}
+        userId={userId}
+        name= {element.name}
+        index = {element.index}
+        />: null
+      }
     </div>
   )
 }

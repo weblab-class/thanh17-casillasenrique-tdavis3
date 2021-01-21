@@ -28,7 +28,7 @@ const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, cus
 
     useEffect(() => {
         if (customIcon) {
-            console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon);
+            // console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon);
             setDisplayedIcon(customIcon);
         } else {
             setDisplayedIcon(icon);
@@ -68,8 +68,8 @@ const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, cus
         item: {
           type: ItemTypes.BOOKMARK,
           id: userId,
-          customRow: customRow,
-          customCol: customCol,
+          // customRow: customRow,
+          // customCol: customCol,
           index: index
         },
         collect: monitor => ({
@@ -85,13 +85,15 @@ const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, cus
                             contextRef.current = createContextFromEvent(e)
                             setOpen(true)
                         }}>
-                    <div ref={drag}
+                    <div
+                      ref={drag}
                          style={{
-                             opacity: isDragging ? 0.5 : 1,
+                             opacity: isDragging ? 0 : 1,
                              fontSize: 25,
                              fontWeight: 'bold',
                              cursor: 'move',
-                         }}>
+                         }}
+                    >
                         <img className="Bookmark-image u-flex-alignCenter u-grow" src={displayedIcon}/>
                         {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
 

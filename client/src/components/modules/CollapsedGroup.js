@@ -13,7 +13,7 @@ import "./CollapsedGroup.css";
  */
 const CollapsedGroup = ({ name, bookmarkIcons, onClick }) => {
   return (
-    <div className=" u-grow">
+    <div className=" u-grow" >
       <button className="CollapsedGroup-button u-flex-alignCenter" onClick={onClick}>
         {/* <Icon name='world' size='huge' color="pink"/> */}
         <div className="CollapsedGroup grid">
