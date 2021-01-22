@@ -175,7 +175,7 @@ const Home = (props) => {
     setState({ ...state, groups: groupsCopy });
 
     //Sends to API
-    post("/api/edit/edit_group", { _id: _id, index: index });
+    post("/api/edit/edit_group", groupsCopy[groupListIndex]);
   };
 
   /** Moves the bookmark to the new location
@@ -218,9 +218,9 @@ const Home = (props) => {
   
     const groupsCopy = [...state.groups];
     const groupsListIndex = groupsCopy.map((group) => group._id).indexOf(groupId);
-    const targetGroup = groupsCopy[groupsListIndex];
     
     //Replaces the bookmark's old index with new index within the group 
+    const targetGroup = groupsCopy[groupsListIndex];
     const newIndex = (targetGroup.bookmarks.length === 0) ? 0 : Math.max.apply(Math, targetGroup.bookmarks.map(bookmark => Number(bookmark.index))) + 1;
     console.log(targetGroup.bookmarks.map(bookmark => bookmark.index));
     targetBookmark.index = newIndex;
@@ -232,6 +232,8 @@ const Home = (props) => {
     setState({...state, bookmarks: bookmarksCopy, groups: groupsCopy});
 
     //TODO: connect to persistence 
+    post("/api/edit/edit_group", groupsCopy[groupsListIndex]);
+    //del("/api/edit/delete_bookmark", { bookmarkId });
   }
 
   return (

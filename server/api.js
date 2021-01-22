@@ -48,30 +48,38 @@ router.post("/initsocket", (req, res) => {
 
 router.get("/bookmark", (req, res) => {
     Bookmark.find({_id: req.query._id}).then((result) => {
-        console.log("boomkmark result: ", result);
+        //console.log("boomkmark result: ", result);
         res.send(result);
     });
 });
 
-router.get("/bookmarks", (req, res) => {
+router.get("/bookmarks", auth.ensureLoggedIn, (req, res) => {
     // console.log("user: ", req.user);
     let updatedResult = undefined;
     Bookmark.find({userId: req.user._id}).lean()
         .then((result) => {
-            updatedResult = result.map(bookmark => {
-                const decodedIcon = bookmark.customIcon.toString();
-                bookmark.customIcon = decodedIcon;
-                return bookmark;
-            });
-        console.log("result here: ", updatedResult);
-        res.send(updatedResult);
-    });
+            updatedResult = decodeIcons(result);
+            //console.log("result here: ", updatedResult);
+            res.send(updatedResult);
+        });
 });
 
-router.get("/groups", (req, res) => {
-    Group.find({userId: req.user._id}).then((result) => {
-        res.send(result);
+const decodeIcons = (bookmarks) => {
+    return bookmarks.map(bookmark => {
+        const decodedIcon = bookmark.customIcon.toString();
+        bookmark.customIcon = decodedIcon;
+        return bookmark;
     });
+};
+
+router.get("/groups", auth.ensureLoggedIn, (req, res) => {
+    Group.find({userId: req.user._id}).lean()
+        .then((result) => {
+            updatedResult = result.map(group => { 
+                return {...group, bookmarks: decodeIcons(group.bookmarks)};
+            });
+            res.send(updatedResult);
+        });
 });
 
 router.post("/edit/add_group", (req, res) => {
@@ -94,17 +102,18 @@ router.post("/edit/add_group", (req, res) => {
 });
 
 router.post("/edit/edit_group", (req, res) => {
-    // console.log("REQUEST BITCH", req);
-    // const updatedGroup = Group({
-    //     userId: req.user._id,  // TODO: Make google Id
-    //     name: req.body.name,
-    //     bookmarks: [String],
-    //     customRow: req.body.customRow,
-    //     customCol: req.body.customCol,
-    //     index: req.body.index,
-    // });
-    console.log(req.body.index)
-    Group.updateOne({_id: req.body._id}, { $set: { index: req.body.index } }).catch((err) =>
+    // console.log("REQUEST", req);
+    const updatedGroup = {
+         userId: req.user._id,  
+         name: req.body.name,
+         bookmarks: req.body.bookmarks,
+         customRow: req.body.customRow,
+         customCol: req.body.customCol,
+         index: req.body.index,
+    };
+    
+    console.log("updated group: " + updatedGroup);
+    Group.updateOne({_id: req.body._id}, updatedGroup).catch((err) =>
         console.log("An error occurred while editing")
     );
 });
