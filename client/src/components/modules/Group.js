@@ -67,7 +67,7 @@ const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
       }} >
         <CollapsedGroup
           name={name}
-          bookmarkIcons={bookmarks.map((bookmark) => { return bookmark.customIcon /*(bookmark.customIcon) ? URL.createObjectURL(bookmark.customIcon) : bookmark.icon*/})}
+          bookmarkIcons={bookmarks.map(bookmark => bookmark.customIcon ? bookmark.customIcon : bookmark.icon)}
           onClick={() => setOpen(true)}
         />
         </div>

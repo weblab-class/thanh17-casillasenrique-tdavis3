@@ -221,11 +221,14 @@ const Home = (props) => {
     const targetGroup = groupsCopy[groupsListIndex];
     
     //Replaces the bookmark's old index with new index within the group 
-    targetBookmark.index = Math.max(targetGroup.bookmarks.map(bookmark => bookmark.index), 0);
+    const newIndex = (targetGroup.bookmarks.length === 0) ? 0 : Math.max.apply(Math, targetGroup.bookmarks.map(bookmark => Number(bookmark.index))) + 1;
+    console.log(targetGroup.bookmarks.map(bookmark => bookmark.index));
+    targetBookmark.index = newIndex;
 
     //Adds the bookmark to the group 
     groupsCopy[groupsListIndex].bookmarks.push(targetBookmark);
-    
+    //console.log("new group with bookmark: " + Object.values(groupsCopy[groupsListIndex]));
+    console.log("new index of bookmark: " + newIndex);
     setState({...state, bookmarks: bookmarksCopy, groups: groupsCopy});
 
     //TODO: connect to persistence 
