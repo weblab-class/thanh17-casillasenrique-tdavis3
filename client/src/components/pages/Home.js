@@ -244,6 +244,25 @@ const Home = (props) => {
     Promise.all([editGroupPromise, deleteBookmarkPromise]).catch((err) => console.log("error occurred while sending changes: " + err));
   }
 
+  /** Returns whether there is a bookmark at the given index index
+   *
+   * @param index the index to check whether there is a bookmark
+   */
+  const indexHasNoBookmarks = (index) => {
+    const filteredBookmarks = state.bookmarks.filter((bookmark) => bookmark.index === index);
+    return filteredBookmarks.length === 0;
+  }
+
+  /** Returns whether there is any element at the given index index
+   *
+   * @param index
+   */
+  const indexHasNoElements  = (index) => {
+    const filteredGroups = state.groups.filter((group) => group.index === index);
+    return indexHasNoBookmarks(index) && filteredGroups.length === 0;
+  }
+
+
   return (
     <div className="Home-root" style={{ backgroundImage: `url(${Background})` }}>
       {!props.userId && <Redirect to={"/"} noThrow />}
@@ -292,6 +311,8 @@ const Home = (props) => {
         groups={state.groups}
         handleMoveGroup={handleMoveGroup}
         handleMoveBookmark={handleMoveBookmark}
+        indexHasNoBookmarks = {indexHasNoBookmarks}
+        indexHasNoElements = {indexHasNoElements}
       />
     </div>
   );

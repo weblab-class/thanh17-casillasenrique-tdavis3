@@ -70,6 +70,7 @@ const Bookmark = ({ userId, inEditMode, url, name, icon, customIcon, index, onRe
       // customCol: customCol,
       index: index,
     },
+    // canDrag: inEditMode,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),

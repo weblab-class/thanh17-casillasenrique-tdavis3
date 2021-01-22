@@ -29,10 +29,11 @@ const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
       type: ItemTypes.GROUP,
       _id: _id,
       // customRow: 0,
-      inEditMode: inEditMode,
+      // inEditMode: inEditMode,
       // customCol: 0,
       index: index
     },
+    // canDrag: inEditMode,
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),

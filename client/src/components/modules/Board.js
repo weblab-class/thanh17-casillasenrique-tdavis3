@@ -13,7 +13,17 @@ export const GridContext = createContext({
 )
 
 //TODO: create bookmark and group be home so that it updates
-const Board = ({handleMoveBookmark,handleMoveGroup,inEditMode,userId, bookmarks, groups, size }) =>{
+const Board = ({
+
+                 inEditMode,
+                 userId,
+                 bookmarks,
+                 groups,
+                 size,
+                 handleMoveBookmark,
+                 handleMoveGroup,
+                 indexHasNoBookmarks,
+                 indexHasNoElements}) =>{
   const [state, setState] = useState({
     squares: []
   });
@@ -58,7 +68,9 @@ const Board = ({handleMoveBookmark,handleMoveGroup,inEditMode,userId, bookmarks,
           element={element}
           userId={userId}
           inEditMode={inEditMode}
-          type={type}/>
+          type={type}
+          indexHasNoBookmarks={indexHasNoBookmarks}
+          indexHasNoElements={indexHasNoElements}/>
     );
   }
 
