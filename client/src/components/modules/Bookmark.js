@@ -28,7 +28,7 @@ const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, index, onRemo
 
     useEffect(() => {
         if (customIcon) {
-            // console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon);
+            //console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon + " " + name);
             setDisplayedIcon(customIcon);
         } else {
             setDisplayedIcon(icon);

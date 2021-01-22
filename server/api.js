@@ -66,7 +66,7 @@ router.get("/bookmarks", auth.ensureLoggedIn, (req, res) => {
 
 const decodeIcons = (bookmarks) => {
     return bookmarks.map(bookmark => {
-        const decodedIcon = bookmark.customIcon.toString();
+        const decodedIcon = (bookmark.customIcon) ? bookmark.customIcon.toString() : null;
         bookmark.customIcon = decodedIcon;
         return bookmark;
     });
@@ -96,6 +96,7 @@ router.post("/edit/add_group", (req, res) => {
     newGroup
         .save()
         .then((group) => {
+            console.log("successfully added group to database");
             res.send(group);
         })
         .catch((err) => console.log("An error occurred while saving"));
@@ -103,6 +104,7 @@ router.post("/edit/add_group", (req, res) => {
 
 router.post("/edit/edit_group", (req, res) => {
     // console.log("REQUEST", req);
+    console.log("in edit group: " + req.body);
     const updatedGroup = {
          userId: req.user._id,  
          name: req.body.name,
@@ -111,14 +113,15 @@ router.post("/edit/edit_group", (req, res) => {
          customCol: req.body.customCol,
          index: req.body.index,
     };
-    
-    console.log("updated group: " + updatedGroup);
-    Group.updateOne({_id: req.body._id}, updatedGroup).catch((err) =>
+
+    Group.updateOne({_id: req.body._id}, updatedGroup).then(result => {
+        console.log("Successfully updated group: " + updatedGroup);
+    }).catch((err) =>
         console.log("An error occurred while editing")
     );
 });
 
-router.delete("/edit/delete_group", (req, res) => {
+router.post("/edit/delete_group", (req, res) => {
     Group.deleteOne({_id: req.body._id}).catch((err) =>
         console.log("An error occurred while deleting")
     );
@@ -158,7 +161,9 @@ router.post("/edit/edit_bookmark", (req, res) => {
 });
 
 router.delete("/edit/delete_bookmark", (req, res) => {
-    Bookmark.deleteOne({_id: req.body._id}).catch((err) =>
+    Bookmark.deleteOne({_id: req.body._id}).then(result => {
+        console.log("successfully deleted bookmark");
+    }).catch((err) =>
         console.log("An error occurred while deleting")
     );
 });

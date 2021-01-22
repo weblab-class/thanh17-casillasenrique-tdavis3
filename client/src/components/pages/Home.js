@@ -95,15 +95,22 @@ const Home = (props) => {
       customCol: newCol, //TODO REMOVE ROW AND COL 
       index: maxIndex,
     };
-
-    //Optimistic UI response, adds bookmark to home page
-    setState({
-      ...state,
-      bookmarks: [newBookmark].concat(state.bookmarks),
-    });
-
+    
     //Send post request with new bookmark
-    post("/api/edit/add_bookmark", newBookmark).catch((err) => {
+    post("/api/edit/add_bookmark", newBookmark).then((result) => {
+      console.log(result.icon + " " + result.customIcon);
+      if (icon) {
+        result.customIcon = "";
+      } else {
+        result.customIcon = result.customIcon.toString();
+      }
+
+      setState({
+        ...state,
+        bookmarks: [result].concat(state.bookmarks),
+      });
+    })
+    .catch((err) => {
       console.log("error occurred in post request to api on add bookmark");
     });
   };
@@ -128,13 +135,12 @@ const Home = (props) => {
       bookmarks: [],
     };
 
-    //Optimistic UI response, adds group to home page
-    setState({
-      ...state,
-      groups: [newGroup].concat(state.groups),
-    });
-
-    post("/api/edit/add_group", newGroup).catch((err) => {
+    post("/api/edit/add_group", newGroup).then((result) => {
+      setState({
+        ...state,
+        groups: [result].concat(state.groups)
+      });
+    }).catch((err) => {
       console.log("error occurred in post request to api on add group");
     });
   };
@@ -232,8 +238,10 @@ const Home = (props) => {
     setState({...state, bookmarks: bookmarksCopy, groups: groupsCopy});
 
     //TODO: connect to persistence 
-    post("/api/edit/edit_group", groupsCopy[groupsListIndex]);
-    del("/api/edit/delete_bookmark", { bookmarkId });
+    const editGroupPromise = post("/api/edit/edit_group", groupsCopy[groupsListIndex]);
+    const deleteBookmarkPromise = del("/api/edit/delete_bookmark", { _id: bookmarkId });
+
+    Promise.all([editGroupPromise, deleteBookmarkPromise]).catch((err) => console.log("error occurred while sending changes: " + err));
   }
 
   return (
