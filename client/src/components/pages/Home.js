@@ -233,7 +233,7 @@ const Home = (props) => {
 
     //TODO: connect to persistence 
     post("/api/edit/edit_group", groupsCopy[groupsListIndex]);
-    //del("/api/edit/delete_bookmark", { bookmarkId });
+    del("/api/edit/delete_bookmark", { bookmarkId });
   }
 
   return (
