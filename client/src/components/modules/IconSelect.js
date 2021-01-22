@@ -10,6 +10,12 @@ const defaultIconLoader = (
   </Loader>
 );
 
+const SELECTION = {
+  STANDARD: "standard",
+  DEFAULT: "default",
+  UPLOAD: "upload",
+}
+
 /**
  *
  * @param onSelect callback that is used when user select certain icons
@@ -17,24 +23,20 @@ const defaultIconLoader = (
  * @returns {JSX.Element} selections of icons to choose from for the bookmark
  * @constructor
  */
-const IconSelect = ({ onSelect, defaultIcon }) => {
-  const [selected, setSelected] = useState("standard");
-  const [uploaded, setUploaded] = useState(false);
+const IconSelect = ({ onSelect, defaultIconURL }) => {
+  const [selected, setSelected] = useState(SELECTION.STANDARD);
 
   useEffect(() => {
-    if (selected !== "upload") {
-      setUploaded(false);
-    }
-    if (selected === "default" && defaultIcon === undefined) {
+    if (selected === SELECTION.DEFAULT && defaultIconURL === undefined) {
       console.log("changing selection as default url doesnt exist anymore");
-      onSelect(standardIcon, "ICON");
-      setSelected("standard");
+      onSelect({icon: standardIcon, isUpload: false});
+      setSelected(SELECTION.STANDARD);
     }
-  }, [selected, defaultIcon]);
+  }, [selected, defaultIconURL]);
 
   return (
     <div className="IconSelect-container">
-      <div className={"IconSelect-option" + (selected === "standard" ? "-selected" : "")}>
+      <div className={"IconSelect-option" + (selected === SELECTION.STANDARD ? "-selected" : "")}>
         <div
           style={{
             display: "flex",
@@ -48,44 +50,44 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
             src={standardIcon}
             onClick={() => {
               console.log("clicked on standard");
-              onSelect(standardIcon, "ICON");
-              setSelected("standard");
+              onSelect({icon: standardIcon, isUpload: false});
+              setSelected(SELECTION.STANDARD);
             }}
           />
         </div>
       </div>
       <div>
-        {!defaultIcon ? (
+        {!defaultIconURL ? (
           defaultIconLoader
         ) : (
-          <div className={"IconSelect-option" + (selected === "default" ? "-selected" : "")}>
+          <div className={"IconSelect-option" + (selected === SELECTION.DEFAULT ? "-selected" : "")}>
             <img
               style={{
                 width: "4vw",
                 height: "4vw",
                 borderRadius: "20%",
               }}
-              src={defaultIcon}
+              src={defaultIconURL}
               onClick={() => {
                 console.log("clicked on default");
-                onSelect(defaultIcon, "ICON");
-                setSelected("default");
+                onSelect({icon: defaultIconURL, isUpload: false});
+                setSelected(SELECTION.DEFAULT);
               }}
             />
           </div>
         )}
       </div>
       <label
-        className={"IconSelect-option" + (selected === "upload" ? "-selected" : "")}
+        className={"IconSelect-option" + (selected === SELECTION.UPLOAD ? "-selected" : "")}
         onClick={() => {
           console.log("clicked on default");
-          setSelected("upload");
+          setSelected(SELECTION.UPLOAD);
           console.log(document.getElementById("fileElem").files[0]);
         }}
       >
         <img
           src={
-            uploaded && document.getElementById("fileElem").files.length > 0
+            selected === SELECTION.UPLOAD && document.getElementById("fileElem").files.length > 0
               ? URL.createObjectURL(document.getElementById("fileElem").files[0])
               : fileUpload
           }
@@ -97,8 +99,7 @@ const IconSelect = ({ onSelect, defaultIcon }) => {
           accept="image/*"
           className="IconSelect-invisibleInput"
           onChange={(event) => {
-            onSelect(event.target.files[0], "FILE");
-            setUploaded(true);
+            onSelect({icon: event.target.files[0], isUpload: true});
           }}
         />
       </label>

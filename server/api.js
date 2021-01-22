@@ -89,8 +89,6 @@ router.post("/edit/add_group", (req, res) => {
   const newGroup = Group({
     userId: req.user._id,
     name: req.body.name,
-    customRow: req.body.customRow,
-    customCol: req.body.customCol,
     index: req.body.index,
     bookmarks: [],
   });
@@ -111,14 +109,13 @@ router.post("/edit/edit_group", (req, res) => {
     userId: req.user._id,
     name: req.body.name,
     bookmarks: req.body.bookmarks,
-    customRow: req.body.customRow,
-    customCol: req.body.customCol,
     index: req.body.index,
   };
 
   Group.updateOne({ _id: req.body._id }, updatedGroup)
     .then((result) => {
       console.log("Successfully updated group: " + updatedGroup);
+      res.send(result);
     })
     .catch((err) => console.log("An error occurred while editing"));
 });
@@ -130,7 +127,7 @@ router.post("/edit/delete_group", (req, res) => {
 });
 
 router.post("/edit/add_bookmark", (req, res) => {
-  // console.log(req.body);
+  console.log("in api, request: " + req.body);
   // console.log("type: ", typeof req.body.customIcon);  // String
   const newBookmark = Bookmark({
     userId: req.user._id,
@@ -139,8 +136,6 @@ router.post("/edit/add_bookmark", (req, res) => {
     icon: req.body.icon,
     customIcon: Buffer.from(req.body.customIcon, "utf-8"),
     group: req.body.group,
-    customRow: req.body.customRow,
-    customCol: req.body.customCol,
     index: req.body.index,
   });
   newBookmark
@@ -166,6 +161,7 @@ router.delete("/edit/delete_bookmark", (req, res) => {
   Bookmark.deleteOne({ _id: req.body._id })
     .then((result) => {
       console.log("successfully deleted bookmark");
+      res.send(result);
     })
     .catch((err) => console.log("An error occurred while deleting"));
 });

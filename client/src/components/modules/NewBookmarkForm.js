@@ -13,8 +13,8 @@ const URL_REGEX =
 const initialState = {
   url: "",
   bookmarkName: "",
-  icon: standardIcon,
-  customIcon: undefined,
+  selectedIcon: standardIcon,
+  selectedCustomIcon: undefined,
   defaultIconURL: undefined,
 };
 
@@ -95,16 +95,16 @@ const NewBookmarkForm = ({ onSubmit, closeForm }) => {
         <Form.Field>
           <label style={{ padding: "5% 0 1% 0" }}>Select Icon</label>
           <IconSelect
-            onSelect={(iconSelection, type) => {
-              if (type === "ICON") {
+            onSelect={({ icon, isUpload }) => {
+              if (!isUpload) {
                 console.log("set to use icon");
-                setState({ ...state, icon: iconSelection, customIcon: null });
-              } else if (type === "FILE") {
+                setState({ ...state, selectedIcon: icon, selectedCustomIcon: null });
+              } else {
                 console.log("set to use file");
-                setState({ ...state, icon: null, customIcon: iconSelection });
+                setState({ ...state, selectedIcon: null, selectedCustomIcon: icon });
               }
             }}
-            defaultIcon={state.defaultIconURL}
+            defaultIconURL={state.defaultIconURL}
           />
         </Form.Field>
       </div>

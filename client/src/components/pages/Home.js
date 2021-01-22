@@ -72,38 +72,30 @@ const Home = (props) => {
    *
    * @param url the url of the new bookmark to be added
    * @param bookmarkName the name of the bookmark to be added
-   * @param icon the desired icon of the new bookmark — may be undefined
-   * @param customIcon the icon of the new bookmark in file form — may be undefined
+   * @param selectedIcon the desired icon of the new bookmark — may be null
+   * @param selectedCustomIcon the icon of the new bookmark in file form — may be null
    */
-  const handleCreateBookmark = async ({ url, bookmarkName, icon, customIcon }) => {
+  const handleCreateBookmark = async ({ url, bookmarkName, selectedIcon, selectedCustomIcon }) => {
     const maxIndex = findMaxIndex() + 1;
-    const newRow = Math.floor(maxIndex / SCREEN_WIDTH);
-    const newCol = maxIndex % SCREEN_WIDTH;
-    console.log("newRow" + newRow + "finalCol: " + newCol);
 
     // Load the image, use empty string if custom icon is not being used
-    let imageBuffer = customIcon ? await readFileAsync(customIcon) : "";
+    let imageBuffer = selectedCustomIcon ? await readFileAsync(selectedCustomIcon) : "";
     // -----------
 
     const newBookmark = {
       name: bookmarkName,
       url: url,
-      icon: icon,
+      icon: selectedIcon,
       customIcon: imageBuffer,
       group: IN_HOME,
-      customRow: newRow, //TODO REMOVE ROW AND COL 
-      customCol: newCol, //TODO REMOVE ROW AND COL 
       index: maxIndex,
     };
     
     //Send post request with new bookmark
     post("/api/edit/add_bookmark", newBookmark).then((result) => {
-      console.log(result.icon + " " + result.customIcon);
-      if (icon) {
-        result.customIcon = "";
-      } else {
-        result.customIcon = result.customIcon.toString();
-      }
+      //Sets the custom icon to be the image buffer as the result holds the 
+      //binary form. 
+      result.customIcon = imageBuffer;
 
       setState({
         ...state,
@@ -111,7 +103,7 @@ const Home = (props) => {
       });
     })
     .catch((err) => {
-      console.log("error occurred in post request to api on add bookmark");
+      console.log("error occurred in post request to api on add bookmark: " + err);
     });
   };
 
@@ -122,15 +114,9 @@ const Home = (props) => {
    */
   const handleCreateGroup = ({ groupName }) => {
     const maxIndex = findMaxIndex() + 1;
-    const newRow = Math.floor(maxIndex / SCREEN_WIDTH);
-    const newCol = maxIndex % SCREEN_WIDTH;
-    //console.log("newRow" + newRow + "finalCol: " + newCol);
-    //console.log("name " + groupName);
-
+    
     const newGroup = {
       name: groupName,
-      customRow: newRow,
-      customCol: newCol,
       index: maxIndex,
       bookmarks: [],
     };
@@ -235,13 +221,16 @@ const Home = (props) => {
     groupsCopy[groupsListIndex].bookmarks.push(targetBookmark);
     //console.log("new group with bookmark: " + Object.values(groupsCopy[groupsListIndex]));
     console.log("new index of bookmark: " + newIndex);
+    //Optimistic
     setState({...state, bookmarks: bookmarksCopy, groups: groupsCopy});
 
     //TODO: connect to persistence 
     const editGroupPromise = post("/api/edit/edit_group", groupsCopy[groupsListIndex]);
     const deleteBookmarkPromise = del("/api/edit/delete_bookmark", { _id: bookmarkId });
 
-    Promise.all([editGroupPromise, deleteBookmarkPromise]).catch((err) => console.log("error occurred while sending changes: " + err));
+    Promise.all([editGroupPromise, deleteBookmarkPromise]).then((results) => {
+      setState({...state, bookmarks: bookmarksCopy, groups: groupsCopy});
+    }).catch((err) => console.log("error occurred while sending changes: " + err));
   }
 
   /** Returns whether there is a bookmark at the given index index

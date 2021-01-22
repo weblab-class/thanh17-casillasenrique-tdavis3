@@ -4,8 +4,6 @@ const BookmarkModel = require("./bookmark");
 const GroupSchema = new mongoose.Schema({
   userId: String,
   name: String,
-  customRow: Number,
-  customCol: Number,
   index: Number,
   bookmarks: [BookmarkModel.schema],
 });

@@ -47,6 +47,7 @@ const Board = ({
   });
 
   useEffect(() => {
+    console.log("refreshing board");
     const tempSquares = []
     for (let i = 0; i < size; i++) {
       tempSquares.push(addGrid(i, bookmarks,groups))

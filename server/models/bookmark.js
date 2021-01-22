@@ -6,9 +6,6 @@ const BookmarkSchema = new mongoose.Schema({
   name: String,
   icon: String,
   customIcon: 'Buffer',
-  group: String,
-  customRow: Number,
-  customCol: Number,
   index: Number,
 });
 
