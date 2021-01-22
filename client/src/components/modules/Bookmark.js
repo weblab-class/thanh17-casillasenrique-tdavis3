@@ -90,7 +90,7 @@ const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, index, onRemo
                                opacity: isDragging ? 0 : 1,
                                fontSize: 25,
                                fontWeight: 'bold',
-                               cursor: 'move',
+                               cursor: isDragging? 'grabbing': "grab",
                                borderRadius: "20%"
                              }}
                              className="Bookmark-image u-flex-alignCenter u-grow" src={displayedIcon}/>

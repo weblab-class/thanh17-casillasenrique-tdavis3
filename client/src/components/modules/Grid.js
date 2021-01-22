@@ -20,7 +20,9 @@ const Grid = ({handleMoveBookmark,handleMoveGroup, index, element, type, userId,
       item.type === ItemTypes.GROUP ? handleMoveGroup(item._id,index):
         handleMoveBookmark(item._id,index),
     // console.log(item),
-    // canDrop: () => indexHasNoBookmarks(index),
+    // canDrop: (item) =>
+    //   item.type ===ItemTypes.BOOKMARK?
+    //   indexHasNoBookmarks(index): indexHasNoElements(index),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),

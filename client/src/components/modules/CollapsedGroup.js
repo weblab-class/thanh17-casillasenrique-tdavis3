@@ -13,9 +13,12 @@ import "./CollapsedGroup.css";
  */
 const CollapsedGroup = ({name, bookmarkIcons, onClick,drag, isDragging }) => {
   return (
-    <div style={{opacity: isDragging? 0:1}} className=" u-grow" >
+    <div style={{
+      opacity: isDragging? 0:1,
+      cursor: isDragging? 'grabbing': "grab"
+    }} className=" u-grow" >
       <div ref={drag}>
-      <button className="CollapsedGroup-button u-flex-alignCenter" onClick={onClick}>
+      <button style={{cursor: isDragging? 'grabbing': "grab"}} className="CollapsedGroup-button u-flex-alignCenter" onClick={onClick}>
         {/* <Icon name='world' size='huge' color="pink"/> */}
         <div  className="CollapsedGroup grid">
           {bookmarkIcons.map((icon, i) => {
