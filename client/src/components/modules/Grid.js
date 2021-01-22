@@ -35,12 +35,11 @@ const Grid = ({handleMoveBookmark,handleMoveGroup, index, element, type, userId,
         width: width,
         height: height,
         /*background-color: #396dff;*/
-        outline: "white solid",
+        // outline: "white solid",
         display: "flex",
         alignItems: "center",
         textAlign: "center",
         justifyContent: "center",
-        backgroundColor: isOver? "white": "transparent"
       }}
     >
       {/*{isOver && (*/}

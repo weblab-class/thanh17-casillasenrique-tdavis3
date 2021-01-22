@@ -81,7 +81,7 @@ const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
       {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
       {/*<Modal.Content>*/}
       {/*TODO: make grid Expand to next page. Filter via passing in page number then map via passing in a page*/}
-      <div className="Group grid" >
+      <div className="Group grid">
         {/*{bookmarks.map((bookmark) => {*/}
         {/*  return (*/}
         {/*    <Bookmark*/}
