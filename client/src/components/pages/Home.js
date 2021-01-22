@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
-import {post, get, del, readFileAsync} from "../../utilities";
+import { post, get, del, readFileAsync } from "../../utilities";
 import Bookmark from "../modules/Bookmark";
 import { Button, Icon } from "semantic-ui-react";
 import Group from "../modules/Group";
@@ -12,13 +12,15 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Board from "../modules/Board";
 const SCREEN_WIDTH = 8;
+const IN_HOME = null;
 
 //@param userId
 //@param handleLogout
 /**
- * @param props I don't actually know lmao
+ * @param handleLogout callback function on logout
+ * @param googleClientId clientId used for Google Logout component
+ * @param userId the google ID of the current user
  * @returns {JSX.Element} the home screen with all the shitz in it
- * @constructor wtf would this be?
  */
 const Home = (props) => {
   // Initialize Default State
@@ -35,130 +37,202 @@ const Home = (props) => {
     inEditMode: false,
   });
 
+  /** Loads user home page data from the database
+   *  Loads bookmarks, groups
+   */
   useEffect(() => {
-    get("/api/bookmarks")
-      .then((bookmarks) => {
-        get("/api/groups")
-          .then((groups) => {
-            setState({ ...state, groups: groups, bookmarks: bookmarks });
-          })
-          .catch((e) => console.log("error occurred when fetching groups: " + e));
+    const bookmarksPromise = get("/api/bookmarks");
+    const groupsPromise = get("/api/groups");
+
+    Promise.all([bookmarksPromise, groupsPromise])
+      .then((results) => {
+        console.log(results);
+        setState({
+          ...state,
+          bookmarks: results[0],
+          groups: results[1],
+        });
       })
-      .catch((e) => console.log("error occurred when fetching bookmarks: " + e));
+      .catch((err) => console.log("an error occurred while fetching home page data: " + err));
   }, []);
 
+  /** Helper function
+   * Finds the maximum index within the list of bookmarks and
+   * groups for the new added component
+   */
   const findMaxIndex = () => {
     return Math.max(
       -1,
       ...state.bookmarks.map((e) => (e.index ? e.index : 0)),
       ...state.groups.map((e) => (e.index ? e.index : 0))
     );
-  }
-
+  };
 
   /** Creates a new bookmark on the home screen given the url, bookmark name, and icon desired
    *
    * @param url the url of the new bookmark to be added
    * @param bookmarkName the name of the bookmark to be added
-   * @param icon the desired icon of the new bookmark
+   * @param icon the desired icon of the new bookmark — may be undefined
+   * @param customIcon the icon of the new bookmark in file form — may be undefined
    */
-  const handleCreateBookmark = async ({ url, bookmarkName, icon, customIcon })  => {
-    const maxIndex = findMaxIndex() +1;
-    const newRow = Math.floor(maxIndex / (SCREEN_WIDTH));
-    const newCol = maxIndex % (SCREEN_WIDTH);
+  const handleCreateBookmark = async ({ url, bookmarkName, icon, customIcon }) => {
+    const maxIndex = findMaxIndex() + 1;
+    const newRow = Math.floor(maxIndex / SCREEN_WIDTH);
+    const newCol = maxIndex % SCREEN_WIDTH;
     console.log("newRow" + newRow + "finalCol: " + newCol);
-    // Load the image --------
-    let imageBuffer = customIcon ? await readFileAsync(customIcon): "";
-    // console.log("imageBuffer: ", imageBuffer);
+
+    // Load the image, use empty string if custom icon is not being used
+    let imageBuffer = customIcon ? await readFileAsync(customIcon) : "";
     // -----------
-    const bookmark = {
+
+    const newBookmark = {
       name: bookmarkName,
       url: url,
       icon: icon,
-      // customIcon: new TextDecoder().decode(imageBuffer),  // converts ArrayBuffer to string
       customIcon: imageBuffer,
-      group: null,
-      customRow: newRow,
-      customCol: newCol,
+      group: IN_HOME,
+      customRow: newRow, //TODO REMOVE ROW AND COL 
+      customCol: newCol, //TODO REMOVE ROW AND COL 
       index: maxIndex,
     };
 
-    const tempDisplayedBookmark = {...bookmark, customIcon: imageBuffer};
+    //Optimistic UI response, adds bookmark to home page
+    setState({
+      ...state,
+      bookmarks: [newBookmark].concat(state.bookmarks),
+    });
 
-    // console.log("sending bookmark to api with customIcon " + imageBuffer);
-    post("/api/edit/add_bookmark", bookmark).then((bookmark) => {
-      state.bookmarks.push(tempDisplayedBookmark);
-      setState({ ...state, bookmarks: state.bookmarks });
+    //Send post request with new bookmark
+    post("/api/edit/add_bookmark", newBookmark).catch((err) => {
+      console.log("error occurred in post request to api on add bookmark");
     });
   };
 
-  //TODO: Live update?
   /** Creates a new group to display on the home screen given a user's input.
    *  The given group will be places at the next available index
    *
    * @param groupName The name that the user designate for the new group
-   *
-   *
    */
   const handleCreateGroup = ({ groupName }) => {
-    const maxIndex = findMaxIndex() +1;
-    const newRow = Math.floor(maxIndex / (SCREEN_WIDTH));
-    const newCol = maxIndex % (SCREEN_WIDTH);
-    console.log("newRow" + newRow + "finalCol: " + newCol);
-    console.log("name " + groupName);
-    const group = {
+    const maxIndex = findMaxIndex() + 1;
+    const newRow = Math.floor(maxIndex / SCREEN_WIDTH);
+    const newCol = maxIndex % SCREEN_WIDTH;
+    //console.log("newRow" + newRow + "finalCol: " + newCol);
+    //console.log("name " + groupName);
+
+    const newGroup = {
       name: groupName,
       customRow: newRow,
       customCol: newCol,
       index: maxIndex,
+      bookmarks: [],
     };
 
-    console.log("sending group to api");
-    post("/api/edit/add_group", group).then((group) => {
-      console.log("returned group after api post: " + group.bookmarks + " empty list: " + []);
-      state.groups.push(group);
-      setState({ ...state, groups: state.groups });
+    //Optimistic UI response, adds group to home page
+    setState({
+      ...state,
+      groups: [newGroup].concat(state.groups),
+    });
+
+    post("/api/edit/add_group", newGroup).catch((err) => {
+      console.log("error occurred in post request to api on add group");
     });
   };
 
+  /** Optimistically removes the bookmark from the the home page
+   *
+   * @param _id the id of the bookmark to be removed
+   */
   const handleRemoveBookmark = (_id) => {
-    const newBookmarks = state.bookmarks.filter(bookmark => bookmark._id !== _id);
-    setState({...state, bookmarks: newBookmarks});
-    
-    del("/api/edit/delete_bookmark", {_id})
-  }
+    const newBookmarks = state.bookmarks.filter((bookmark) => bookmark._id !== _id);
+    setState({ ...state, bookmarks: newBookmarks });
+
+    del("/api/edit/delete_bookmark", { _id });
+  };
+
+  /** Handles the moving of a generic element
+   * TODO add more detailed description?
+   *
+   * @param {*} _id
+   * @param {*} index
+   */
   const handleMoveElement = (_id, index) => {
+    //TODO
+  };
 
+  /** Moves the group to the new location on the home page
+   *
+   * @param _id the id of the group to be moved
+   * @param index the new target index
+   */
+  const handleMoveGroup = (_id, index) => {
+    //Finds the target bookmark's index
+    const groupListIndex = state.groups.map((group) => group._id).indexOf(_id);
+
+    //Modifies a copy of the bookmarks list and sets it to state optimistically
+    let groupsCopy = [...state.groups];
+    groupsCopy[groupListIndex].index = index;
+    setState({ ...state, groups: groupsCopy });
+
+    //Sends to API
+    post("/api/edit/edit_group", { _id: _id, index: index });
+  };
+
+  /** Moves the bookmark to the new location
+   *
+   * @param _id the id of the boookmark to be moved
+   * @param index the new target index
+   */
+  const handleMoveBookmark = (_id, index) => {
+    const filteredGroups = state.groups.filter((group) => group.index === index);
+    const indexIsAGroup = filteredGroups.length === 1;
+
+    //If the bookmark is moved to a group, special action is needed
+    //Otherwise we can simply change the index of the bookmark within
+    //the home page
+    if (indexIsAGroup) {
+      handleAddBookmarkToGroup(_id, filteredGroups[0]._id);
+    } else {
+      //Finds the target bookmark's index
+      const bookmarkListIndex = state.bookmarks.map((bookmark) => bookmark._id).indexOf(_id);
+
+      //Modifies a copy of the bookmarks list and sets it to state optimistically
+      let bookmarksCopy = [...state.bookmarks];
+      bookmarksCopy[bookmarkListIndex].index = index;
+      setState({ ...state, bookmarks: bookmarksCopy });
+
+      //Sends to API
+      post("/api/edit/edit_bookmark", { _id: _id, index: index });
+    }
+  };
+
+  /** Adds a bookmark to the group 
+   * 
+   * @param bookmarkId the ID of the bookmark that is being moved 
+   * @param groupId the target group ID 
+   */
+  const handleAddBookmarkToGroup = (bookmarkId, groupId) => {
+    const bookmarksCopy = [...state.bookmarks];
+    const bookmarkListIndex = bookmarksCopy.map((bookmark) => bookmark._id).indexOf(bookmarkId);
+    const targetBookmark = bookmarksCopy.splice(bookmarkListIndex, 1)[0];
+  
+    const groupsCopy = [...state.groups];
+    const groupsListIndex = groupsCopy.map((group) => group._id).indexOf(groupId);
+    const targetGroup = groupsCopy[groupsListIndex];
+    
+    //Replaces the bookmark's old index with new index within the group 
+    targetBookmark.index = Math.max(targetGroup.bookmarks.map(bookmark => bookmark.index), 0);
+
+    //Adds the bookmark to the group 
+    groupsCopy[groupsListIndex].bookmarks.push(targetBookmark);
+    
+    setState({...state, bookmarks: bookmarksCopy, groups: groupsCopy});
+
+    //TODO: connect to persistence 
   }
-  //TODO: better handled with _id?
-  const handleMoveGroup = (_id,index) => {
-    const group = state.groups.filter((group) => group._id === _id);
-
-    group[0].index = index;
-    const newGroupList = state.groups.filter((group) => group._id !== _id).concat(group[0]);
-    // console.log(newGroupList);
-    // console.log(group)
-    post("/api/edit/edit_group",  {_id: _id,index: index});
-    setState({...state, groups: newGroupList});
-
-  }
-
-  const handleMoveBookmark = (_id,index) => {
-    const bookmark = state.bookmarks.filter((bookmark) => bookmark._id === _id);
-
-    bookmark[0].index = index;
-    const newBookmarkList = state.bookmarks.filter((bookmark) => bookmark._id !== _id)
-      .concat(bookmark[0]);
-    // console.log(newGroupList);
-    // console.log(group)
-    post("/api/edit/edit_bookmark",  {_id: _id,index: index});
-    setState({...state, bookmarks: newBookmarkList});
-
-  }
-
 
   return (
-    <div className="Home-root" style={{backgroundImage: `url(${Background})`}}>
+    <div className="Home-root" style={{ backgroundImage: `url(${Background})` }}>
       {!props.userId && <Redirect to={"/"} noThrow />}
 
       {/*The logout button*/}
@@ -169,13 +243,18 @@ const Home = (props) => {
           onLogoutSuccess={props.handleLogout}
           onFailure={(err) => console.log(err)}
         />
+
         <div className="Home-toggleEdit">
-          <Button toggle={state.inEditMode} onClick={() => setState({...state, inEditMode: !state.inEditMode})}  inverted size="huge" animated="vertical">
+          <Button
+            toggle={state.inEditMode}
+            onClick={() => setState({ ...state, inEditMode: !state.inEditMode })}
+            inverted
+            size="huge"
+            animated="vertical"
+          >
             <div className={"icon-button"}>
-              <Button.Content visible >
-
-                <Icon  name="edit"/>
-
+              <Button.Content visible>
+                <Icon name="edit" />
               </Button.Content>
             </div>
             <Button.Content hidden>Edit</Button.Content>
@@ -186,22 +265,21 @@ const Home = (props) => {
         <div className={"Home-edit-dropdown"}>
           <EditBar
             handleCreateBookmark={handleCreateBookmark}
-            handleCreateGroup={handleCreateGroup}/>
+            handleCreateGroup={handleCreateGroup}
+          />
         </div>
       </div>
-
-
-        {/*{console.log("YOOOOOOOO")}*/}
-        {/*{console.log(state.bookmarks)}*/}
-        <Board
-               userId={props.userId}
-               inEditMode = {state.inEditMode}
-               bookmarks={state.bookmarks}
-               groups={state.groups}
-               handleMoveGroup = {handleMoveGroup}
-               handleMoveBookmark = {handleMoveBookmark}
-                />
-
+      {/*{console.log("YOOOOOOOO")}*/}
+      {/*{console.log(state.bookmarks)}*/}
+      <Board
+        size={48}
+        userId={props.userId}
+        inEditMode={state.inEditMode}
+        bookmarks={state.bookmarks}
+        groups={state.groups}
+        handleMoveGroup={handleMoveGroup}
+        handleMoveBookmark={handleMoveBookmark}
+      />
     </div>
   );
 };
@@ -209,6 +287,6 @@ const Home = (props) => {
 export default Home;
 
 export const ItemTypes = {
-  BOOKMARK : "bookmark",
-  GROUP: "group"
-}
+  BOOKMARK: "bookmark",
+  GROUP: "group",
+};

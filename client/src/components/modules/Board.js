@@ -22,7 +22,7 @@ const Board = ({handleMoveBookmark,handleMoveGroup,inEditMode,userId, bookmarks,
     const tempSquares = []
     for (let i = 0; i < size; i++) {
       tempSquares.push(addGrid(i, bookmarks,groups))
-      console.log(tempSquares.length)
+      //console.log(tempSquares.length)
     }
 
     setState({squares: tempSquares})
@@ -46,7 +46,7 @@ const Board = ({handleMoveBookmark,handleMoveGroup,inEditMode,userId, bookmarks,
       ItemTypes.GROUP
     ) : null;
 
-    console.log(element)
+    //console.log(element)
     return (
         <Grid
           index={i}
