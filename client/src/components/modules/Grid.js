@@ -6,6 +6,25 @@ import Bookmark from "./Bookmark";
 import Group from "./Group";
 import "./Grid.css"
 
+/** A droppable element that together builds a board for our bookmarks manager interface
+ *
+ * @param index location of the Grid item wrt to other Grid objects
+ * @param element either a Bookmark or Group object
+ * @param type ItemsType object indicating the type of element
+ * @param userId the Google ID
+ * @param inEditMode boolean representing whether the Grid can be edited/dragged or not
+ * @param width the percentage of a grid width according to whether this is in a group or home screen
+ * @param height the percentage of a grid height according to whether this is in a group or home screen
+ * @param handleMoveGroup callback that will move the group after DnD
+ * @param handleMoveBookmark callback that will move the bookmark after DnD
+ * @param handleRemoveBookmark callback that will remove the bookmark after DnD
+ * @param indexHasNoBookmarks callback that determines whether there is a bookmark
+ *        at the desired drop location
+ * @param indexHasNoElements callback that determines whether there is an element
+ *        at the desired drop location
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Grid = ({
 
                 index,

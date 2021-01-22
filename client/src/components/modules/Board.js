@@ -13,6 +13,23 @@ export const GridContext = createContext({
 )
 
 //TODO: create bookmark and group be home so that it updates
+/** Create a board that has bookmarks and groups
+ *
+ * @param inEditMode boolean value indicating whether the board can be edited or not
+ * @param userId the Google ID
+ * @param bookmarks the list of bookmarks for the given board
+ * @param groups the list of Groups elements for the given board
+ * @param size the number of grids for the board. 48 for home, 9 for a group.
+ * @param handleMoveGroup callback that will move the group after DnD
+ * @param handleMoveBookmark callback that will move the bookmark after DnD
+ * @param handleRemoveBookmark callback that will remove the bookmark after DnD
+ * @param indexHasNoBookmarks callback that determines whether there is a bookmark
+ *        at the desired drop location
+ * @param indexHasNoElements callback that determines whether there is an element
+ *        at the desired drop location
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Board = ({
 
                  inEditMode,
