@@ -15,8 +15,9 @@ const Grid = ({
                 inEditMode,
                 width,
                 height,
-                handleMoveBookmark,
                 handleMoveGroup,
+                handleMoveBookmark,
+                handleRemoveBookmark,
                 indexHasNoBookmarks,
                 indexHasNoElements}) => {
 
@@ -81,7 +82,7 @@ const Grid = ({
         customRow = {element.customRow}
         customCol={element.customCol}
         index={element.index}
-        // onRemove={() => handleRemoveBookmark(bookmark._id)}
+        onRemove={() => handleRemoveBookmark(element._id)}
       /> : null}
       {type === ItemTypes.GROUP?
       <Group
@@ -91,6 +92,9 @@ const Grid = ({
         userId={userId}
         name= {element.name}
         index = {element.index}
+        handleMoveBookmark={handleMoveBookmark}
+        handleRemoveBookmark={handleRemoveBookmark}
+        indexHasNoBookmarks={indexHasNoBookmarks}
         />: null
       }
     </div>

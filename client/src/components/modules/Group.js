@@ -1,7 +1,7 @@
 //TODO: install semantic UI
 //
 
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import "./Group.css";
 import { Button, Header, Image, Modal, Icon, Grid } from "semantic-ui-react";
 import Bookmark from "./Bookmark";
@@ -9,6 +9,7 @@ import CollapsedGroup from "./CollapsedGroup";
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../pages/Home";
 import Board from "./Board";
+import { del, post } from "../../utilities";
 
 /** Creates a group object given all of the properties of the group and its identification
  *
@@ -21,9 +22,39 @@ import Board from "./Board";
  * @returns {JSX.Element}
  * @constructor
  */
-const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
+const Group = ({
+                 _id,
+                 bookmarks,
+                 inEditMode,
+                 userId,
+                 name,
+                 index,
+                 indexHasNoBookmarks}) => {
   const [open, setOpen] = React.useState(false);
+  useEffect(() => {
+  },[bookmarks]);
 
+  //TODO: handleRemoveBookmark
+  const handleRemoveBookmark = (_id) => {
+    const newBookmarks = bookmarks.filter((bookmark) => bookmark._id !== _id);
+
+    // setState({ ...state, bookmarks: newBookmarks });
+    //TODO: populate??
+
+    // del("/api/edit/delete_bookmark", { _id });
+  };
+
+  //TODO: handleMoveBookmark edit bookmarks and update group?
+  const handleMoveBookmark = (_id,index) => {
+    const bookmarkListIndex = bookmarks.map((bookmark) => bookmark._id).indexOf(_id);
+
+    //Modifies a copy of the bookmarks list and sets it to state optimistically
+    let bookmarksCopy = [...bookmarks];
+    bookmarksCopy[bookmarkListIndex].index = index;
+    // bookmarks = bookmarksCopy;
+    // setState({ ...state, bookmarks: bookmarksCopy });
+    // post("/api/edit/edit_bookmark", { _id: _id, index: index });
+  }
   const [{isDragging}, drag] = useDrag({
     item: {
       type: ItemTypes.GROUP,
@@ -102,6 +133,9 @@ const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
           userId={userId}
           bookmarks={bookmarks}
           groups={[]}
+          handleMoveBookmark={handleMoveBookmark}
+          handleRemoveBookmark = {handleRemoveBookmark}
+          indexHasNoBookmarks = {indexHasNoBookmarks}
         />
       </div>
       {/*</Modal.Content>*/}

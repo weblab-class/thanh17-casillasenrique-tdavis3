@@ -20,8 +20,9 @@ const Board = ({
                  bookmarks,
                  groups,
                  size,
-                 handleMoveBookmark,
                  handleMoveGroup,
+                 handleMoveBookmark,
+                 handleRemoveBookmark,
                  indexHasNoBookmarks,
                  indexHasNoElements}) =>{
   const [state, setState] = useState({
@@ -63,12 +64,13 @@ const Board = ({
           index={i}
           width={size === 48? "12.5%": "30%"}
           height={size === 48? "17%": "30%"}
-          handleMoveGroup={handleMoveGroup}
           handleMoveBookmark={handleMoveBookmark}
           element={element}
           userId={userId}
           inEditMode={inEditMode}
           type={type}
+          handleMoveGroup={handleMoveGroup}
+          handleRemoveBookmark = {handleRemoveBookmark}
           indexHasNoBookmarks={indexHasNoBookmarks}
           indexHasNoElements={indexHasNoElements}/>
     );

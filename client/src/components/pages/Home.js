@@ -311,6 +311,7 @@ const Home = (props) => {
         groups={state.groups}
         handleMoveGroup={handleMoveGroup}
         handleMoveBookmark={handleMoveBookmark}
+        handleRemoveBookmark = {handleRemoveBookmark}
         indexHasNoBookmarks = {indexHasNoBookmarks}
         indexHasNoElements = {indexHasNoElements}
       />
