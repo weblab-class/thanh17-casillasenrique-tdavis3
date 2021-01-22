@@ -55,7 +55,7 @@ const Board = ({
     }
 
     setState({squares: tempSquares})
-  },[bookmarks,groups]);
+  },[bookmarks, groups, inEditMode]);
 
 
   const addGrid = (i, bookmarks, groups) => {

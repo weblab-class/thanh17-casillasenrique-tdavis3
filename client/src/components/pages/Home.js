@@ -114,7 +114,7 @@ const Home = (props) => {
    */
   const handleCreateGroup = ({ groupName }) => {
     const maxIndex = findMaxIndex() + 1;
-    
+
     const newGroup = {
       name: groupName,
       index: maxIndex,
