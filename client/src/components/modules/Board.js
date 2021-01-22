@@ -49,6 +49,7 @@ const Board = ({handleMoveBookmark,handleMoveGroup,inEditMode,userId, bookmarks,
     //console.log(element)
     return (
         <Grid
+          key = {i}
           index={i}
           width={size === 48? "12.5%": "30%"}
           height={size === 48? "17%": "30%"}

@@ -11,21 +11,23 @@ import "./CollapsedGroup.css";
  * @returns {JSX.Element}
  * @constructor
  */
-const CollapsedGroup = ({ name, bookmarkIcons, onClick }) => {
+const CollapsedGroup = ({name, bookmarkIcons, onClick,drag, isDragging }) => {
   return (
-    <div className=" u-grow" >
+    <div style={{opacity: isDragging? 0:1}} className=" u-grow" >
+      <div ref={drag}>
       <button className="CollapsedGroup-button u-flex-alignCenter" onClick={onClick}>
         {/* <Icon name='world' size='huge' color="pink"/> */}
-        <div className="CollapsedGroup grid">
+        <div  className="CollapsedGroup grid">
           {bookmarkIcons.map((icon, i) => {
             return (
-              <div key={i} style={{ textAlign: "center" }}>
+              <div key={i} style={{ textAlign: "center", }}>
                 <img className="CollapsedGroup-minimizedIcon" src={icon} />
               </div>
             );
           })}
         </div>
       </button>
+      </div>
       <p className="Bookmark-text u-bold ">{name}</p>
     </div>
   );

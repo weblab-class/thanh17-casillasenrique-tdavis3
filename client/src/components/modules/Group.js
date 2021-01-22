@@ -58,14 +58,17 @@ const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
       dimmer="blurring"
       trigger={
         <div
-          ref={drag}
-        style={{
-        opacity: isDragging ? 0 : 1,
-        fontSize: 25,
-        fontWeight: 'bold',
-        cursor: 'move',
-      }} >
+      //     ref={drag}
+      //   style={{
+      //   opacity: isDragging ? 0 : 1,
+      //   fontSize: 25,
+      //   fontWeight: 'bold',
+      //   cursor: 'move',
+      // }}
+        >
         <CollapsedGroup
+          drag = {drag}
+          isDragging ={isDragging}
           name={name}
           bookmarkIcons={bookmarks.map(bookmark => bookmark.customIcon ? bookmark.customIcon : bookmark.icon)}
           onClick={() => setOpen(true)}

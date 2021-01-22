@@ -85,23 +85,22 @@ const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, index, onRemo
                             contextRef.current = createContextFromEvent(e)
                             setOpen(true)
                         }}>
-                    <div
-                      ref={drag}
-                         style={{
-                             opacity: isDragging ? 0 : 1,
-                             fontSize: 25,
-                             fontWeight: 'bold',
-                             cursor: 'move',
-                         }}
-                    >
-                        <img className="Bookmark-image u-flex-alignCenter u-grow" src={displayedIcon}/>
+                        <img ref={drag}
+                             style={{
+                               opacity: isDragging ? 0 : 1,
+                               fontSize: 25,
+                               fontWeight: 'bold',
+                               cursor: 'move',
+                               borderRadius: "20%"
+                             }}
+                             className="Bookmark-image u-flex-alignCenter u-grow" src={displayedIcon}/>
                         {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
 
                         {/*</div>*/}
-                    </div>
 
                 </button>
-                <p className="Bookmark-text u-bold ">{name}</p>
+                <p className="Bookmark-text u-bold "
+                  style={{opacity: isDragging?0:1 }}>{name}</p>
             </form>
             <Popup
                 basic
