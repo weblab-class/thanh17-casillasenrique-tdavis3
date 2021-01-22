@@ -6,6 +6,7 @@ const GroupSchema = new mongoose.Schema({
   name: String,
   index: Number,
   bookmarks: [BookmarkModel.schema],
+  pageIndex: Number,
 });
 
 module.exports = mongoose.model("group", GroupSchema);

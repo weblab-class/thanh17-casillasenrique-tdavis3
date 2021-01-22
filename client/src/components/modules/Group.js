@@ -1,7 +1,7 @@
 //TODO: install semantic UI
 //
 
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import "./Group.css";
 import { Button, Header, Image, Modal, Icon, Grid } from "semantic-ui-react";
 import Bookmark from "./Bookmark";
@@ -33,6 +33,8 @@ const Group = ({
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
   },[bookmarks]);
+
+  const [page, setPage] = useState(0);
 
   //TODO: handleRemoveBookmark
   const handleRemoveBookmark = (_id) => {
@@ -84,7 +86,10 @@ const Group = ({
     <Modal
       className="Group modal"
       size="small"
-      onClose={() => setOpen(false)}
+      onClose={() => { 
+        setOpen(false);
+        setPage(0); 
+      }}
       onOpen={() => setOpen(true)}
       open={open}
       dimmer="blurring"
@@ -102,7 +107,7 @@ const Group = ({
           drag = {drag}
           isDragging ={isDragging}
           name={name}
-          bookmarkIcons={bookmarks.map(bookmark => bookmark.customIcon ? bookmark.customIcon : bookmark.icon)}
+          bookmarkIcons={bookmarks.filter(bookmark => bookmark.pageIndex === 0).map(bookmark => bookmark.customIcon ? bookmark.customIcon : bookmark.icon)}
           onClick={() => setOpen(true)}
         />
         </div>
@@ -131,13 +136,18 @@ const Group = ({
         <Board
           size={9}
           userId={userId}
-          bookmarks={bookmarks}
+          bookmarks={bookmarks.filter(bookmark => bookmark.pageIndex === page)}
           groups={[]}
           handleMoveBookmark={handleMoveBookmark}
           handleRemoveBookmark = {handleRemoveBookmark}
           indexHasNoBookmarks = {indexHasNoBookmarks}
         />
       </div>
+      <div>
+        Page {page}
+      </div>
+      <Button inverted content='Previous' icon='left arrow' labelPosition='left' onClick={() => setPage(page - 1)}/>
+      <Button inverted content='Next' icon='right arrow' labelPosition='right' onClick={() => setPage(page + 1)}/>
       {/*</Modal.Content>*/}
       {/*//TODO: add Title @bottom*/}
     </Modal>

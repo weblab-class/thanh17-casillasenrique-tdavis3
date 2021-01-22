@@ -91,6 +91,7 @@ router.post("/edit/add_group", (req, res) => {
     name: req.body.name,
     index: req.body.index,
     bookmarks: [],
+    pageIndex: req.body.pageIndex,
   });
 
   newGroup
@@ -110,6 +111,7 @@ router.post("/edit/edit_group", (req, res) => {
     name: req.body.name,
     bookmarks: req.body.bookmarks,
     index: req.body.index,
+    pageIndex: req.body.pageIndex,
   };
 
   Group.updateOne({ _id: req.body._id }, updatedGroup)
@@ -136,6 +138,7 @@ router.post("/edit/add_bookmark", (req, res) => {
     icon: req.body.icon,
     customIcon: Buffer.from(req.body.customIcon, "utf-8"),
     index: req.body.index,
+    pageIndex: req.body.pageIndex,
   });
   newBookmark
     .save()

@@ -30,6 +30,7 @@ const Home = (props) => {
    *
    */
   const [state, setState] = useState({
+    currentPage: 0,
     groups: [],
     bookmarks: [],
     inEditMode: false,
@@ -61,8 +62,8 @@ const Home = (props) => {
   const findMaxIndex = () => {
     return Math.max(
       -1,
-      ...state.bookmarks.map((e) => (e.index ? e.index : 0)),
-      ...state.groups.map((e) => (e.index ? e.index : 0))
+      ...state.bookmarks.filter(bookmark => bookmark.pageIndex === state.currentPage).map((e) => (e.index ? e.index : 0)),
+      ...state.groups.filter(group => group.pageIndex === state.currentPage).map((e) => (e.index ? e.index : 0))
     );
   };
 
@@ -86,6 +87,7 @@ const Home = (props) => {
       icon: selectedIcon,
       customIcon: imageBuffer,
       index: maxIndex,
+      pageIndex: state.currentPage
     };
     
     //Send post request with new bookmark
@@ -116,6 +118,7 @@ const Home = (props) => {
       name: groupName,
       index: maxIndex,
       bookmarks: [],
+      pageIndex: state.currentPage,
     };
 
     post("/api/edit/add_group", newGroup).then((result) => {
@@ -173,7 +176,7 @@ const Home = (props) => {
    * @param index the new target index
    */
   const handleMoveBookmark = (_id, index) => {
-    const filteredGroups = state.groups.filter((group) => group.index === index);
+    const filteredGroups = state.groups.filter((group) => group.index === index && group.pageIndex === state.currentPage);
     const indexIsAGroup = filteredGroups.length === 1;
 
     //If the bookmark is moved to a group, special action is needed
@@ -213,6 +216,7 @@ const Home = (props) => {
     const newIndex = (targetGroup.bookmarks.length === 0) ? 0 : Math.max.apply(Math, targetGroup.bookmarks.map(bookmark => Number(bookmark.index))) + 1;
     console.log(targetGroup.bookmarks.map(bookmark => bookmark.index));
     targetBookmark.index = newIndex;
+    targetBookmark.page = Math.floor(newIndex / 9);
 
     //Adds the bookmark to the group 
     groupsCopy[groupsListIndex].bookmarks.push(targetBookmark);
@@ -235,7 +239,8 @@ const Home = (props) => {
    * @param index the index to check whether there is a bookmark
    */
   const indexHasNoBookmarks = (index) => {
-    const filteredBookmarks = state.bookmarks.filter((bookmark) => bookmark.index === index);
+    const filteredBookmarks = state.bookmarks.filter((bookmark) => bookmark.index === index && bookmark.pageIndex === state.currentPage);
+    //console.log("index " + index + "has no elements: " + (filteredBookmarks.length === 0));
     return filteredBookmarks.length === 0;
   }
 
@@ -244,7 +249,7 @@ const Home = (props) => {
    * @param index
    */
   const indexHasNoElements  = (index) => {
-    const filteredGroups = state.groups.filter((group) => group.index === index);
+    const filteredGroups = state.groups.filter((group) => group.index === index && group.pageIndex === state.currentPage);
     return indexHasNoBookmarks(index) && filteredGroups.length === 0;
   }
 
@@ -261,7 +266,11 @@ const Home = (props) => {
           onLogoutSuccess={props.handleLogout}
           onFailure={(err) => console.log(err)}
         />
-
+        <div style={{color: "white" }}>
+          Page {state.currentPage}
+        </div>
+        <Button inverted content='Previous' icon='left arrow' labelPosition='left' onClick={() => setState({...state, currentPage: state.currentPage - 1})}/>
+        <Button inverted content='Next' icon='right arrow' labelPosition='right' onClick={() => setState({...state, currentPage: state.currentPage + 1})}/>
         <div className="Home-toggleEdit">
           <Button
             toggle={state.inEditMode}
@@ -293,8 +302,8 @@ const Home = (props) => {
         size={ELEMENTS_PER_PAGE}
         userId={props.userId}
         inEditMode={state.inEditMode}
-        bookmarks={state.bookmarks}
-        groups={state.groups}
+        bookmarks={state.bookmarks.filter(bookmark => bookmark.pageIndex === state.currentPage)}
+        groups={state.groups.filter(group => group.pageIndex === state.currentPage)}
         handleMoveGroup={handleMoveGroup}
         handleMoveBookmark={handleMoveBookmark}
         handleRemoveBookmark = {handleRemoveBookmark}

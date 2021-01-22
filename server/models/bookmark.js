@@ -7,6 +7,7 @@ const BookmarkSchema = new mongoose.Schema({
   icon: String,
   customIcon: 'Buffer',
   index: Number,
+  pageIndex: Number,
 });
 
 module.exports = mongoose.model("bookmark", BookmarkSchema);
