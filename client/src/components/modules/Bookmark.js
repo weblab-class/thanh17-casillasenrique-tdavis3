@@ -20,7 +20,7 @@ const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
  * @returns {JSX.Element}
  * @constructor
  */
-const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, location, customRow, customCol, index, onRemove, _id}) => {
+const Bookmark = ({userId,inEditMode, url, name, icon, customIcon, index, onRemove, _id}) => {
 
     const contextRef = useRef()
     const [open, setOpen] = useState(false)

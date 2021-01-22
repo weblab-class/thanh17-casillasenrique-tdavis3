@@ -18,12 +18,12 @@
 
 .Group.grid {
   height: 100%;
-  display: grid;
-  grid-gap: 4px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  text-align: center;
-  align-items: center;
+  /*display: grid;*/
+  /*grid-gap: 4px;*/
+  /*grid-template-columns: repeat(3, 1fr);*/
+  /*grid-template-rows: repeat(3, 1fr);*/
+  /*text-align: center;*/
+  /*align-items: center;*/
 }
 /*.group-container{*/
 /*    !*display: grid;*!*/

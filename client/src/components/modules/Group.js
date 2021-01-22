@@ -8,6 +8,7 @@ import Bookmark from "./Bookmark";
 import CollapsedGroup from "./CollapsedGroup";
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../pages/Home";
+import Board from "./Board";
 
 /** Creates a group object given all of the properties of the group and its identification
  *
@@ -78,20 +79,26 @@ const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
       {/*<Modal.Content>*/}
       {/*TODO: make grid Expand to next page. Filter via passing in page number then map via passing in a page*/}
       <div className="Group grid" >
-        {bookmarks.map((bookmark) => {
-          return (
-            <Bookmark
-              key={bookmark._id}
-              userId={userId}
-              inEditMode={inEditMode}
-              url={bookmark.url}
-              name={bookmark.name}
-              location={undefined}
-              icon={bookmark.icon}
-              customIcon={bookmark.customIcon}
-            />
-          );
-        })}
+        {/*{bookmarks.map((bookmark) => {*/}
+        {/*  return (*/}
+        {/*    <Bookmark*/}
+        {/*      key={bookmark._id}*/}
+        {/*      userId={userId}*/}
+        {/*      inEditMode={inEditMode}*/}
+        {/*      url={bookmark.url}*/}
+        {/*      name={bookmark.name}*/}
+        {/*      location={undefined}*/}
+        {/*      icon={bookmark.icon}*/}
+        {/*      customIcon={bookmark.customIcon}*/}
+        {/*    />*/}
+        {/*  );*/}
+        {/*})}*/}
+        <Board
+          size={9}
+          userId={userId}
+          bookmarks={bookmarks}
+          groups={[]}
+        />
       </div>
       {/*</Modal.Content>*/}
       {/*//TODO: add Title @bottom*/}
