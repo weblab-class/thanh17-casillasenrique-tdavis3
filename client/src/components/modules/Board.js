@@ -13,14 +13,14 @@ export const GridContext = createContext({
 )
 
 //TODO: create bookmark and group be home so that it updates
-const Board = ({handleMoveBookmark,handleMoveGroup,inEditMode,userId, bookmarks, groups }) =>{
+const Board = ({handleMoveBookmark,handleMoveGroup,inEditMode,userId, bookmarks, groups, size }) =>{
   const [state, setState] = useState({
     squares: []
   });
 
   useEffect(() => {
     const tempSquares = []
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < size; i++) {
       tempSquares.push(addGrid(i, bookmarks,groups))
       console.log(tempSquares.length)
     }
@@ -50,6 +50,8 @@ const Board = ({handleMoveBookmark,handleMoveGroup,inEditMode,userId, bookmarks,
     return (
         <Grid
           index={i}
+          width={"12.5%"}
+          height={"17%"}
           handleMoveGroup={handleMoveGroup}
           handleMoveBookmark={handleMoveBookmark}
           element={element}

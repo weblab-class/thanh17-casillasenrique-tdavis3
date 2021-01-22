@@ -6,7 +6,7 @@ import "./Group.css";
 import { Button, Header, Image, Modal, Icon, Grid } from "semantic-ui-react";
 import Bookmark from "./Bookmark";
 import CollapsedGroup from "./CollapsedGroup";
-import { useDrag } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../pages/Home";
 
 /** Creates a group object given all of the properties of the group and its identification
@@ -37,6 +37,16 @@ const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
     }),
   })
 
+  // const [{ isOver }, drop] = useDrop({
+  //   accept: ItemTypes.BOOKMARK,
+  //   drop: (item) =>
+  //       // handleAddBookmark(item._id,index),
+  //   console.log(item),
+  //   collect: monitor => ({
+  //     isOver: !!monitor.isOver(),
+  //   }),
+  // })
+
   return (
     <Modal
       className="Group modal"
@@ -46,7 +56,8 @@ const Group = ({_id, bookmarks, inEditMode, userId, name,index }) => {
       open={open}
       dimmer="blurring"
       trigger={
-        <div ref={drag}
+        <div
+          ref={drag}
         style={{
         opacity: isDragging ? 0 : 1,
         fontSize: 25,

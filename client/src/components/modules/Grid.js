@@ -6,18 +6,21 @@ import Bookmark from "./Bookmark";
 import Group from "./Group";
 import "./Grid.css"
 
-const Grid = ({handleMoveBookmark,handleMoveGroup, index, element, type, userId, inEditMode}) => {
+const Grid = ({handleMoveBookmark,handleMoveGroup, index, element, type, userId, inEditMode, width, height}) => {
 
   // useEffect(() => {
   // },[])
   //
+
+
+
   const [{ isOver }, drop] = useDrop({
     accept: [ItemTypes.BOOKMARK, ItemTypes.GROUP],
     drop: (item) =>
-      //TODO: replace with _id?
       item.type === ItemTypes.GROUP ? handleMoveGroup(item._id,index):
         handleMoveBookmark(item._id,index),
     // console.log(item),
+    // canDrop: () => indexHasNoBookmarks(index),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
@@ -29,8 +32,8 @@ const Grid = ({handleMoveBookmark,handleMoveGroup, index, element, type, userId,
       className={"grid-individual"}
       ref={drop}
       style={{
-        width: "12.5%",
-        height:"17%",
+        width: width,
+        height: height,
         /*background-color: #396dff;*/
         outline: "white solid",
         display: "flex",
