@@ -135,7 +135,6 @@ router.post("/edit/add_bookmark", (req, res) => {
     url: req.body.url,
     icon: req.body.icon,
     customIcon: Buffer.from(req.body.customIcon, "utf-8"),
-    group: req.body.group,
     index: req.body.index,
   });
   newBookmark

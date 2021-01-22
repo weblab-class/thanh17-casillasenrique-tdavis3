@@ -11,9 +11,7 @@ import Background from "../../public/images/background.jpg";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Board from "../modules/Board";
-const SCREEN_WIDTH = 8;
-const IN_HOME = null;
-
+const ELEMENTS_PER_PAGE = 48;
 //@param userId
 //@param handleLogout
 /**
@@ -87,7 +85,6 @@ const Home = (props) => {
       url: url,
       icon: selectedIcon,
       customIcon: imageBuffer,
-      group: IN_HOME,
       index: maxIndex,
     };
     
@@ -293,7 +290,7 @@ const Home = (props) => {
       {/*{console.log("YOOOOOOOO")}*/}
       {/*{console.log(state.bookmarks)}*/}
       <Board
-        size={48}
+        size={ELEMENTS_PER_PAGE}
         userId={props.userId}
         inEditMode={state.inEditMode}
         bookmarks={state.bookmarks}
