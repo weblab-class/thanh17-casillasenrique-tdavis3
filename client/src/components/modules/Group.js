@@ -72,7 +72,7 @@ const Group = ({
    */
   const indexHasNoBookmarksInGroup = (groupID,index) => {
     const filteredBookmarks = bookmarks.filter((bookmark) => bookmark.index === index && bookmark.pageIndex === page)
-    console.log(filteredBookmarks.length)
+    // console.log(filteredBookmarks.length)
     return filteredBookmarks.length === 0;
   }
   return (
