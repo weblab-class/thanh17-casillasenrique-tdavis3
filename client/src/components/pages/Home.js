@@ -228,6 +228,28 @@ const Home = (props) => {
     }
   };
 
+  /** Move a bookmark in a group
+   *
+   * @param groupID ID of the group we're modifying
+   * @param _id the id of the bookmark being moved
+   * @param index the new index of the bookmark
+   */
+  const moveBookmarksInGroup = (groupID,_id,index) => {
+    const group = state.groups.filter((group) => group._id === groupID)[0];
+    //Find the index of bookmark, set to new index
+    const bookmarkListIndex = group.bookmarks.map((bookmark) => bookmark._id).indexOf(_id);
+    let bookmarksCopy = [...group.bookmarks];
+    bookmarksCopy[bookmarkListIndex].index = index;
+    group.bookmarks = bookmarksCopy;
+
+    const newGroups = state.groups.filter((group) => group._id !== groupID)
+    newGroups.push(group)
+
+    setState({ ...state, groups: newGroups });
+
+    post("/api/edit/edit_group", group);
+
+  }
   /** Adds a bookmark to the group 
    * 
    * @param bookmarkId the ID of the bookmark that is being moved 
@@ -273,9 +295,9 @@ const Home = (props) => {
   const indexHasNoBookmarks = (index) => {
     const filteredBookmarks = state.bookmarks.filter((bookmark) => bookmark.index === index && bookmark.pageIndex === state.currentPage);
     //console.log("index " + index + "has no elements: " + (filteredBookmarks.length === 0));
+    // console.log(filteredBookmarks.length)
     return filteredBookmarks.length === 0;
   }
-
   /** Returns whether there is any element at the given index index
    *
    * @param index
@@ -374,6 +396,7 @@ const Home = (props) => {
         groups={state.groups.filter(group => group.pageIndex === state.currentPage)}
         handleMoveGroup={handleMoveGroup}
         handleMoveBookmark={handleMoveBookmark}
+        moveBookmarksInGroup = {moveBookmarksInGroup}
         handleRemoveBookmark = {handleRemoveBookmark}
         removeBookmarkFromGroup = {removeBookmarkFromGroup}
         indexHasNoBookmarks = {indexHasNoBookmarks}

@@ -30,24 +30,15 @@ const Group = ({
                  name,
                  index,
                  removeBookmarkFromGroup,
+                 moveBookmarksInGroup,
                  indexHasNoBookmarks}) => {
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
   },[bookmarks]);
 
+
   const [page, setPage] = useState(0);
 
-  //TODO: handleMoveBookmark edit bookmarks and update group?
-  const handleMoveBookmark = (_id,index) => {
-    const bookmarkListIndex = bookmarks.map((bookmark) => bookmark._id).indexOf(_id);
-
-    //Modifies a copy of the bookmarks list and sets it to state optimistically
-    let bookmarksCopy = [...bookmarks];
-    bookmarksCopy[bookmarkListIndex].index = index;
-    // bookmarks = bookmarksCopy;
-    // setState({ ...state, bookmarks: bookmarksCopy });
-    // post("/api/edit/edit_bookmark", { _id: _id, index: index });
-  }
   const [{isDragging}, drag] = useDrag({
     item: {
       type: ItemTypes.GROUP,
@@ -73,6 +64,17 @@ const Group = ({
   //   }),
   // })
 
+  /** Return a boolean indicating whether there is a boolean at index index
+   *
+   * @param groupID ID of the group
+   * @param index index of the desired moving location
+   * @returns {boolean} indicating whether there is another bookmark at index
+   */
+  const indexHasNoBookmarksInGroup = (groupID,index) => {
+    const filteredBookmarks = bookmarks.filter((bookmark) => bookmark.index === index && bookmark.pageIndex === page)
+    console.log(filteredBookmarks.length)
+    return filteredBookmarks.length === 0;
+  }
   return (
     <>
 
@@ -116,9 +118,10 @@ const Group = ({
           userId={userId}
           bookmarks={bookmarks.filter(bookmark => bookmark.pageIndex === page)}
           groups={[]}
-          handleMoveBookmark={handleMoveBookmark}
+          moveBookmarksInGroup={moveBookmarksInGroup}
           removeBookmarkFromGroup= {removeBookmarkFromGroup}
           indexHasNoBookmarks = {indexHasNoBookmarks}
+          indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}
         />
       </div>
       <div style={{
@@ -144,8 +147,15 @@ const Group = ({
         top:"-5%"}}>
         Page {page}
       </div>
-      {/*</Modal.Content>*/}
-      {/*//TODO: add Title @bottom*/}
+      <header style={{
+        fontSize: "xxx-large",
+        color: "white",
+        position: "fixed",
+        left: "50%",
+        transform: "translateX(-50%)",
+        bottom:"-10%"}}>
+        {name}
+      </header>
     </Modal>
     </>
   );

@@ -40,10 +40,12 @@ const Board = ({
                  size,
                  handleMoveGroup,
                  handleMoveBookmark,
+                 moveBookmarksInGroup,
                  handleRemoveBookmark,
                  removeBookmarkFromGroup,
                  indexHasNoBookmarks,
-                 indexHasNoElements}) =>{
+                 indexHasNoElements,
+                 indexHasNoBookmarksInGroup}) =>{
   const [state, setState] = useState({
     squares: []
   });
@@ -91,10 +93,12 @@ const Board = ({
           inEditMode={inEditMode}
           type={type}
           handleMoveGroup={handleMoveGroup}
+          moveBookmarksInGroup={moveBookmarksInGroup}
           handleRemoveBookmark = {handleRemoveBookmark}
           removeBookmarkFromGroup = {removeBookmarkFromGroup}
           indexHasNoBookmarks={indexHasNoBookmarks}
-          indexHasNoElements={indexHasNoElements}/>
+          indexHasNoElements={indexHasNoElements}
+          indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}/>
     );
   }
 

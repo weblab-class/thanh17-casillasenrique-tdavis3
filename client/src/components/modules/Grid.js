@@ -36,10 +36,12 @@ const Grid = ({
                 height,
                 handleMoveGroup,
                 handleMoveBookmark,
+                moveBookmarksInGroup,
                 handleRemoveBookmark,
                 removeBookmarkFromGroup,
                 indexHasNoBookmarks,
-                indexHasNoElements}) => {
+                indexHasNoElements,
+                indexHasNoBookmarksInGroup}) => {
 
   // useEffect(() => {
   // },[])
@@ -51,11 +53,13 @@ const Grid = ({
     accept: [ItemTypes.BOOKMARK, ItemTypes.GROUP],
     drop: (item) =>
       item.type === ItemTypes.GROUP ? handleMoveGroup(item._id,index):
-        handleMoveBookmark(item._id,index),
+        (groupID ? moveBookmarksInGroup(groupID,item._id,index)
+          : handleMoveBookmark(item._id,index)),
     // console.log(item),
     canDrop: (item) =>
       item.type ===ItemTypes.BOOKMARK?
-      indexHasNoBookmarks(index): indexHasNoElements(index),
+        (groupID? indexHasNoBookmarksInGroup(groupID,index) : indexHasNoBookmarks(index))
+        : indexHasNoElements(index),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
@@ -114,9 +118,10 @@ const Grid = ({
         userId={userId}
         name= {element.name}
         index = {element.index}
-        handleMoveBookmark={handleMoveBookmark}
+        moveBookmarksInGroup={moveBookmarksInGroup}
         removeBookmarkFromGroup={removeBookmarkFromGroup}
         indexHasNoBookmarks={indexHasNoBookmarks}
+        indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}
         />: null
       }
     </div>
