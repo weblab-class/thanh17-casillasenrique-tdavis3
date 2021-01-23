@@ -26,17 +26,18 @@ import "./Grid.css"
  * @constructor
  */
 const Grid = ({
-
                 index,
                 element,
                 type,
                 userId,
+                groupID,
                 inEditMode,
                 width,
                 height,
                 handleMoveGroup,
                 handleMoveBookmark,
                 handleRemoveBookmark,
+                removeBookmarkFromGroup,
                 indexHasNoBookmarks,
                 indexHasNoElements}) => {
 
@@ -91,6 +92,7 @@ const Grid = ({
       {/*  />*/}
       {/*)}*/}
       {type === ItemTypes.BOOKMARK? <Bookmark
+        groupID={groupID}
         _id = {element._id}
         userId={userId}
         inEditMode={inEditMode}
@@ -102,6 +104,7 @@ const Grid = ({
         customCol={element.customCol}
         index={element.index}
         onRemove={() => handleRemoveBookmark(element._id)}
+        removeBookmarkFromGroup={removeBookmarkFromGroup}
       /> : null}
       {type === ItemTypes.GROUP?
       <Group
@@ -112,7 +115,7 @@ const Grid = ({
         name= {element.name}
         index = {element.index}
         handleMoveBookmark={handleMoveBookmark}
-        handleRemoveBookmark={handleRemoveBookmark}
+        removeBookmarkFromGroup={removeBookmarkFromGroup}
         indexHasNoBookmarks={indexHasNoBookmarks}
         />: null
       }

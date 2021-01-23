@@ -34,12 +34,14 @@ const Board = ({
 
                  inEditMode,
                  userId,
+                 groupID,
                  bookmarks,
                  groups,
                  size,
                  handleMoveGroup,
                  handleMoveBookmark,
                  handleRemoveBookmark,
+                 removeBookmarkFromGroup,
                  indexHasNoBookmarks,
                  indexHasNoElements}) =>{
   const [state, setState] = useState({
@@ -80,6 +82,7 @@ const Board = ({
         <Grid
           key = {i}
           index={i}
+          groupID={groupID}
           width={size === 48? "12.5%": "30%"}
           height={size === 48? "17%": "30%"}
           handleMoveBookmark={handleMoveBookmark}
@@ -89,6 +92,7 @@ const Board = ({
           type={type}
           handleMoveGroup={handleMoveGroup}
           handleRemoveBookmark = {handleRemoveBookmark}
+          removeBookmarkFromGroup = {removeBookmarkFromGroup}
           indexHasNoBookmarks={indexHasNoBookmarks}
           indexHasNoElements={indexHasNoElements}/>
     );

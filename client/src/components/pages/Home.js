@@ -1,16 +1,13 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
-import { post, get, del, readFileAsync } from "../../utilities";
-import Bookmark from "../modules/Bookmark";
+import { del, get, post, readFileAsync } from "../../utilities";
 import { Button, Icon } from "semantic-ui-react";
-import Group from "../modules/Group";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
 import Background from "../../public/images/background.jpg";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import Board from "../modules/Board";
+
 const ELEMENTS_PER_PAGE = 48;
 //@param userId
 //@param handleLogout
@@ -157,6 +154,24 @@ const Home = (props) => {
     del("/api/edit/delete_bookmark", { _id });
   };
 
+  /** remove a Bookmark from a group
+   *
+   * @param groupID the Group id number
+   * @param _id the id of the Bookmark
+   */
+  const removeBookmarkFromGroup = (groupID, _id) => {
+    const group = state.groups.filter((group) => group._id === groupID)[0];
+    console.log(group)
+    group.bookmarks = group.bookmarks.filter((bookmark) => bookmark._id !== _id);
+
+    const newGroups = state.groups.filter((group) => group._id !== groupID)
+    newGroups.push(group)
+
+    setState({ ...state, groups: newGroups });
+    console.log(state.groups)
+
+    post("/api/edit/edit_group", group);
+  }
   /** Handles the moving of a generic element
    * TODO add more detailed description?
    *
@@ -339,6 +354,7 @@ const Home = (props) => {
         handleMoveGroup={handleMoveGroup}
         handleMoveBookmark={handleMoveBookmark}
         handleRemoveBookmark = {handleRemoveBookmark}
+        removeBookmarkFromGroup = {removeBookmarkFromGroup}
         indexHasNoBookmarks = {indexHasNoBookmarks}
         indexHasNoElements = {indexHasNoElements}
       />

@@ -29,22 +29,13 @@ const Group = ({
                  userId,
                  name,
                  index,
+                 removeBookmarkFromGroup,
                  indexHasNoBookmarks}) => {
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
   },[bookmarks]);
 
   const [page, setPage] = useState(0);
-
-  //TODO: handleRemoveBookmark
-  const handleRemoveBookmark = (_id) => {
-    const newBookmarks = bookmarks.filter((bookmark) => bookmark._id !== _id);
-
-    // setState({ ...state, bookmarks: newBookmarks });
-    //TODO: populate??
-
-    // del("/api/edit/delete_bookmark", { _id });
-  };
 
   //TODO: handleMoveBookmark edit bookmarks and update group?
   const handleMoveBookmark = (_id,index) => {
@@ -66,7 +57,7 @@ const Group = ({
       // customCol: 0,
       index: index
     },
-    // canDrag: inEditMode,
+    canDrag: inEditMode,
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -134,12 +125,14 @@ const Group = ({
         {/*  );*/}
         {/*})}*/}
         <Board
+          groupID={_id}
+          inEditMode={inEditMode}
           size={9}
           userId={userId}
           bookmarks={bookmarks.filter(bookmark => bookmark.pageIndex === page)}
           groups={[]}
           handleMoveBookmark={handleMoveBookmark}
-          handleRemoveBookmark = {handleRemoveBookmark}
+          removeBookmarkFromGroup= {removeBookmarkFromGroup}
           indexHasNoBookmarks = {indexHasNoBookmarks}
         />
       </div>

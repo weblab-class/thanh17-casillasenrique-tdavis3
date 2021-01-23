@@ -20,7 +20,19 @@ const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
  * @returns {JSX.Element}
  * @constructor
  */
-const Bookmark = ({ userId, inEditMode, url, name, icon, customIcon, index, onRemove, _id }) => {
+const Bookmark = ({
+                    userId,
+                    inEditMode,
+                    url,
+                    name,
+                    icon,
+                    customIcon,
+                    index,
+                    onRemove,
+                    removeBookmarkFromGroup,
+                    groupID,
+                    _id,
+                    }) => {
   const contextRef = useRef();
   const [open, setOpen] = useState(false);
   const [displayedIcon, setDisplayedIcon] = useState(globe);
@@ -70,7 +82,7 @@ const Bookmark = ({ userId, inEditMode, url, name, icon, customIcon, index, onRe
       // customCol: customCol,
       index: index,
     },
-    // canDrag: inEditMode,
+    canDrag: inEditMode,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -115,14 +127,15 @@ const Bookmark = ({ userId, inEditMode, url, name, icon, customIcon, index, onRe
         <Menu
           items={[{ key: "delete", content: "Delete", icon: "remove" }]}
           onItemClick={() => {
-            onRemove();
+            groupID? removeBookmarkFromGroup(groupID,_id) : onRemove();
             setOpen(false);
+            console.log(groupID);
           }}
           secondary
           vertical
         />
       </Popup>
-      {inEditMode && <Button size="tiny" inverted circular icon="close" onClick={onRemove} />}
+      {inEditMode && <Button size="tiny" inverted circular icon="close" onClick={groupID? () => removeBookmarkFromGroup(groupID,_id): onRemove} />}
     </div>
   );
 };
