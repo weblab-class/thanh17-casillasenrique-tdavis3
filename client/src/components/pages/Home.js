@@ -88,7 +88,7 @@ const Home = (props) => {
    * @param selectedCustomIcon the icon of the new bookmark in file form — may be null
    */
   const handleCreateBookmark = async ({ url, bookmarkName, selectedIcon, selectedCustomIcon }) => {
-    const [ page, maxIndex ] = findNextPageAndIndex();
+    const [ maxIndex, page ] = findNextPageAndIndex();
     
     // Load the image, use empty string if custom icon is not being used
     let imageBuffer = selectedCustomIcon ? await readFileAsync(selectedCustomIcon) : "";
@@ -127,7 +127,7 @@ const Home = (props) => {
    */
   const handleCreateGroup = ({ groupName }) => {
     const [ maxIndex, page ] = findNextPageAndIndex();
-    
+
     const newGroup = {
       name: groupName,
       index: maxIndex,
