@@ -146,7 +146,7 @@ const Group = ({
       <div>
         Page {page}
       </div>
-      <Button inverted content='Previous' icon='left arrow' labelPosition='left' onClick={() => setPage(page - 1)}/>
+      <Button disabled={page === 0} inverted content='Previous' icon='left arrow' labelPosition='left' onClick={() => setPage(page - 1)}/>
       <Button inverted content='Next' icon='right arrow' labelPosition='right' onClick={() => setPage(page + 1)}/>
       {/*</Modal.Content>*/}
       {/*//TODO: add Title @bottom*/}

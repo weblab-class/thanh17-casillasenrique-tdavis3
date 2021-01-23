@@ -59,11 +59,11 @@ const Home = (props) => {
    * Finds the maximum index within the list of bookmarks and
    * groups for the new added component
    */
-  const findMaxIndex = () => {
+  const findMaxIndex = (currentPage) => {
     return Math.max(
       -1,
-      ...state.bookmarks.filter(bookmark => bookmark.pageIndex === state.currentPage).map((e) => (e.index ? e.index : 0)),
-      ...state.groups.filter(group => group.pageIndex === state.currentPage).map((e) => (e.index ? e.index : 0))
+      ...state.bookmarks.filter(bookmark => bookmark.pageIndex === currentPage).map((e) => (e.index ? e.index : 0)),
+      ...state.groups.filter(group => group.pageIndex === currentPage).map((e) => (e.index ? e.index : 0))
     );
   };
 
@@ -75,8 +75,15 @@ const Home = (props) => {
    * @param selectedCustomIcon the icon of the new bookmark in file form — may be null
    */
   const handleCreateBookmark = async ({ url, bookmarkName, selectedIcon, selectedCustomIcon }) => {
-    const maxIndex = findMaxIndex() + 1;
+    let page = state.currentPage;
+    let maxIndex = findMaxIndex(page) + 1;
 
+    while (maxIndex >= 48) {
+      page += 1;
+      console.log("need to go to the next page");  
+      maxIndex = findMaxIndex(page) + 1;
+    }
+    
     // Load the image, use empty string if custom icon is not being used
     let imageBuffer = selectedCustomIcon ? await readFileAsync(selectedCustomIcon) : "";
     // -----------
@@ -87,7 +94,7 @@ const Home = (props) => {
       icon: selectedIcon,
       customIcon: imageBuffer,
       index: maxIndex,
-      pageIndex: state.currentPage
+      pageIndex: page,
     };
     
     //Send post request with new bookmark
@@ -98,6 +105,7 @@ const Home = (props) => {
 
       setState({
         ...state,
+        currentPage: page,
         bookmarks: [result].concat(state.bookmarks),
       });
     })
@@ -213,15 +221,17 @@ const Home = (props) => {
     
     //Replaces the bookmark's old index with new index within the group 
     const targetGroup = groupsCopy[groupsListIndex];
-    const newIndex = (targetGroup.bookmarks.length === 0) ? 0 : Math.max.apply(Math, targetGroup.bookmarks.map(bookmark => Number(bookmark.index))) + 1;
+    const newIndex = (targetGroup.bookmarks.length === 0) ? 0 : Math.max.apply(Math, targetGroup.bookmarks.map(bookmark => Number(bookmark.pageIndex) * 9 + Number(bookmark.index))) + 1;
     console.log(targetGroup.bookmarks.map(bookmark => bookmark.index));
-    targetBookmark.index = newIndex;
-    targetBookmark.page = Math.floor(newIndex / 9);
+    
+    targetBookmark.index = newIndex % 9;
+    targetBookmark.pageIndex = Math.floor(newIndex / 9);
+    console.log("new index: " + (newIndex % 9) + " New page: " + targetBookmark.pageIndex);
 
     //Adds the bookmark to the group 
     groupsCopy[groupsListIndex].bookmarks.push(targetBookmark);
     //console.log("new group with bookmark: " + Object.values(groupsCopy[groupsListIndex]));
-    console.log("new index of bookmark: " + newIndex);
+    //console.log("new index of bookmark: " + newIndex);
     //Optimistic
     setState({...state, bookmarks: bookmarksCopy, groups: groupsCopy});
 
@@ -269,8 +279,22 @@ const Home = (props) => {
         <div style={{color: "white" }}>
           Page {state.currentPage}
         </div>
-        <Button inverted content='Previous' icon='left arrow' labelPosition='left' onClick={() => setState({...state, currentPage: state.currentPage - 1})}/>
-        <Button inverted content='Next' icon='right arrow' labelPosition='right' onClick={() => setState({...state, currentPage: state.currentPage + 1})}/>
+        <Button 
+          disabled={state.currentPage === 0} 
+          inverted 
+          content='Previous' 
+          icon='left arrow' 
+          labelPosition='left' 
+          onClick={() => setState({...state, currentPage: state.currentPage - 1})}
+        />
+        <Button 
+          inverted 
+          content='Next' 
+          icon='right arrow' 
+          labelPosition='right' 
+          onClick={() => setState({...state, currentPage: state.currentPage + 1})}
+        />
+        <Button content="add test bookmark" onClick={() => handleCreateBookmark({url: "https://google.com", bookmarkName: "Test Bookmark", selectedIcon: "https://www.google.com/s2/favicons?sz=256&domain_url=https://www.google.com", selectedCustomIcon: null})}/>
         <div className="Home-toggleEdit">
           <Button
             toggle={state.inEditMode}
@@ -278,6 +302,7 @@ const Home = (props) => {
             inverted
             size="huge"
             animated="vertical"
+            color={state.inEditMode ? "blue" : "white"}
           >
             <div className={"icon-button"}>
               <Button.Content visible>
