@@ -67,14 +67,7 @@ const Home = (props) => {
     );
   };
 
-  /** Creates a new bookmark on the home screen given the url, bookmark name, and icon desired
-   *
-   * @param url the url of the new bookmark to be added
-   * @param bookmarkName the name of the bookmark to be added
-   * @param selectedIcon the desired icon of the new bookmark — may be null
-   * @param selectedCustomIcon the icon of the new bookmark in file form — may be null
-   */
-  const handleCreateBookmark = async ({ url, bookmarkName, selectedIcon, selectedCustomIcon }) => {
+  const findNextPageAndIndex = () => {
     let page = state.currentPage;
     let maxIndex = findMaxIndex(page) + 1;
 
@@ -83,6 +76,19 @@ const Home = (props) => {
       console.log("need to go to the next page");  
       maxIndex = findMaxIndex(page) + 1;
     }
+
+    return [ maxIndex, page ];
+  }
+
+  /** Creates a new bookmark on the home screen given the url, bookmark name, and icon desired
+   *
+   * @param url the url of the new bookmark to be added
+   * @param bookmarkName the name of the bookmark to be added
+   * @param selectedIcon the desired icon of the new bookmark — may be null
+   * @param selectedCustomIcon the icon of the new bookmark in file form — may be null
+   */
+  const handleCreateBookmark = async ({ url, bookmarkName, selectedIcon, selectedCustomIcon }) => {
+    const [ page, maxIndex ] = findNextPageAndIndex();
     
     // Load the image, use empty string if custom icon is not being used
     let imageBuffer = selectedCustomIcon ? await readFileAsync(selectedCustomIcon) : "";
@@ -120,19 +126,20 @@ const Home = (props) => {
    * @param groupName The name that the user designate for the new group
    */
   const handleCreateGroup = ({ groupName }) => {
-    const maxIndex = findMaxIndex() + 1;
-
+    const [ maxIndex, page ] = findNextPageAndIndex();
+    
     const newGroup = {
       name: groupName,
       index: maxIndex,
       bookmarks: [],
-      pageIndex: state.currentPage,
+      pageIndex: page,
     };
 
     post("/api/edit/add_group", newGroup).then((result) => {
       setState({
         ...state,
-        groups: [result].concat(state.groups)
+        groups: [result].concat(state.groups),
+        currentPage: page
       });
     }).catch((err) => {
       console.log("error occurred in post request to api on add group");
