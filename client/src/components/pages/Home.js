@@ -292,57 +292,77 @@ const Home = (props) => {
 
       {/*The logout button*/}
       <div className={"Home-top"}>
-        <GoogleLogout
-          clientId={props.googleClientId}
-          buttonText="Logout"
-          onLogoutSuccess={props.handleLogout}
-          onFailure={(err) => console.log(err)}
-        />
-        <div style={{color: "white" }}>
-          Page {state.currentPage}
-        </div>
-        <Button 
-          disabled={state.currentPage === 0} 
-          inverted 
-          content='Previous' 
-          icon='left arrow' 
-          labelPosition='left' 
-          onClick={() => setState({...state, currentPage: state.currentPage - 1})}
-        />
-        <Button 
-          inverted 
-          content='Next' 
-          icon='right arrow' 
-          labelPosition='right' 
-          onClick={() => setState({...state, currentPage: state.currentPage + 1})}
-        />
-        <Button content="add test bookmark" onClick={() => handleCreateBookmark({url: "https://google.com", bookmarkName: "Test Bookmark", selectedIcon: "https://www.google.com/s2/favicons?sz=256&domain_url=https://www.google.com", selectedCustomIcon: null})}/>
-        <div className="Home-toggleEdit">
-          <Button
-            toggle={state.inEditMode}
-            onClick={() => setState({ ...state, inEditMode: !state.inEditMode })}
-            inverted
-            size="huge"
-            animated="vertical"
-            color={state.inEditMode ? "blue" : "white"}
-          >
-            <div className={"icon-button"}>
-              <Button.Content visible>
-                <Icon name="edit" />
-              </Button.Content>
+        {/*<GoogleLogout*/}
+        {/*  clientId={props.googleClientId}*/}
+        {/*  buttonText="Logout"*/}
+        {/*  onLogoutSuccess={props.handleLogout}*/}
+        {/*  onFailure={(err) => console.log(err)}*/}
+        {/*/>*/}
+
+        <div style={{display: "flex",
+          paddingTop:"1em",
+          paddingLeft: "1em",
+          paddingRight: "1em",
+          justifyContent: "space-between" }}>
+          <div>
+            <Button
+              disabled={state.currentPage === 0}
+              inverted
+              // content='Previous'
+              icon='angle left'
+              // labelPosition='left'
+              size={"medium"}
+              onClick={() => setState({...state, currentPage: state.currentPage - 1})}
+            />
+            <Button
+              inverted
+              // content='Next'
+              size={"medium"}
+              icon='angle right'
+              // labelPosition='right'
+              onClick={() => setState({...state, currentPage: state.currentPage + 1})}
+            />
+          </div>
+
+          <div style={{
+            color: "white",
+            position: "fixed",
+            left: "50%",
+            transform: "translateX(-50%)"}}>
+            Page {state.currentPage}
+          </div>
+          <div style={{display:"flex"}}>
+            <div className="Home-toggleEdit" >
+              <Button
+                toggle={state.inEditMode}
+                onClick={() => setState({ ...state, inEditMode: !state.inEditMode })}
+                inverted
+                size="medium"
+                animated="vertical"
+                color={state.inEditMode ? "blue" : "white"}
+              >
+                <div className={"icon-button"}>
+                  <Button.Content visible>
+                    <Icon name="edit" />
+                  </Button.Content>
+                </div>
+                <Button.Content hidden>Edit</Button.Content>
+              </Button>
             </div>
-            <Button.Content hidden>Edit</Button.Content>
-          </Button>
+
+            {/*The freaking bookmark bar*/}
+            <div className={"Home-edit-dropdown"}>
+              <EditBar
+                handleCreateBookmark={handleCreateBookmark}
+                handleCreateGroup={handleCreateGroup}
+              />
+            </div>
+          </div>
+          </div>
         </div>
 
-        {/*The freaking bookmark bar*/}
-        <div className={"Home-edit-dropdown"}>
-          <EditBar
-            handleCreateBookmark={handleCreateBookmark}
-            handleCreateGroup={handleCreateGroup}
-          />
-        </div>
-      </div>
+        {/*<Button content="add test bookmark" onClick={() => handleCreateBookmark({url: "https://google.com", bookmarkName: "Test Bookmark", selectedIcon: "https://www.google.com/s2/favicons?sz=256&domain_url=https://www.google.com", selectedCustomIcon: null})}/>*/}
+
       {/*{console.log("YOOOOOOOO")}*/}
       {/*{console.log(state.bookmarks)}*/}
       <Board

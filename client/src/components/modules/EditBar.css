@@ -1,6 +1,6 @@
 .EditBar.ui.dropdown.menu {
-  height: 250px;
-  width: 100px;
+  /*height: 250px;*/
+  /*width: 100px;*/
   margin-top: 0;
   margin-bottom: 0;
   margin-right: 0;
@@ -27,7 +27,7 @@
 .EditBar-dropdown-button {
 
   width: 4.5em!important;
-  height: 4em!important;
+  height: 2.8em!important;
   text-align: center!important;
   display: flex!important;
   flex-direction: column;

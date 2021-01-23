@@ -89,6 +89,9 @@ const Bookmark = ({
   });
   return (
     <div>
+      <div style={{display:"flex",justifyContent:"flex-end", outline: "none !important"}}>
+        {inEditMode && <Button size="mini" circular compact={true} icon="close" onClick={groupID? () => removeBookmarkFromGroup(groupID,_id): onRemove} />}
+      </div>
       <form
         action={"http://" + url.replace(new RegExp("((http|https)://)?(www.)?"), "")}
         target="_blank"
@@ -123,7 +126,9 @@ const Bookmark = ({
           {name}
         </p>
       </form>
-      <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open}>
+
+      {/*//TODO: make popup not blurry*/}
+      <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open} >
         <Menu
           items={[{ key: "delete", content: "Delete", icon: "remove" }]}
           onItemClick={() => {
@@ -135,7 +140,8 @@ const Bookmark = ({
           vertical
         />
       </Popup>
-      {inEditMode && <Button size="tiny" inverted circular icon="close" onClick={groupID? () => removeBookmarkFromGroup(groupID,_id): onRemove} />}
+
+
     </div>
   );
 };

@@ -40,7 +40,7 @@ const EditBar = ({ handleCreateBookmark, handleCreateGroup }) => {
   });
 
   return (
-    <>
+    <div>
       {/* New Bookmark Form */}
       <NewComponentModal
         isOpen={modalStates.bookmarkModalOpened}
@@ -56,11 +56,11 @@ const EditBar = ({ handleCreateBookmark, handleCreateGroup }) => {
       />
 
       {/* New Folder Form */}
-      <NewComponentModal
-        isOpen={modalStates.folderModalOpened}
-        form={<NewFolderForm onSubmit={handleCreateBookmark} />}
-        close={() => setModalStates({ ...modalStates, folderModalOpened: false })}
-      />
+      {/*<NewComponentModal*/}
+      {/*  isOpen={modalStates.folderModalOpened}*/}
+      {/*  form={<NewFolderForm onSubmit={handleCreateBookmark} />}*/}
+      {/*  close={() => setModalStates({ ...modalStates, folderModalOpened: false })}*/}
+      {/*/>*/}
 
       {/* New Folder Form */}
       <NewComponentModal
@@ -84,24 +84,27 @@ const EditBar = ({ handleCreateBookmark, handleCreateGroup }) => {
             image={<img className="u-textCenter EditBar image" src={newBookmark} />}
             onClick={() => setModalStates({ ...modalStates, bookmarkModalOpened: true })}
           />
+
+          <>
+          </>
           <Dropdown.Item
             className="EditBar ui dropdown item"
             image={<img className="u-textCenter EditBar image" src={newGroup} />}
             onClick={() => setModalStates({ ...modalStates, groupModalOpened: true })}
           />
-          <Dropdown.Item
-            className="EditBar ui dropdown item"
-            icon={<img className="u-textCenter EditBar image" src={newFolder} />}
-            onClick={() => setModalStates({ ...modalStates, folderModalOpened: true })}
-          />
-          <Dropdown.Item
-            className="EditBar ui dropdown item"
-            icon={<img className="u-textCenter EditBar image" src={newWidget} />}
-            onClick={() => setModalStates({ ...modalStates, widgetModalOpened: true })}
-          />
+          {/*<Dropdown.Item*/}
+          {/*  className="EditBar ui dropdown item"*/}
+          {/*  icon={<img className="u-textCenter EditBar image" src={newFolder} />}*/}
+          {/*  onClick={() => setModalStates({ ...modalStates, folderModalOpened: true })}*/}
+          {/*/>*/}
+          {/*<Dropdown.Item*/}
+          {/*  className="EditBar ui dropdown item"*/}
+          {/*  icon={<img className="u-textCenter EditBar image" src={newWidget} />}*/}
+          {/*  onClick={() => setModalStates({ ...modalStates, widgetModalOpened: true })}*/}
+          {/*/>*/}
         </Dropdown.Menu>
       </Dropdown>
-    </>
+    </div>
   );
 };
 
