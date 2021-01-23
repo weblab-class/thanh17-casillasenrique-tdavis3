@@ -74,6 +74,9 @@ const Group = ({
   // })
 
   return (
+    <>
+
+
     <Modal
       className="Group modal"
       size="small"
@@ -105,25 +108,7 @@ const Group = ({
       }
       centered
     >
-      {/*{console.log("bookmarks:" + bookmarks)}*/}
-      {/*<Modal.Header>Should probably have a title somewhere</Modal.Header>*/}
-      {/*<Modal.Content>*/}
-      {/*TODO: make grid Expand to next page. Filter via passing in page number then map via passing in a page*/}
-      <div className="Group grid">
-        {/*{bookmarks.map((bookmark) => {*/}
-        {/*  return (*/}
-        {/*    <Bookmark*/}
-        {/*      key={bookmark._id}*/}
-        {/*      userId={userId}*/}
-        {/*      inEditMode={inEditMode}*/}
-        {/*      url={bookmark.url}*/}
-        {/*      name={bookmark.name}*/}
-        {/*      location={undefined}*/}
-        {/*      icon={bookmark.icon}*/}
-        {/*      customIcon={bookmark.customIcon}*/}
-        {/*    />*/}
-        {/*  );*/}
-        {/*})}*/}
+      <div className={"Group grid"}>
         <Board
           groupID={_id}
           inEditMode={inEditMode}
@@ -136,14 +121,33 @@ const Group = ({
           indexHasNoBookmarks = {indexHasNoBookmarks}
         />
       </div>
-      <div>
+      <div style={{
+        color: "white",
+        position: "fixed",
+        left: "50%",
+        transform: "translateX(-50%)",
+        bottom: "50%"}}>
+        <div style={{display:"flex", justifyContent:"space-between"}}>
+          <Button disabled={page === 0} size={"huge"} inverted icon='angle left' onClick={() => setPage(page - 1)}/>
+          <div style={{paddingRight:"48vw"}}/>
+          <Button inverted icon='angle right' size={"huge"} onClick={() => setPage(page + 1)}/>
+        </div>
+
+      </div>
+
+      <div style={{
+        fontSize: "larger",
+        color: "white",
+        position: "fixed",
+        left: "50%",
+        transform: "translateX(-50%)",
+        top:"-5%"}}>
         Page {page}
       </div>
-      <Button disabled={page === 0} inverted content='Previous' icon='left arrow' labelPosition='left' onClick={() => setPage(page - 1)}/>
-      <Button inverted content='Next' icon='right arrow' labelPosition='right' onClick={() => setPage(page + 1)}/>
       {/*</Modal.Content>*/}
       {/*//TODO: add Title @bottom*/}
     </Modal>
+    </>
   );
 };
 

@@ -325,6 +325,7 @@ const Home = (props) => {
           </div>
 
           <div style={{
+            fontSize: "larger",
             color: "white",
             position: "fixed",
             left: "50%",
