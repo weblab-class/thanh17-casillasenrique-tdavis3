@@ -614,9 +614,6 @@ const Home = (props) => {
             {/*  onLogoutSuccess={props.handleLogout}*/}
             {/*  onFailure={(err) => console.log(err)}*/}
             {/*/>*/}
-            <Button onClick={() => setState({ ...state, sidebarVisible: !state.sidebarVisible })}>
-              Open Sidebar
-            </Button>
             <div
               style={{
                 display: "flex",
@@ -664,12 +661,12 @@ const Home = (props) => {
                     onClick={() => setState({ ...state, inEditMode: !state.inEditMode })}
                     inverted
                     size="medium"
-                    animated="vertical"
+                    animated="fade"
                     color={state.inEditMode ? "blue" : "white"}
                   >
                     <div className={"icon-button"}>
                       <Button.Content visible>
-                        <Icon name="edit" />
+                        <Icon name="move" />
                       </Button.Content>
                     </div>
                     <Button.Content hidden>Edit</Button.Content>
@@ -678,10 +675,19 @@ const Home = (props) => {
 
                 {/*The freaking bookmark bar*/}
                 <div className={"Home-edit-dropdown"}>
-                  <EditBar
-                    handleCreateBookmark={handleCreateBookmark}
-                    handleCreateGroup={handleCreateGroup}
-                  />
+                  <Button 
+                    inverted
+                    animated
+                    size="medium"
+                    onClick={() => setState({ ...state, sidebarVisible: !state.sidebarVisible })}
+                  >
+                    <div className="icon-button" >
+                      <Button.Content visible>
+                        <Icon name="bars" />
+                      </Button.Content>
+                    </div>
+                    <Button.Content hidden>Options</Button.Content>
+                  </Button>
                 </div>
               </div>
             </div>
