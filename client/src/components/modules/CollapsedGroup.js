@@ -1,7 +1,7 @@
-import React, {useRef, useEffect, useState} from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./Bookmark.css";
-import {Button, Icon, Menu, Popup} from "semantic-ui-react";
-import {createContextFromEvent} from "../../utilities";
+import { Button, Icon, Input, Menu, Popup } from "semantic-ui-react";
+import { createContextFromEvent } from "../../utilities";
 import "./CollapsedGroup.css";
 
 /**
@@ -12,52 +12,97 @@ import "./CollapsedGroup.css";
  * @returns {JSX.Element}
  * @constructor
  */
-const CollapsedGroup = ({name, bookmarkIcons, onClick, drag, isDragging, inEditMode, onRemove}) => {
-    const contextRef = useRef();
-    const [open, setOpen] = useState(false);
-    return (
-        <div style={{
-            opacity: isDragging ? 0 : 1,
-            cursor: isDragging ? 'grabbing' : (inEditMode ? "grab" : "pointer")
-        }} className="u-grow">
-            <div ref={drag}>
-                <div style={{display: "flex", justifyContent: "flex-end", outline: "none !important"}}>
-                    {inEditMode && <Button size="mini" circular compact={true} icon="close" onClick={onRemove}/>}
-                </div>
-                <button style={{cursor: isDragging ? 'grabbing' : (inEditMode ? "grab" : "pointer")}}
-                        className="CollapsedGroup-button u-flex-alignCenter" onClick={onClick}
-                        onContextMenu={(e) => {
-                            e.preventDefault();
-                            contextRef.current = createContextFromEvent(e);
-                            setOpen(true);
-                        }}
-                >
-                    {/* <Icon name='world' size='huge' color="pink"/> */}
-                    <div className="CollapsedGroup grid">
-                        {bookmarkIcons.map((icon, i) => {
-                            return (
-                                <div key={i} style={{textAlign: "center",}}>
-                                    <img className="CollapsedGroup-minimizedIcon" src={icon}/>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </button>
-                <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open}>
-                    <Menu
-                        items={[{key: "delete", content: "Delete", icon: "remove"}]}
-                        onItemClick={() => {
-                            onRemove();
-                            setOpen(false);
-                        }}
-                        secondary
-                        vertical
-                    />
-                </Popup>
-            </div>
-            <p className="Bookmark-text u-bold ">{name}</p>
+const CollapsedGroup = ({
+  _id,
+  name,
+  bookmarkIcons,
+  onClick,
+  drag,
+  isDragging,
+  inEditMode,
+  onRemove,
+  handleMoveGroupToNewPage
+}) => {
+  const contextRef = useRef();
+  const [open, setOpen] = useState(false);
+  const [state,setState] = useState({
+    newPageValue: ""
+  })
+  return (
+    <div
+      style={{
+        opacity: isDragging ? 0 : 1,
+        cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer",
+      }}
+      className="u-grow"
+    >
+      <div ref={drag}>
+        <div style={{ display: "flex", justifyContent: "flex-end", outline: "none !important" }}>
+          {inEditMode && (
+            <Button size="mini" circular compact={true} icon="close" onClick={onRemove} />
+          )}
         </div>
-    );
+        <button
+          style={{ cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer" }}
+          className="CollapsedGroup-button u-flex-alignCenter"
+          onClick={onClick}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            contextRef.current = createContextFromEvent(e);
+            setOpen(true);
+          }}
+        >
+          {/* <Icon name='world' size='huge' color="pink"/> */}
+          <div className="CollapsedGroup grid">
+            {bookmarkIcons.map((icon, i) => {
+              return (
+                <div key={i} style={{ textAlign: "center" }}>
+                  <img className="CollapsedGroup-minimizedIcon" src={icon} />
+                </div>
+              );
+            })}
+          </div>
+        </button>
+        <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open}>
+          <Menu secondary vertical>
+            <Menu.Item
+              onClick={() => {
+                onRemove();
+                setOpen(false);
+              }}
+            >
+              Delete
+              <Icon name={"remove"} />
+            </Menu.Item>
+            <Menu.Item>
+              //TODO: why tf does the group open while changing states
+              <Input
+                min="0"
+                style={{ width: "11em" }}
+                type="number"
+                placeholder="Move to page..."
+                onChange={(event, data) => {
+                  setState({newPageValue: data.value});
+                } }
+              >
+                <input />
+                <Button
+                  type="submit"
+                  icon={"paper plane"}
+                  onClick={() => handleMoveGroupToNewPage(_id,parseInt(state.newPageValue))}
+                />
+              </Input>
+              {/*<Input type={"number"} style ={{width: "10em"}}  icon={}*/}
+              {/*       placeholder='Move to page...'>*/}
+              {/*</Input>*/}
+            </Menu.Item>
+            {/*  TODO: show/edit URL on right click*/}
+          </Menu>
+        </Popup>
+      </div>
+      <p className="Bookmark-text u-bold ">{name}</p>
+    </div>
+  );
 };
 
 export default CollapsedGroup;

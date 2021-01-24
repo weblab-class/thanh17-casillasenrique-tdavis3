@@ -39,7 +39,7 @@ const Bookmark = ({
   const [open, setOpen] = useState(false);
   const [displayedIcon, setDisplayedIcon] = useState(globe);
   const [state,setState] = useState({
-    newPageValue: null
+    newPageValue: ""
   })
   useEffect(() => {
     if (customIcon) {
@@ -142,7 +142,6 @@ const Bookmark = ({
             <Icon name={"remove"} />
           </Menu.Item>
           <Menu.Item>
-            {/*<Button  icon={'paper plane'}/>*/}
             <Input
               min="0"
               style={{ width: "11em" }}

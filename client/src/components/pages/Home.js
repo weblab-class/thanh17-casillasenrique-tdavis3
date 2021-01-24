@@ -248,6 +248,12 @@ const Home = (props) => {
       post("/api/edit/edit_bookmark", { _id: _id, index: index, pageIndex: state.currentPage });
     }
   };
+  /** Handling the moving of bookmarks between pages in a group or a home screen
+   *
+   * @param _id id of the bookmark
+   * @param newPageIndex the index of the new page
+   * @param groupID the ID number of the group the bookmark is in if it exists
+   */
   const handleMoveBookmarkToNewPage = (_id,newPageIndex,groupID) => {
     let group;
     let newIndex;
@@ -286,7 +292,19 @@ const Home = (props) => {
 
   }
 
-  const handleMoveGroupToNewPage = (_id,newPageNumber) => {
+  const handleMoveGroupToNewPage = (_id,newPageIndex) => {
+    const [newIndex , newPage] = findNextPageAndIndex(newPageIndex);
+    const groupListIndex = state.groups.map((group) => group._id).indexOf(_id);
+
+    //Modifies a copy of the bookmarks list and sets it to state optimistically
+    let groupsCopy = [...state.groups];
+    groupsCopy[groupListIndex].index = newIndex;
+    groupsCopy[groupListIndex].pageIndex = newPage;
+    setState({ ...state, groups: groupsCopy });
+
+    //Sends to API
+    post("/api/edit/edit_group", groupsCopy[groupListIndex]);
+
   }
   /** Move a bookmark in a group
    *
@@ -605,12 +623,14 @@ const Home = (props) => {
         handleMoveGroup={handleMoveGroup}
         handleMoveBookmark={handleMoveBookmark}
         handleMoveBookmarkToNewPage = {handleMoveBookmarkToNewPage}
+        handleMoveGroupToNewPage = {handleMoveGroupToNewPage}
         moveBookmarksInGroup = {moveBookmarksInGroup}
         handleRemoveBookmark = {handleRemoveBookmark}
         handleRemoveGroup = {handleRemoveGroup}
         removeBookmarkFromGroup = {removeBookmarkFromGroup}
         indexHasNoBookmarks = {indexHasNoBookmarks}
         indexHasNoElements = {indexHasNoElements}
+
       />
     </div>
   );

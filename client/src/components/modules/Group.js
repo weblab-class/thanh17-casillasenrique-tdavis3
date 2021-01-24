@@ -33,6 +33,7 @@ const Group = ({
   removeBookmarkFromGroup,
   moveBookmarksInGroup,
   handleMoveBookmarkToNewPage,
+  handleMoveGroupToNewPage,
   indexHasNoBookmarks,
 }) => {
   const [open, setOpen] = React.useState(false);
@@ -101,6 +102,8 @@ const Group = ({
           style={{ filter: "blur(0)!important" }}
         >
           <CollapsedGroup
+            _id = {_id}
+            handleMoveGroupToNewPage={handleMoveGroupToNewPage}
             onRemove={onRemove}
             inEditMode={inEditMode}
             drag={drag}
