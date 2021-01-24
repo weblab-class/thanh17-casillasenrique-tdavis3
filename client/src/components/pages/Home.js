@@ -77,8 +77,8 @@ const Home = (props) => {
   const findNextPageAndIndex = (currentPage,groupID) => {
     let page = currentPage;
     let maxIndex = findMaxIndex(page,groupID) + 1;
-
-    while (maxIndex >= 48) {
+    const maxGrids = groupID? 9: 48;
+    while (maxIndex >= maxGrids) {
       page += 1;
       console.log("need to go to the next page");  
       maxIndex = findMaxIndex(page,groupID) + 1;
