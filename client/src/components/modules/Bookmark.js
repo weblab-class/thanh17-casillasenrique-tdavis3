@@ -143,7 +143,7 @@ const Bookmark = ({
           </Menu.Item>
           <Menu.Item>
             <Input
-              min="0"
+              min="1"
               style={{ width: "11em" }}
               type="number"
               placeholder="Move to page..."
@@ -153,7 +153,7 @@ const Bookmark = ({
               <Button
                 type="submit"
                 icon={"paper plane"}
-                onClick={() => handleMoveBookmarkToNewPage(_id,parseInt(state.newPageValue),groupID)}
+                onClick={() => handleMoveBookmarkToNewPage(_id,parseInt(state.newPageValue)-1,groupID)}
               />
             </Input>
             {/*<Input type={"number"} style ={{width: "10em"}}  icon={}*/}

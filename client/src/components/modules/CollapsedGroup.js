@@ -76,7 +76,7 @@ const CollapsedGroup = ({
             </Menu.Item>
             <Menu.Item>
               <Input
-                min="0"
+                min="1"
                 style={{ width: "11em" }}
                 type="number"
                 placeholder="Move to page..."
@@ -88,7 +88,7 @@ const CollapsedGroup = ({
                 <Button
                   type="submit"
                   icon={"paper plane"}
-                  onClick={() => handleMoveGroupToNewPage(_id,parseInt(state.newPageValue))}
+                  onClick={() => handleMoveGroupToNewPage(_id,parseInt(state.newPageValue)-1)}
                 />
               </Input>
               {/*<Input type={"number"} style ={{width: "10em"}}  icon={}*/}

@@ -64,9 +64,9 @@ const Home = (props) => {
    */
   const findMaxIndex = (currentPage, groupID) => {
     if (groupID) {
-      console.log("ID,bitch", groupID);
+      // console.log("ID,bitch", groupID);
       const group = state.groups.filter((group) => group._id === groupID)[0];
-      console.log("GROUP,BITCH", group);
+      // console.log("GROUP,BITCH", group);
       return Math.max(
         -1,
         ...group.bookmarks
@@ -85,6 +85,13 @@ const Home = (props) => {
     );
   };
 
+
+  /** Find the next page and index in the sequence of pages
+   *
+   * @param currentPage
+   * @param groupID
+   * @returns {[number, undefined]}
+   */
   const findNextPageAndIndex = (currentPage, groupID) => {
     let page = currentPage;
     let maxIndex = findMaxIndex(page, groupID) + 1;
@@ -98,6 +105,61 @@ const Home = (props) => {
     return [maxIndex, page];
   };
 
+  /** Return the first empty index at currentPage
+   *
+   * @param currentPage the page we are looking for the index in
+   * @param groupID the ID of the group if it exists
+   * @returns {number} the first empty index at currentPage
+   */
+  const findEmptyIndex = (currentPage,groupID) => {
+    const findElementAtIndex = () => {
+      // console.log(group)
+      return groupID
+        ? group.bookmarks.filter((bookmark) => bookmark.index === emptyIndex && bookmark.pageIndex === currentPage)
+        : [
+          ...state.bookmarks.filter((bookmark) => bookmark.index === emptyIndex && bookmark.pageIndex === currentPage),
+          ...state.groups.filter((group) => group.index === emptyIndex && group.pageIndex === currentPage),
+        ];
+    }
+    let emptyIndex = 0;
+    const maxGrids = groupID ? ELEMENTS_PER_GROUP : ELEMENTS_PER_PAGE;
+    const group = groupID? state.groups.filter((group) => group._id === groupID)[0]:null;
+    // console.log(group)
+    // console.log("emptyIndex outside:", emptyIndex)
+    let elementAtIndex = findElementAtIndex();
+    // console.log("elementAtIndex",elementAtIndex);
+    while (elementAtIndex.length !== 0 && emptyIndex <= maxGrids){
+      // console.log("emptyIndex", emptyIndex)
+      emptyIndex+= 1
+      elementAtIndex = findElementAtIndex();
+      // console.log("elementAtIndex Inside:",elementAtIndex);
+    }
+
+    return emptyIndex;
+  }
+  /** Return the first available page and index given the current page number and
+   * groupID if in a group
+   *
+   * @param currentPage the page that we wish to move to
+   * @param groupID
+   * @returns {[number, undefined]}
+   */
+  const findFirstAvailablePageAndIndex = (currentPage, groupID) => {
+    let page = currentPage;
+    // let maxIndex = findMaxIndex(page, groupID) + 1;
+    const maxGrids = groupID ? ELEMENTS_PER_GROUP : ELEMENTS_PER_PAGE;
+    let emptyIndex = findEmptyIndex(page,groupID);
+    while (emptyIndex >= maxGrids) {
+      //check each index until empty grid.
+      page += 1;
+      console.log("need to go to the next page");
+      // maxIndex = findMaxIndex(page, groupID) + 1;
+      emptyIndex = findEmptyIndex(page,groupID);
+    }
+
+    return [emptyIndex, page];
+  };
+
   /** Creates a new bookmark on the home screen given the url, bookmark name, and icon desired
    *
    * @param url the url of the new bookmark to be added
@@ -106,7 +168,7 @@ const Home = (props) => {
    * @param selectedCustomIcon the icon of the new bookmark in file form — may be null
    */
   const handleCreateBookmark = async ({ url, bookmarkName, selectedIcon, selectedCustomIcon }) => {
-    const [maxIndex, page] = findNextPageAndIndex(state.currentPage);
+    const [maxIndex, page] = findFirstAvailablePageAndIndex(state.currentPage);
 
     // Load the image, use empty string if custom icon is not being used
     let imageBuffer = selectedCustomIcon ? await readFileAsync(selectedCustomIcon) : "";
@@ -145,7 +207,7 @@ const Home = (props) => {
    * @param groupName The name that the user designate for the new group
    */
   const handleCreateGroup = ({ groupName }) => {
-    const [maxIndex, page] = findNextPageAndIndex(state.currentPage);
+    const [maxIndex, page] = findFirstAvailablePageAndIndex(state.currentPage);
 
     const newGroup = {
       name: groupName,
@@ -281,7 +343,7 @@ const Home = (props) => {
     } else {
       allBookmarks = state.bookmarks;
     }
-    [newIndex, newPage] = findNextPageAndIndex(newPageIndex, groupID);
+    [newIndex, newPage] = findFirstAvailablePageAndIndex(newPageIndex, groupID);
     const bookmarkListIndex = allBookmarks.map((bookmark) => bookmark._id).indexOf(_id);
     // console.log("newPageNumber", newPage)
     // console.log("newIndex:",newIndex)
@@ -289,7 +351,7 @@ const Home = (props) => {
 
     //Create new bookmarks in new page
     let bookmarksCopy = [...allBookmarks];
-    console.log(bookmarksCopy);
+    // console.log(bookmarksCopy);
     bookmarksCopy[bookmarkListIndex].index = newIndex;
     bookmarksCopy[bookmarkListIndex].pageIndex = newPage;
 
@@ -299,16 +361,16 @@ const Home = (props) => {
       const newGroups = state.groups.filter((group) => group._id !== groupID);
       newGroups.push(group);
       setState({ ...state, groups: newGroups });
-      post("/api/edit/edit_group", group);
+      // post("/api/edit/edit_group", group);
     } else {
       //Sends to API
       setState({ ...state, bookmarks: bookmarksCopy });
-      post("/api/edit/edit_bookmark", { _id: _id, index: newIndex, pageIndex: newPage });
+      // post("/api/edit/edit_bookmark", { _id: _id, index: newIndex, pageIndex: newPage });
     }
   };
 
   const handleMoveGroupToNewPage = (_id, newPageIndex) => {
-    const [newIndex, newPage] = findNextPageAndIndex(newPageIndex);
+    const [newIndex, newPage] = findFirstAvailablePageAndIndex(newPageIndex);
     const groupListIndex = state.groups.map((group) => group._id).indexOf(_id);
 
     //Modifies a copy of the bookmarks list and sets it to state optimistically
@@ -318,7 +380,7 @@ const Home = (props) => {
     setState({ ...state, groups: groupsCopy });
 
     //Sends to API
-    post("/api/edit/edit_group", groupsCopy[groupListIndex]);
+    // post("/api/edit/edit_group", groupsCopy[groupListIndex]);
   };
   /** Move a bookmark in a group
    *
@@ -411,7 +473,7 @@ const Home = (props) => {
    * @param {List} bookmarks
    */
   const createComponentsFromNodes = (bookmarks) => {
-    let [index, page] = findNextPageAndIndex(state.currentPage, null);
+    let [index, page] = findFirstAvailablePageAndIndex(state.currentPage, null);
     console.log("index and page: ", index, page);
     let newGroups = new Map();
 
@@ -653,7 +715,7 @@ const Home = (props) => {
                   transform: "translateX(-50%)",
                 }}
               >
-                Page {state.currentPage}
+                Page {state.currentPage+1}
               </div>
               <div style={{ display: "flex" }}>
                 <div className="Home-toggleEdit">

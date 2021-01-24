@@ -182,7 +182,7 @@ const Group = ({
           top: "-5%",
         }}
       >
-        Page {page}
+        Page {page+1}
       </div>
       <header
         style={{
