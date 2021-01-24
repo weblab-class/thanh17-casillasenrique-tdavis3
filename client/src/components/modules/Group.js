@@ -134,12 +134,26 @@ const Group = ({
                 transform: "translateX(-50%)",
                 bottom: "50%"
             }}>
-                <div style={{display: "flex", justifyContent: "space-between"}}>
+                <div style={{
+                    color: "white",
+                    position: "fixed",
+                    left: "50%",
+                    transform: "translateX(-800%)",
+                    bottom: "50%"
+                }}>
                     <Button disabled={page === 0} size={"huge"} inverted icon='angle left'
                             onClick={() => setPage(page - 1)}/>
-                    <div style={{paddingRight: "48vw"}}/>
+                </div>
+                <div style={{
+                    color: "white",
+                    position: "fixed",
+                    left: "50%",
+                    transform: "translateX(720%)",
+                    bottom: "50%"
+                }}>
                     <Button inverted icon='angle right' size={"huge"} onClick={() => setPage(page + 1)}/>
                 </div>
+
 
             </div>
 
