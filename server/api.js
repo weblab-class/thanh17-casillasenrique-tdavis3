@@ -122,7 +122,7 @@ router.post("/edit/edit_group", (req, res) => {
     .catch((err) => console.log("An error occurred while editing"));
 });
 
-router.post("/edit/delete_group", (req, res) => {
+router.delete("/edit/delete_group", (req, res) => {
   Group.deleteOne({ _id: req.body._id }).catch((err) =>
     console.log("An error occurred while deleting")
   );

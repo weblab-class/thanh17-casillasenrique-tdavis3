@@ -29,6 +29,7 @@ const Group = ({
                  userId,
                  name,
                  index,
+                 onRemove,
                  removeBookmarkFromGroup,
                  moveBookmarksInGroup,
                  indexHasNoBookmarks}) => {
@@ -100,6 +101,8 @@ const Group = ({
       // }}
         >
         <CollapsedGroup
+          onRemove={onRemove}
+          inEditMode={inEditMode}
           drag = {drag}
           isDragging ={isDragging}
           name={name}

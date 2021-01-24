@@ -154,6 +154,17 @@ const Home = (props) => {
     del("/api/edit/delete_bookmark", { _id });
   };
 
+  /** Remove a Group from the home screen
+   *
+   * @param _id
+   */
+  const handleRemoveGroup = (_id) => {
+    const newGroups = state.groups.filter((group) => group._id !== _id);
+    setState({ ...state, groups: newGroups });
+
+    del("/api/edit/delete_group", { _id });
+  }
+
   /** remove a Bookmark from a group
    *
    * @param groupID the Group id number
@@ -398,6 +409,7 @@ const Home = (props) => {
         handleMoveBookmark={handleMoveBookmark}
         moveBookmarksInGroup = {moveBookmarksInGroup}
         handleRemoveBookmark = {handleRemoveBookmark}
+        handleRemoveGroup = {handleRemoveGroup}
         removeBookmarkFromGroup = {removeBookmarkFromGroup}
         indexHasNoBookmarks = {indexHasNoBookmarks}
         indexHasNoElements = {indexHasNoElements}

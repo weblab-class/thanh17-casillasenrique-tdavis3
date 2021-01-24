@@ -15,8 +15,8 @@ import "../../utilities.css";
 import { Dropdown, Image, Button, Icon  } from "semantic-ui-react";
 
 // const openedImage = <Image className="EditBar-dropdown-button u-grow" src={openedIcon} />;
-const openedImage = <div className="EditBar-dropdown-button u-grow"><Icon name={"angle up"} inverted={true} size={"big"}/></div>
-const closedImage = <div className="EditBar-dropdown-button u-grow"><Icon name={"angle down"} inverted={true} size={"big"}/> </div>
+const openedImage = <div className="EditBar-dropdown-button u-grow"><Icon name={"bars"} inverted={true} size={"large"}/></div>
+const closedImage = <div className="EditBar-dropdown-button u-grow"><Icon name={"bars"} inverted={true} size={"large"}/> </div>
 // const closedImage = <Image className="EditBar-dropdown-button u-grow" src={closedIcon} />;
 const testButton =  <Button circular inverted size="huge" animated="vertical">
                       <Button.Content visible><Icon name="add"/></Button.Content>
