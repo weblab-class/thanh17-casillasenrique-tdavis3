@@ -41,6 +41,7 @@ const Board = ({
                  handleMoveGroup,
                  handleMoveBookmark,
                  moveBookmarksInGroup,
+                 handleMoveBookmarkToNewPage,
                  handleRemoveBookmark,
                  handleRemoveGroup,
                  removeBookmarkFromGroup,
@@ -95,6 +96,7 @@ const Board = ({
           type={type}
           handleMoveGroup={handleMoveGroup}
           moveBookmarksInGroup={moveBookmarksInGroup}
+          handleMoveBookmarkToNewPage = {handleMoveBookmarkToNewPage}
           handleRemoveBookmark = {handleRemoveBookmark}
           handleRemoveGroup = {handleRemoveGroup}
           removeBookmarkFromGroup = {removeBookmarkFromGroup}

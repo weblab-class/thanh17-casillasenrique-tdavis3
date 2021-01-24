@@ -59,7 +59,14 @@ const Home = (props) => {
    * Finds the maximum index within the list of bookmarks and
    * groups for the new added component
    */
-  const findMaxIndex = (currentPage) => {
+  const findMaxIndex = (currentPage,groupID) => {
+    if (groupID) {
+      console.log("ID,bitch",groupID)
+      const group = state.groups.filter((group) => group._id === groupID)[0];
+      console.log("GROUP,BITCH",group);
+      return Math.max(-1,...group.bookmarks.filter(bookmark => bookmark.pageIndex === currentPage).map((e) => (e.index ? e.index : 0)))
+
+    }
     return Math.max(
       -1,
       ...state.bookmarks.filter(bookmark => bookmark.pageIndex === currentPage).map((e) => (e.index ? e.index : 0)),
@@ -67,14 +74,14 @@ const Home = (props) => {
     );
   };
 
-  const findNextPageAndIndex = () => {
-    let page = state.currentPage;
-    let maxIndex = findMaxIndex(page) + 1;
+  const findNextPageAndIndex = (currentPage,groupID) => {
+    let page = currentPage;
+    let maxIndex = findMaxIndex(page,groupID) + 1;
 
     while (maxIndex >= 48) {
       page += 1;
       console.log("need to go to the next page");  
-      maxIndex = findMaxIndex(page) + 1;
+      maxIndex = findMaxIndex(page,groupID) + 1;
     }
 
     return [ maxIndex, page ];
@@ -88,7 +95,7 @@ const Home = (props) => {
    * @param selectedCustomIcon the icon of the new bookmark in file form — may be null
    */
   const handleCreateBookmark = async ({ url, bookmarkName, selectedIcon, selectedCustomIcon }) => {
-    const [ maxIndex, page ] = findNextPageAndIndex();
+    const [ maxIndex, page ] = findNextPageAndIndex(state.currentPage);
     
     // Load the image, use empty string if custom icon is not being used
     let imageBuffer = selectedCustomIcon ? await readFileAsync(selectedCustomIcon) : "";
@@ -126,7 +133,7 @@ const Home = (props) => {
    * @param groupName The name that the user designate for the new group
    */
   const handleCreateGroup = ({ groupName }) => {
-    const [ maxIndex, page ] = findNextPageAndIndex();
+    const [ maxIndex, page ] = findNextPageAndIndex(state.currentPage);
 
     const newGroup = {
       name: groupName,
@@ -238,10 +245,49 @@ const Home = (props) => {
       setState({ ...state, bookmarks: bookmarksCopy });
 
       //Sends to API
-      post("/api/edit/edit_bookmark", { _id: _id, index: index });
+      post("/api/edit/edit_bookmark", { _id: _id, index: index, pageIndex: state.currentPage });
     }
   };
+  const handleMoveBookmarkToNewPage = (_id,newPageIndex,groupID) => {
+    let group;
+    let newIndex;
+    let newPage;
+    let allBookmarks;
+    if (groupID){
+      group = state.groups.filter((group) => group._id === groupID)[0];
+      allBookmarks = group.bookmarks
+    } else {
+      allBookmarks = state.bookmarks;
+    }
+    [newIndex , newPage] = findNextPageAndIndex(newPageIndex,groupID);
+    const bookmarkListIndex = allBookmarks.map((bookmark) => bookmark._id).indexOf(_id);
+    // console.log("newPageNumber", newPage)
+    // console.log("newIndex:",newIndex)
+    // console.log("allBookmarks",allBookmarks)
 
+    //Create new bookmarks in new page
+    let bookmarksCopy = [...allBookmarks];
+    console.log(bookmarksCopy);
+    bookmarksCopy[bookmarkListIndex].index = newIndex;
+    bookmarksCopy[bookmarkListIndex].pageIndex = newPage;
+
+    //Different API calls dependant on bookmarks in groups or on homepage
+    if (groupID) {
+      group.bookmarks = bookmarksCopy;
+      const newGroups = state.groups.filter((group) => group._id !== groupID)
+      newGroups.push(group)
+      setState({ ...state, groups: newGroups });
+      post("/api/edit/edit_group", group);
+    } else{
+      //Sends to API
+      setState({ ...state, bookmarks: bookmarksCopy });
+      post("/api/edit/edit_bookmark", { _id: _id, index: newIndex, pageIndex:newPage});
+    }
+
+  }
+
+  const handleMoveGroupToNewPage = (_id,newPageNumber) => {
+  }
   /** Move a bookmark in a group
    *
    * @param groupID ID of the group we're modifying
@@ -476,7 +522,7 @@ const Home = (props) => {
         {/*  onFailure={(err) => console.log(err)}*/}
         {/*/>*/}
         <NewComponentModal
-          isOpen={state.inEditMode}
+          isOpen={false}
           form={<SettingsForm uploadBookmarks={handleUploadBookmarks} onSubmit={() => setState({...state, inEditMode: false})} closeForm={() => console.log("closing form")} googleClientId={props.googleClientId} handleLogout={props.handleLogout}/>}
           close={() => {
             console.log("closed modal");
@@ -558,6 +604,7 @@ const Home = (props) => {
         groups={state.groups.filter(group => group.pageIndex === state.currentPage)}
         handleMoveGroup={handleMoveGroup}
         handleMoveBookmark={handleMoveBookmark}
+        handleMoveBookmarkToNewPage = {handleMoveBookmarkToNewPage}
         moveBookmarksInGroup = {moveBookmarksInGroup}
         handleRemoveBookmark = {handleRemoveBookmark}
         handleRemoveGroup = {handleRemoveGroup}

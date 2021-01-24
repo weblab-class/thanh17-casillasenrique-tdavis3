@@ -32,6 +32,7 @@ const Group = ({
   onRemove,
   removeBookmarkFromGroup,
   moveBookmarksInGroup,
+  handleMoveBookmarkToNewPage,
   indexHasNoBookmarks,
 }) => {
   const [open, setOpen] = React.useState(false);
@@ -87,7 +88,7 @@ const Group = ({
       }}
       onOpen={() => setOpen(true)}
       open={open}
-      dimmer="blurring"
+      // dimmer="blurring"
       trigger={
         <div
           //     ref={drag}
@@ -123,6 +124,7 @@ const Group = ({
           bookmarks={bookmarks.filter((bookmark) => bookmark.pageIndex === page)}
           groups={[]}
           moveBookmarksInGroup={moveBookmarksInGroup}
+          handleMoveBookmarkToNewPage={handleMoveBookmarkToNewPage}
           removeBookmarkFromGroup={removeBookmarkFromGroup}
           indexHasNoBookmarks={indexHasNoBookmarks}
           indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}

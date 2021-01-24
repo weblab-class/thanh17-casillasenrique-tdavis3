@@ -31,13 +31,16 @@ const Bookmark = ({
   index,
   onRemove,
   removeBookmarkFromGroup,
+  handleMoveBookmarkToNewPage,
   groupID,
   _id,
 }) => {
   const contextRef = useRef();
   const [open, setOpen] = useState(false);
   const [displayedIcon, setDisplayedIcon] = useState(globe);
-
+  const [state,setState] = useState({
+    newPageValue: null
+  })
   useEffect(() => {
     if (customIcon) {
       //console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon + " " + name);
@@ -138,12 +141,27 @@ const Bookmark = ({
             Delete
             <Icon name={"remove"} />
           </Menu.Item>
-          <Menu.Item >
-            <Button  icon={'paper plane'}/>
+          <Menu.Item>
+            {/*<Button  icon={'paper plane'}/>*/}
+            <Input
+              min="0"
+              style={{ width: "11em" }}
+              type="number"
+              placeholder="Move to page..."
+              onChange={(event, data) => setState({ newPageValue: data.value })}
+            >
+              <input />
+              <Button
+                type="submit"
+                icon={"paper plane"}
+                onClick={() => handleMoveBookmarkToNewPage(_id,parseInt(state.newPageValue),groupID)}
+              />
+            </Input>
             {/*<Input type={"number"} style ={{width: "10em"}}  icon={}*/}
             {/*       placeholder='Move to page...'>*/}
             {/*</Input>*/}
           </Menu.Item>
+          {/*  TODO: show/edit URL on right click*/}
         </Menu>
       </Popup>
     </div>

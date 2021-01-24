@@ -36,6 +36,7 @@ const Grid = ({
                 height,
                 handleMoveGroup,
                 handleMoveBookmark,
+                handleMoveBookmarkToNewPage,
                 moveBookmarksInGroup,
                 handleRemoveBookmark,
                 handleRemoveGroup,
@@ -110,6 +111,7 @@ const Grid = ({
         index={element.index}
         onRemove={() => handleRemoveBookmark(element._id)}
         removeBookmarkFromGroup={removeBookmarkFromGroup}
+        handleMoveBookmarkToNewPage = {handleMoveBookmarkToNewPage}
       /> : null}
       {type === ItemTypes.GROUP?
       <Group
@@ -121,6 +123,7 @@ const Grid = ({
         index = {element.index}
         onRemove={() => handleRemoveGroup(element._id)}
         moveBookmarksInGroup={moveBookmarksInGroup}
+        handleMoveBookmarkToNewPage={ handleMoveBookmarkToNewPage}
         removeBookmarkFromGroup={removeBookmarkFromGroup}
         indexHasNoBookmarks={indexHasNoBookmarks}
         indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}
