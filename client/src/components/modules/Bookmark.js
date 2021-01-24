@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import "./Bookmark.css";
 import "../../utilities.css";
-import { Button, Menu, Popup } from "semantic-ui-react";
+import {Button, Menu, Popup} from "semantic-ui-react";
 import globe from "../../public/images/globe.png";
-import { useDrag } from "react-dnd";
-import { ItemTypes } from "../pages/Home";
+import {useDrag} from "react-dnd";
+import {ItemTypes} from "../pages/Home";
+import {createContextFromEvent} from "../../utilities";
 
 const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
 
@@ -21,133 +22,118 @@ const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
  * @constructor
  */
 const Bookmark = ({
-                    userId,
-                    inEditMode,
-                    url,
-                    name,
-                    icon,
-                    customIcon,
-                    index,
-                    onRemove,
-                    removeBookmarkFromGroup,
-                    groupID,
-                    _id,
-                    }) => {
-  const contextRef = useRef();
-  const [open, setOpen] = useState(false);
-  const [displayedIcon, setDisplayedIcon] = useState(globe);
+                      userId,
+                      inEditMode,
+                      url,
+                      name,
+                      icon,
+                      customIcon,
+                      index,
+                      onRemove,
+                      removeBookmarkFromGroup,
+                      groupID,
+                      _id,
+                  }) => {
+    const contextRef = useRef();
+    const [open, setOpen] = useState(false);
+    const [displayedIcon, setDisplayedIcon] = useState(globe);
 
-  useEffect(() => {
-    if (customIcon) {
-      //console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon + " " + name);
-      setDisplayedIcon(customIcon);
-    } else if (icon) {
-      setDisplayedIcon(icon);
-    } 
-  });
+    useEffect(() => {
+        if (customIcon) {
+            //console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon + " " + name);
+            setDisplayedIcon(customIcon);
+        } else if (icon) {
+            setDisplayedIcon(icon);
+        }
+    });
 
-  useEffect(() => {
-    watchBookmark();
-  }, [inEditMode]);
+    useEffect(() => {
+        watchBookmark();
+    }, [inEditMode]);
 
-  const watchBookmark = () => {};
-
-  function createContextFromEvent(e) {
-    const left = e.clientX;
-    const top = e.clientY;
-    const right = left + 1;
-    const bottom = top + 1;
-
-    return {
-      getBoundingClientRect: () => ({
-        left,
-        top,
-        right,
-        bottom,
-
-        height: 0,
-        width: 0,
-      }),
+    const watchBookmark = () => {
     };
-  }
 
-  /**
-   * Turns a Bookmark into a dragable component
-   */
-  const [{ isDragging }, drag] = useDrag({
-    item: {
-      type: ItemTypes.BOOKMARK,
-      _id: _id,
-      // customRow: customRow,
-      // customCol: customCol,
-      index: index,
-    },
-    canDrag: inEditMode,
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  });
-  return (
-    <div style={{filter: "blur(0)"}}>
-      <div style={{display:"flex",
-        justifyContent:"flex-end",
-        outline: "none !important",
-        filter: "blur(0)"
-      }}>
-        {inEditMode && <Button size="mini" circular compact={true} icon="close" onClick={groupID? () => removeBookmarkFromGroup(groupID,_id): onRemove} />}
-      </div>
-      <form
-        action={"http://" + url.replace(new RegExp("((http|https)://)?(www.)?"), "")}
-        target="_blank"
-      >
-        <button
-          disabled={inEditMode}
-          className="Bookmark-button u-flex-alignCenter"
-          type="submit"
-          onContextMenu={(e) => {
-            e.preventDefault();
-            contextRef.current = createContextFromEvent(e);
-            setOpen(true);
-          }}
-        >
-          <img
-            ref={drag}
-            style={{
-              opacity: isDragging ? 0 : 1,
-              fontSize: 25,
-              fontWeight: "bold",
-              cursor: isDragging ? "grabbing" : (inEditMode? "grab": "pointer"),
-              borderRadius: "20%",
-            }}
-            className="Bookmark-image u-flex-alignCenter u-grow"
-            src={displayedIcon}
-          />
-          {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
+    /**
+     * Turns a Bookmark into a dragable component
+     */
+    const [{isDragging}, drag] = useDrag({
+        item: {
+            type: ItemTypes.BOOKMARK,
+            _id: _id,
+            // customRow: customRow,
+            // customCol: customCol,
+            index: index,
+        },
+        canDrag: inEditMode,
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    });
 
-          {/*</div>*/}
-        </button>
-        <p className="Bookmark-text u-bold " style={{ opacity: isDragging ? 0 : 1 }}>
-          {name}
-        </p>
-      </form>
+    return (
+        <div style={{filter: "blur(0)"}}>
+            <div style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                outline: "none !important",
+                filter: "blur(0)"
+            }}>
+                {inEditMode && <Button size="mini" circular compact={true} icon="close"
+                                       onClick={groupID ? () => removeBookmarkFromGroup(groupID, _id) : onRemove}/>}
+            </div>
+            <form
+                action={"http://" + url.replace(new RegExp("((http|https)://)?(www.)?"), "")}
+                target="_blank"
+            >
+                <button
+                    disabled={inEditMode}
+                    className="Bookmark-button u-flex-alignCenter"
+                    type="submit"
+                    onContextMenu={(e) => {
+                        e.preventDefault();
+                        contextRef.current = createContextFromEvent(e);
+                        setOpen(true);
+                    }}
+                >
+                    <img
+                        ref={drag}
+                        style={{
+                            opacity: isDragging ? 0 : 1,
+                            fontSize: 25,
+                            fontWeight: "bold",
+                            cursor: isDragging ? "grabbing" : (inEditMode ? "grab" : "pointer"),
+                            borderRadius: "20%",
+                        }}
+                        className="Bookmark-image u-flex-alignCenter u-grow"
+                        src={displayedIcon}
+                    />
+                    {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
 
-      {/*//TODO: make popup not blurry*/}
-      <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open} >
-        <Menu
-          items={[{ key: "delete", content: "Delete", icon: "remove" }]}
-          onItemClick={() => {
-            groupID? removeBookmarkFromGroup(groupID,_id) : onRemove();
-            setOpen(false);
-            console.log(groupID);
-          }}
-          secondary
-          vertical
-        />
-      </Popup>
+                    {/*</div>*/}
+                </button>
+                <p className="Bookmark-text u-bold " style={{opacity: isDragging ? 0 : 1}}>
+                    {name}
+                </p>
+            </form>
+
+            {/*//TODO: make popup not blurry*/}
+            <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open}>
+                <Menu
+                    items={[{key: "delete", content: "Delete", icon: "remove"}]}
+                    onItemClick={() => {
+                        groupID ? removeBookmarkFromGroup(groupID, _id) : onRemove();
+                        setOpen(false);
+                        console.log(groupID);
+                    }}
+                    secondary
+                    vertical
+                />
+            </Popup>
 
 
-    </div>
-  );
+        </div>
+    );
 };
 
 export default Bookmark;
