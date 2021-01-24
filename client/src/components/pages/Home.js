@@ -12,6 +12,7 @@ import SettingsForm from "../modules/SettingsForm";
 import globe from "../../public/images/globe.png";
 
 const ELEMENTS_PER_PAGE = 48;
+const ELEMENTS_PER_GROUP = 9;
 //@param userId
 //@param handleLogout
 /**
@@ -77,7 +78,7 @@ const Home = (props) => {
   const findNextPageAndIndex = (currentPage,groupID) => {
     let page = currentPage;
     let maxIndex = findMaxIndex(page,groupID) + 1;
-    const maxGrids = groupID? 9: 48;
+    const maxGrids = groupID? 9: ELEMENTS_PER_PAGE;
     while (maxIndex >= maxGrids) {
       page += 1;
       console.log("need to go to the next page");  
@@ -343,12 +344,12 @@ const Home = (props) => {
     
     //Replaces the bookmark's old index with new index within the group 
     const targetGroup = groupsCopy[groupsListIndex];
-    const newIndex = (targetGroup.bookmarks.length === 0) ? 0 : Math.max.apply(Math, targetGroup.bookmarks.map(bookmark => Number(bookmark.pageIndex) * 9 + Number(bookmark.index))) + 1;
+    const newIndex = (targetGroup.bookmarks.length === 0) ? 0 : Math.max.apply(Math, targetGroup.bookmarks.map(bookmark => Number(bookmark.pageIndex) * ELEMENTS_PER_GROUP + Number(bookmark.index))) + 1;
     console.log(targetGroup.bookmarks.map(bookmark => bookmark.index));
     
-    targetBookmark.index = newIndex % 9;
-    targetBookmark.pageIndex = Math.floor(newIndex / 9);
-    console.log("new index: " + (newIndex % 9) + " New page: " + targetBookmark.pageIndex);
+    targetBookmark.index = newIndex % ELEMENTS_PER_GROUP;
+    targetBookmark.pageIndex = Math.floor(newIndex / ELEMENTS_PER_GROUP);
+    console.log("new index: " + (newIndex % ELEMENTS_PER_GROUP) + " New page: " + targetBookmark.pageIndex);
 
     //Adds the bookmark to the group 
     groupsCopy[groupsListIndex].bookmarks.push(targetBookmark);
@@ -366,12 +367,26 @@ const Home = (props) => {
     }).catch((err) => console.log("error occurred while sending changes: " + err));
   };
 
+
+  /** Helper function that takes group objects and
+   * creates them on the front end. Additionally saves
+   * them to the database 
+   * 
+   * @param {List} groups 
+   */
   const uploadToHome = (groups) => {
     setState({...state, groups: groups.concat(state.groups)});
 
     //TODO: CONNECT TO PERSISTENCE 
   }
 
+  /** Helper function that creates bookmark and group objects from the 
+   * parsed bookmarks. Returns groups in the form of a map 
+   * mapping group names to group objects with additional 
+   * fields. 
+   * 
+   * @param {List} bookmarks 
+   */
   const createComponentsFromNodes = (bookmarks) => {
     let [ index, page ] = findNextPageAndIndex();
 
@@ -401,14 +416,15 @@ const Home = (props) => {
           }
         });
 
-        index = (index + 1) % 48;
-        page = (index === 47) ? page + 1 : page;
-
+        //Updates page and index for the next group 
+        page = (index === ELEMENTS_PER_PAGE - 1) ? page + 1 : page;
+        index = (index + 1) % ELEMENTS_PER_PAGE;
+        
       //Group needs to be updated 
       } else {
         let groupData = newGroups.get(parentName);
-        let newBookmarkIndex = (groupData.maxGroupIndex + 1) % 9;
-        let newBookmarkPageIndex = (groupData.maxGroupIndex === 8) ? groupData.maxGroupPage + 1 : groupData.maxGroupPage;
+        let newBookmarkIndex = (groupData.maxGroupIndex + 1) % ELEMENTS_PER_GROUP;
+        let newBookmarkPageIndex = (groupData.maxGroupIndex === ELEMENTS_PER_GROUP - 1) ? groupData.maxGroupPage + 1 : groupData.maxGroupPage;
 
         let newBookmark = {
           name: name,
@@ -427,20 +443,35 @@ const Home = (props) => {
       }
     }
 
-    console.log(newGroups);
+    //console.log(newGroups);
+
     return newGroups;
   }
 
+  /** Helper function of handleUploadBookmarks
+   * Parses a chrome HTML file and uploads the bookmarks
+   * to the home page in groups. Throws error if unable to parse
+   * 
+   * @param {File} htmlFile 
+   */
   const parseAndUpload = (htmlFile) => {
     let reader = new FileReader();
 
-    reader.onload = function (loadedFile) {
+    /** Function called on reader load,
+     * creates DOM Parse Tree and filters the nodes
+     * in order to find all bookmarks and the parent
+     * components
+     * 
+     * @param {Text} loadedFile 
+     */
+    reader.onload = (loadedFile) => {
       let contents = loadedFile.target.result;
-      //console.log("The read contents: " + contents);
       const domParser = new DOMParser();
       const document = domParser.parseFromString(contents, "text/html");
-      console.log(document);
+      
+      //console.log(document);
 
+      //Finds all links within the document body 
       const nodeIterator = document.createNodeIterator(
         document.body,
         NodeFilter.SHOW_ELEMENT,
@@ -450,25 +481,31 @@ const Home = (props) => {
           }
         }
       );
+
+      //Iterates through link nodes 
       const linkNodes = [];
       let currentNode;
-    
       while (currentNode = nodeIterator.nextNode()) {
         linkNodes.push(currentNode);
       }
 
-      console.log(linkNodes);
+      //console.log(linkNodes);
+
+      //Extracts the relevant information from the link nodes,
+      //including the parent text, icon, bookmark name, and url  
+      const parentNameIndex = 0;
+      const regexMatchIndex = 2;
       let newNodes = linkNodes.map((node) =>  {
         let icon = node.outerHTML.match(new RegExp("(icon=\"(.*)\")"));
         if (!icon) {
           console.log("element did not have an icon")
           icon = globe;
         } else {
-          icon = icon[2];
+          icon = icon[regexMatchIndex];
         }
 
         return { 
-          parentName: node.parentNode.parentNode.parentNode.children.item(0).outerText, 
+          parentName: node.parentNode.parentNode.parentNode.children.item(parentNameIndex).outerText, 
           icon: icon, 
           name: node.outerText, 
           href: node.href, 
@@ -476,8 +513,9 @@ const Home = (props) => {
         };
       });
       
-      console.log(newNodes);
+      //console.log(newNodes);
 
+      //Creates groups and uploads to the home page 
       let groups = createComponentsFromNodes(newNodes);
       groups =  Array.from(groups.values()).map(groupData => groupData.group);
       console.log(groups);
@@ -492,8 +530,8 @@ const Home = (props) => {
    * Since folders are not implemented, creates a shallow clone of the folders
    * by taking each bookmark and checking its parent folder, that becomes its 
    * parent group.   
-   * 
-   * Throws error if file cannot be parsed 
+   * TODO: possibly move function to be handled in the server 
+   * Catches error if file cannot be parsed 
    * 
    * @param {File} htmlFile 
    */
