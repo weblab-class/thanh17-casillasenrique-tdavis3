@@ -7,6 +7,9 @@ import EditBar from "../modules/EditBar";
 import "./Home.css";
 import Background from "../../public/images/background.jpg";
 import Board from "../modules/Board";
+import NewComponentModal from "../modules/NewComponentModal";
+import SettingsForm from "../modules/SettingsForm";
+import globe from "../../public/images/globe.png";
 
 const ELEMENTS_PER_PAGE = 48;
 //@param userId
@@ -297,7 +300,148 @@ const Home = (props) => {
     Promise.all([editGroupPromise, deleteBookmarkPromise]).then((results) => {
       setState({...state, bookmarks: bookmarksCopy, groups: groupsCopy});
     }).catch((err) => console.log("error occurred while sending changes: " + err));
+  };
+
+  const uploadToHome = (groups) => {
+    setState({...state, groups: groups.concat(state.groups)});
+
+    //TODO: CONNECT TO PERSISTENCE 
   }
+
+  const createComponentsFromNodes = (bookmarks) => {
+    let [ index, page ] = findNextPageAndIndex();
+
+    let newGroups = new Map();
+
+    for (const {parentName, icon, name, href, html} of bookmarks) {
+
+      //Group needs to be created 
+      if (!newGroups.has(parentName)) {
+        let newBookmark = {
+          name: name,
+          url: href,
+          icon: icon,
+          customIcon: "",
+          index: 0,
+          pageIndex: 0,
+        };
+
+        newGroups.set(parentName, {
+          maxGroupIndex: 0, 
+          maxGroupPage: 0, 
+          group: {
+            name: parentName,
+            index: index,
+            pageIndex: page,
+            bookmarks: [newBookmark,],
+          }
+        });
+
+        index = (index + 1) % 48;
+        page = (index === 47) ? page + 1 : page;
+
+      //Group needs to be updated 
+      } else {
+        let groupData = newGroups.get(parentName);
+        let newBookmarkIndex = (groupData.maxGroupIndex + 1) % 9;
+        let newBookmarkPageIndex = (groupData.maxGroupIndex === 8) ? groupData.maxGroupPage + 1 : groupData.maxGroupPage;
+
+        let newBookmark = {
+          name: name,
+          url: href,
+          icon: icon,
+          customIcon: "",
+          index: newBookmarkIndex,
+          pageIndex: newBookmarkPageIndex,
+        };
+
+        newGroups.set(parentName, {
+          maxGroupIndex: newBookmarkIndex,
+          maxGroupPage: newBookmarkPageIndex,
+          group: {...groupData.group, bookmarks: [newBookmark].concat(groupData.group.bookmarks)}
+        });
+      }
+    }
+
+    console.log(newGroups);
+    return newGroups;
+  }
+
+  const parseAndUpload = (htmlFile) => {
+    let reader = new FileReader();
+
+    reader.onload = function (loadedFile) {
+      let contents = loadedFile.target.result;
+      //console.log("The read contents: " + contents);
+      const domParser = new DOMParser();
+      const document = domParser.parseFromString(contents, "text/html");
+      console.log(document);
+
+      const nodeIterator = document.createNodeIterator(
+        document.body,
+        NodeFilter.SHOW_ELEMENT,
+        {
+          acceptNode(node) {
+            return node.nodeName.toLowerCase() === 'a' ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+          }
+        }
+      );
+      const linkNodes = [];
+      let currentNode;
+    
+      while (currentNode = nodeIterator.nextNode()) {
+        linkNodes.push(currentNode);
+      }
+
+      console.log(linkNodes);
+      let newNodes = linkNodes.map((node) =>  {
+        let icon = node.outerHTML.match(new RegExp("(icon=\"(.*)\")"));
+        if (!icon) {
+          console.log("element did not have an icon")
+          icon = globe;
+        } else {
+          icon = icon[2];
+        }
+
+        return { 
+          parentName: node.parentNode.parentNode.parentNode.children.item(0).outerText, 
+          icon: icon, 
+          name: node.outerText, 
+          href: node.href, 
+          html: node.outerHTML
+        };
+      });
+      
+      console.log(newNodes);
+
+      let groups = createComponentsFromNodes(newNodes);
+      groups =  Array.from(groups.values()).map(groupData => groupData.group);
+      console.log(groups);
+      uploadToHome(groups);
+    }
+
+    reader.readAsText(htmlFile);
+  }
+
+
+  /** Uploads bookmarks from a chrome HTML file onto the home page
+   * Since folders are not implemented, creates a shallow clone of the folders
+   * by taking each bookmark and checking its parent folder, that becomes its 
+   * parent group.   
+   * 
+   * Throws error if file cannot be parsed 
+   * 
+   * @param {File} htmlFile 
+   */
+  const handleUploadBookmarks = (htmlFile) => {
+    try {
+      parseAndUpload(htmlFile);
+    } catch (e) {
+      console.log("Failed to parse given chrome bookmarks file. Please try a different file");
+    }
+  };
+
+
 
   /** Returns whether there is a bookmark at the given index index
    *
@@ -331,7 +475,14 @@ const Home = (props) => {
         {/*  onLogoutSuccess={props.handleLogout}*/}
         {/*  onFailure={(err) => console.log(err)}*/}
         {/*/>*/}
-
+        <NewComponentModal
+          isOpen={state.inEditMode}
+          form={<SettingsForm uploadBookmarks={handleUploadBookmarks} onSubmit={() => setState({...state, inEditMode: false})} closeForm={() => console.log("closing form")} googleClientId={props.googleClientId} handleLogout={props.handleLogout}/>}
+          close={() => {
+            console.log("closed modal");
+            setState({...state, inEditMode: false})
+          }}
+        />
         <div style={{display: "flex",
           paddingTop:"1em",
           paddingLeft: "1em",

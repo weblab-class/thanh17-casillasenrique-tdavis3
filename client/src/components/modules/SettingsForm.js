@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Icon, Menu, Header } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
 import standardIcon from "../../public/images/globe.png";
+import fileUpload from "../../public/images/fileUpload.png";
 import { GoogleLogout } from "react-google-login";
 const PLACEHOLDER_URL = "https://www.google.com/";
 const PLACEHOLDER_NAME = "Google";
@@ -12,11 +13,7 @@ const URL_REGEX =
   "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
 
 const initialState = {
-  url: "",
-  bookmarkName: "",
-  selectedIcon: standardIcon,
-  selectedCustomIcon: undefined,
-  defaultIconURL: undefined,
+  uploadedFile: undefined,
 };
 
 /** A bookmark form to be used for handling the creating of a new bookmark
@@ -26,7 +23,7 @@ const initialState = {
  * @returns {JSX.Element} A bookmark form that has options for URLs, name, and icons
  * @constructor
  */
-const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout}) => {
+const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploadBookmarks}) => {
   const [state, setState] = useState(initialState);
 
   /** Handle the changes that occur while interacting with the new bookmark form
@@ -95,16 +92,37 @@ const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout}) => {
           {/*/>*/}
         </Form.Field>
       </div>
-
+      <label
+        onClick={() => {
+          console.log("clicked on default");
+          console.log(document.getElementById("htmlFile").files[0]);
+        }}
+      >
+        Uploaded: {(state.uploadedFile) && state.uploadedFile.name}
+        <img
+          src={
+            fileUpload
+          }
+          className="IconSelect-fileUploadImage"
+        />
+        <input
+          type="file"
+          id="htmlFile"
+          accept=".html"
+          className="IconSelect-invisibleInput"
+          onChange={(event) => {
+            console.log(event.target.files[0]);
+            setState({...state, uploadedFile: event.target.files[0]});
+          }}
+        />
+      </label>
       <div style={{ textAlign: "center", padding: "5%" }}>
         <Form.Button
           inverted
           primary
           size="huge"
           type="button"
-          // color= "#1F2322"
-          onClick={handleSubmit}
-          disabled={state.url === "" || state.bookmarkName === "" || !state.url.match(URL_REGEX)}
+          onClick={() => uploadBookmarks(state.uploadedFile)}
         >
           Upload!
         </Form.Button>
