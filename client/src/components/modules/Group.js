@@ -99,7 +99,9 @@ const Group = ({
       //   fontWeight: 'bold',
       //   cursor: 'move',
       // }}
+          style = {{filter: "blur(0)!important"}}
         >
+
         <CollapsedGroup
           onRemove={onRemove}
           inEditMode={inEditMode}

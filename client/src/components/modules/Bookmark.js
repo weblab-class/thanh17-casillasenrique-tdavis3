@@ -88,8 +88,12 @@ const Bookmark = ({
     }),
   });
   return (
-    <div>
-      <div style={{display:"flex",justifyContent:"flex-end", outline: "none !important"}}>
+    <div style={{filter: "blur(0)"}}>
+      <div style={{display:"flex",
+        justifyContent:"flex-end",
+        outline: "none !important",
+        filter: "blur(0)"
+      }}>
         {inEditMode && <Button size="mini" circular compact={true} icon="close" onClick={groupID? () => removeBookmarkFromGroup(groupID,_id): onRemove} />}
       </div>
       <form
@@ -112,7 +116,7 @@ const Bookmark = ({
               opacity: isDragging ? 0 : 1,
               fontSize: 25,
               fontWeight: "bold",
-              cursor: isDragging ? "grabbing" : "grab",
+              cursor: isDragging ? "grabbing" : (inEditMode? "grab": "pointer"),
               borderRadius: "20%",
             }}
             className="Bookmark-image u-flex-alignCenter u-grow"
