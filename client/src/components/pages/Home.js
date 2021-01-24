@@ -559,6 +559,7 @@ const Home = (props) => {
    * @param {File} htmlFile
    */
   const handleUploadBookmarks = (htmlFile) => {
+    chrome.bookmarks.getTree((res) => console.log(red));
     try {
       parseAndUpload(htmlFile);
     } catch (e) {

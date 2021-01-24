@@ -17,7 +17,7 @@ const HomeSidebar = ({
   handleLogout,
   handleUploadBookmarks,
 }) => {
-  //State 
+  //State
   const [state, setState] = useState({
     bookmarkModalOpened: false,
     widgetModalOpened: false,
@@ -70,55 +70,71 @@ const HomeSidebar = ({
         vertical
         icon="labeled"
       >
-        {/* TODO: Reformat header to look nice (add icon, etc.), or remove entirely */}
-        <Menu.Header as={Header} inverted size="large">
-          Options
-        </Menu.Header>
         <Menu.Item
           as="a"
-          onClick={() => {
-            console.log("clicked on new bookmark!");
-            setState({ ...state, bookmarkModalOpened: true });
-          }}
+          onClick={onHide}
         >
-          <img src={newBookmark} />
+          <Icon name="arrow right"></Icon>
         </Menu.Item>
-        <Menu.Item
-          as="a"
-          onClick={() => {
-            console.log("clicked on new group!");
-            setState({ ...state, groupModalOpened: true });
-          }}
-        >
-          <img src={newGroup} />
-        </Menu.Item>
-        <Menu.Item
-          as="a"
-          onClick={() => {
-            console.log("clicked on new widget!");
-            setState({ ...state, widgetModalOpened: true });
-          }}
-        >
-          <img src={newWidget} />
-        </Menu.Item>
-        <Menu.Item
-          as="a"
-          onClick={() => {
-            console.log("clicked on settings");
-            setState({ ...state, settingsModalOpened: true });
-          }}
-        >
-          <Icon name="setting"></Icon>
+        <Menu.Item>
+          <Menu.Header>Create Item</Menu.Header>
+          <Menu.Menu>
+            <Menu.Item
+              as="a"
+              onClick={() => {
+                console.log("clicked on new bookmark!");
+                setState({ ...state, bookmarkModalOpened: true });
+              }}
+            >
+              {/* <img src={newBookmark} /> */}
+              <Icon name="bookmark"></Icon>
+            </Menu.Item>
+            <Menu.Item
+              as="a"
+              onClick={() => {
+                console.log("clicked on new group!");
+                setState({ ...state, groupModalOpened: true });
+              }}
+            >
+              {/* <img src={newGroup} /> */}
+              <Icon name="square outline"></Icon>
+            </Menu.Item>
+            <Menu.Item
+              as="a"
+              onClick={() => {
+                console.log("clicked on new widget!");
+                setState({ ...state, widgetModalOpened: true });
+              }}
+            >
+              {/* <img src={newWidget} /> */}
+              
+            </Menu.Item>
+          </Menu.Menu>
         </Menu.Item>
 
-        <Menu.Item
-          as="a"
-          onClick={() => {
-            console.log("clicked on profile");
-            setState({ ...state, settingsModalOpened: true });
-          }}
-        >
-          <Icon name="user outline"></Icon>
+        <Menu.Item>
+          <Menu.Header>Settings</Menu.Header>
+          <Menu.Menu>
+            <Menu.Item
+              as="a"
+              onClick={() => {
+                console.log("clicked on settings");
+                setState({ ...state, settingsModalOpened: true });
+              }}
+            >
+              <Icon name="setting"></Icon>
+            </Menu.Item>
+
+            <Menu.Item
+              as="a"
+              onClick={() => {
+                console.log("clicked on profile");
+                setState({ ...state, settingsModalOpened: true });
+              }}
+            >
+              <Icon name="user outline"></Icon>
+            </Menu.Item>
+          </Menu.Menu>
         </Menu.Item>
       </Sidebar>
     </>

@@ -80,9 +80,9 @@ const IconSelect = ({ onSelect, defaultIconURL }) => {
       <label
         className={"IconSelect-option" + (selected === SELECTION.UPLOAD ? "-selected" : "")}
         onClick={() => {
-          console.log("clicked on default");
-          setSelected(SELECTION.UPLOAD);
-          console.log(document.getElementById("fileElem").files[0]);
+          console.log("clicked on upload");
+          
+          
         }}
       >
         <img
@@ -99,7 +99,11 @@ const IconSelect = ({ onSelect, defaultIconURL }) => {
           accept="image/*"
           className="IconSelect-invisibleInput"
           onChange={(event) => {
-            onSelect({icon: event.target.files[0], isUpload: true});
+            if (event.target.files[0]) {
+              console.log("set selected to upload");
+              onSelect({icon: event.target.files[0], isUpload: true});
+              setSelected(SELECTION.UPLOAD);
+            }
           }}
         />
       </label>
