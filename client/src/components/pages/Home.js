@@ -361,11 +361,11 @@ const Home = (props) => {
       const newGroups = state.groups.filter((group) => group._id !== groupID);
       newGroups.push(group);
       setState({ ...state, groups: newGroups });
-      // post("/api/edit/edit_group", group);
+      post("/api/edit/edit_group", group);
     } else {
       //Sends to API
       setState({ ...state, bookmarks: bookmarksCopy });
-      // post("/api/edit/edit_bookmark", { _id: _id, index: newIndex, pageIndex: newPage });
+      post("/api/edit/edit_bookmark", { _id: _id, index: newIndex, pageIndex: newPage });
     }
   };
 
@@ -380,7 +380,7 @@ const Home = (props) => {
     setState({ ...state, groups: groupsCopy });
 
     //Sends to API
-    // post("/api/edit/edit_group", groupsCopy[groupListIndex]);
+    post("/api/edit/edit_group", groupsCopy[groupListIndex]);
   };
   /** Move a bookmark in a group
    *
