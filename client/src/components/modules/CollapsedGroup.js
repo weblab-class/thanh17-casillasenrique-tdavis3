@@ -75,7 +75,6 @@ const CollapsedGroup = ({
               <Icon name={"remove"} />
             </Menu.Item>
             <Menu.Item>
-              //TODO: why tf does the group open while changing states
               <Input
                 min="0"
                 style={{ width: "11em" }}

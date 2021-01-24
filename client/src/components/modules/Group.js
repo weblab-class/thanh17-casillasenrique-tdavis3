@@ -87,7 +87,7 @@ const Group = ({
         setOpen(false);
         setPage(0);
       }}
-      onOpen={() => setOpen(true)}
+      // onOpen={() => setOpen(true)}
       open={open}
       // dimmer="blurring"
       trigger={
