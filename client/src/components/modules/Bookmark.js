@@ -129,7 +129,7 @@ const Bookmark = ({
       </form>
 
       {/*//TODO: make popup not blurry*/}
-      <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open}>
+      <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open} closeOnPortalMouseLeave={true}>
         <Menu secondary vertical>
           <Menu.Item
             onClick={() => {

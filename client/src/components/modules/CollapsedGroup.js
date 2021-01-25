@@ -63,7 +63,7 @@ const CollapsedGroup = ({
             })}
           </div>
         </button>
-        <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open}>
+        <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open} closeOnPortalMouseLeave={true}>
           <Menu secondary vertical>
             <Menu.Item
               onClick={() => {
