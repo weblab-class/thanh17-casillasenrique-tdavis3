@@ -135,6 +135,9 @@ router.post("/edit/edit_group", (req, res) => {
 });
 
 router.post("/edit/add_multiple_groups", (req, res) => {
+    for (let group of req.body.groups) {
+        group.userId = req.user._id;
+    }
     Group.insertMany(req.body.groups).then((result) => {
         console.log("Added multiple groups.");
         res.json(result);
