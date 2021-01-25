@@ -21,6 +21,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: undefined,
       userId: undefined,
       backgroundImage: undefined,
       isDarkMode: true,
@@ -33,7 +34,7 @@ class App extends Component {
         // they are registered in the database, and currently logged in.
         console.log("already logged in");
         console.log("user settings are: isDarkMode: " + user.isDarkMode + " \nbackgroundimage," + user.backgroundImage + " \n") ;
-        this.setState({ userId: user._id, backgroundImage: user.backgroundImage, isDarkMode: user.isDarkMode });
+        this.setState({ name: user.name, userId: user._id, backgroundImage: user.backgroundImage, isDarkMode: user.isDarkMode });
       }
     });
   }
@@ -43,13 +44,13 @@ class App extends Component {
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       console.log("user settings are: isDarkMode: " + user.isDarkMode + " \nbackgroundimage," + user.backgroundImage + " \n") ;
-      this.setState({ userId: user._id, backgroundImage: user.backgroundImage, isDarkMode: user.isDarkMode });
+      this.setState({name: user.name, userId: user._id, backgroundImage: user.backgroundImage, isDarkMode: user.isDarkMode });
       post("/api/initsocket", { socketid: socket.id });
     });
   };
 
   handleLogout = () => {
-    this.setState({ userId: undefined });
+    this.setState({name: undefined, userId: undefined });
     post("/api/logout");
   };
 
@@ -82,6 +83,7 @@ class App extends Component {
             path="/home"
             handleLogout={this.handleLogout}
             googleClientId={GOOGLE_CLIENT_ID}
+            userName = {this.state.name}
             userId={this.state.userId}
             backgroundImage={this.state.backgroundImage}
             isDarkMode={this.state.isDarkMode}

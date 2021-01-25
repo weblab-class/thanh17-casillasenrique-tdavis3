@@ -663,7 +663,7 @@ const Home = (props) => {
   };
 
   return (
-    <Sidebar.Pushable>
+    <Sidebar.Pushable style = {{fontFamily: "'Quicksand', sans-serif !important"}}>
       <HomeSidebar
         visible={state.sidebarVisible}
         onHide={() => setState({ ...state, sidebarVisible: false })}
@@ -671,6 +671,7 @@ const Home = (props) => {
         handleCreateGroup={handleCreateGroup}
         handleLogout={props.handleLogout}
         googleClientId={props.googleClientId}
+        userName = {props.userName}
         handleEditSettings = {handleEditSettings}
         isDarkMode={props.isDarkMode}
       />

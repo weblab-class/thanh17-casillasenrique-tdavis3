@@ -7,13 +7,14 @@ import NewComponentModal from "./NewComponentModal";
 import NewBookmarkForm from "./NewBookmarkForm";
 import NewGroupForm from "./NewGroupForm";
 import SettingsForm from "./SettingsForm";
-
+import UserForm from "./UserForm";
 const HomeSidebar = ({
   visible,
   onHide,
   handleCreateBookmark,
   handleCreateGroup,
   googleClientId,
+  userName,
   handleLogout,
   handleEditSettings,
   isDarkMode,
@@ -24,6 +25,7 @@ const HomeSidebar = ({
     widgetModalOpened: false,
     groupModalOpened: false,
     settingsModalOpened: false,
+    userModalOpened: false
   });
 
   return (
@@ -56,6 +58,19 @@ const HomeSidebar = ({
           />
         }
         close={() => setState({ ...state, settingsModalOpened: false })}
+      />
+      <NewComponentModal
+        isOpen={state.userModalOpened}
+        form={
+          <UserForm
+            onSubmit={() => setState({ ...state, userModalOpened: false })}
+            closeForm={() => console.log("closing form")}
+            googleClientId={googleClientId}
+            handleLogout={handleLogout}
+            userName={userName}
+          />
+        }
+        close={() => setState({ ...state, userModalOpened: false })}
       />
 
       {/* <NewComponentModal
@@ -139,7 +154,7 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on profile");
-                setState({ ...state, settingsModalOpened: true });
+                setState({ ...state, userModalOpened: true });
               }}
             >
               <Icon name="user outline"></Icon>
