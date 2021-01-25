@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
 import { del, get, post, readFileAsync } from "../../utilities";
-import { Button, Icon, Sidebar } from "semantic-ui-react";
+import { Button, Icon, Sidebar, Placeholder } from "semantic-ui-react";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
 import Board from "../modules/Board";
 import NewComponentModal from "../modules/NewComponentModal";
 import SettingsForm from "../modules/SettingsForm";
+import background from "../../public/images/background.jpg";
 import globe from "../../public/images/globe.png";
 import HomeSidebar from "../modules/HomeSidebar";
 
@@ -36,6 +37,8 @@ const Home = (props) => {
     bookmarks: [],
     inEditMode: false,
     sidebarVisible: false,
+    isDarkMode: false,
+    backgroundImage: undefined,
   });
 
   /** Loads user home page data from the database
@@ -44,14 +47,21 @@ const Home = (props) => {
   useEffect(() => {
     const bookmarksPromise = get("/api/bookmarks");
     const groupsPromise = get("/api/groups");
+    const settingsPromise = get("/api/settings");
 
-    Promise.all([bookmarksPromise, groupsPromise])
+    Promise.all([bookmarksPromise, groupsPromise, settingsPromise])
       .then((results) => {
-        console.log(results);
+        let bookmarks = results[0];
+        let groups = results[1];
+        let settings = results[2];
+
+        //console.log("from component did mount: \nbookmarks: " + bookmarks + "\ngroups: " + groups + "\nsettings: " + settings.isDarkMode + "," + settings.backgroundImage);
         setState({
           ...state,
-          bookmarks: results[0],
-          groups: results[1],
+          bookmarks: bookmarks,
+          groups: groups,
+          isDarkMode: settings.isDarkMode,
+          backgroundImage: settings.backgroundImage,
         });
       })
       .catch((err) => console.log("an error occurred while fetching home page data: " + err));
@@ -84,7 +94,6 @@ const Home = (props) => {
     );
   };
 
-
   /** Find the next page and index in the sequence of pages
    *
    * @param currentPage
@@ -110,32 +119,38 @@ const Home = (props) => {
    * @param groupID the ID of the group if it exists
    * @returns {number} the first empty index at currentPage
    */
-  const findEmptyIndex = (currentPage,groupID) => {
+  const findEmptyIndex = (currentPage, groupID) => {
     const findElementAtIndex = () => {
       // console.log(group)
       return groupID
-        ? group.bookmarks.filter((bookmark) => bookmark.index === emptyIndex && bookmark.pageIndex === currentPage)
+        ? group.bookmarks.filter(
+            (bookmark) => bookmark.index === emptyIndex && bookmark.pageIndex === currentPage
+          )
         : [
-          ...state.bookmarks.filter((bookmark) => bookmark.index === emptyIndex && bookmark.pageIndex === currentPage),
-          ...state.groups.filter((group) => group.index === emptyIndex && group.pageIndex === currentPage),
-        ];
-    }
+            ...state.bookmarks.filter(
+              (bookmark) => bookmark.index === emptyIndex && bookmark.pageIndex === currentPage
+            ),
+            ...state.groups.filter(
+              (group) => group.index === emptyIndex && group.pageIndex === currentPage
+            ),
+          ];
+    };
     let emptyIndex = 0;
     const maxGrids = groupID ? ELEMENTS_PER_GROUP : ELEMENTS_PER_PAGE;
-    const group = groupID? state.groups.filter((group) => group._id === groupID)[0]:null;
+    const group = groupID ? state.groups.filter((group) => group._id === groupID)[0] : null;
     // console.log(group)
     // console.log("emptyIndex outside:", emptyIndex)
     let elementAtIndex = findElementAtIndex();
     // console.log("elementAtIndex",elementAtIndex);
-    while (elementAtIndex.length !== 0 && emptyIndex <= maxGrids){
+    while (elementAtIndex.length !== 0 && emptyIndex <= maxGrids) {
       // console.log("emptyIndex", emptyIndex)
-      emptyIndex+= 1
+      emptyIndex += 1;
       elementAtIndex = findElementAtIndex();
       // console.log("elementAtIndex Inside:",elementAtIndex);
     }
 
     return emptyIndex;
-  }
+  };
   /** Return the first available page and index given the current page number and
    * groupID if in a group
    *
@@ -147,13 +162,13 @@ const Home = (props) => {
     let page = currentPage;
     // let maxIndex = findMaxIndex(page, groupID) + 1;
     const maxGrids = groupID ? ELEMENTS_PER_GROUP : ELEMENTS_PER_PAGE;
-    let emptyIndex = findEmptyIndex(page,groupID);
+    let emptyIndex = findEmptyIndex(page, groupID);
     while (emptyIndex >= maxGrids) {
       //check each index until empty grid.
       page += 1;
       console.log("need to go to the next page");
       // maxIndex = findMaxIndex(page, groupID) + 1;
-      emptyIndex = findEmptyIndex(page,groupID);
+      emptyIndex = findEmptyIndex(page, groupID);
     }
 
     return [emptyIndex, page];
@@ -458,11 +473,19 @@ const Home = (props) => {
    *
    * @param {List} groups
    */
-  const uploadToHome = (groups) => {
-    setState({ ...state, groups: groups.concat(state.groups) });
-
+  const uploadToHome = (groups, isDarkMode, background) => {
+    // setState({ ...state, groups: groups.concat(state.groups) });
+    
     //TODO: CONNECT TO PERSISTENCE
-    post("/api/edit/add_multiple_groups", { groups });
+    post("/api/edit/add_multiple_groups", { groups }).then((result) => {
+      console.log("addings groups to state");
+      setState({ 
+        ...state, 
+        groups: groups.concat(state.groups),
+        backgroundImage: background,
+        isDarkMode: isDarkMode,
+      });
+    });
   };
 
   /** Helper function that creates bookmark and group objects from the
@@ -541,7 +564,7 @@ const Home = (props) => {
    *
    * @param {File} htmlFile
    */
-  const parseAndUpload = (htmlFile) => {
+  const parseAndUpload = (htmlFile, isDarkMode, background) => {
     let reader = new FileReader();
 
     /** Function called on reader load,
@@ -587,7 +610,6 @@ const Home = (props) => {
           console.log("element did not have an icon");
           icon = globe;
         } else {
-
           icon = icon[regexMatchIndex];
         }
 
@@ -607,7 +629,7 @@ const Home = (props) => {
       let groups = createComponentsFromNodes(newNodes);
       groups = Array.from(groups.values()).map((groupData) => groupData.group);
       console.log(groups);
-      uploadToHome(groups);
+      uploadToHome(groups, isDarkMode, background);
     };
 
     reader.readAsText(htmlFile);
@@ -622,9 +644,9 @@ const Home = (props) => {
    *
    * @param {File} htmlFile
    */
-  const handleUploadBookmarks = (htmlFile) => {
+  const handleUploadBookmarksAndSettings = (htmlFile, isDarkMode, background) => {
     try {
-      parseAndUpload(htmlFile);
+      parseAndUpload(htmlFile, isDarkMode, background);
     } catch (e) {
       console.log("Failed to parse given chrome bookmarks file. Please try a different file");
     }
@@ -653,17 +675,34 @@ const Home = (props) => {
     return indexHasNoBookmarks(index) && filteredGroups.length === 0;
   };
 
-  const handleEditSettings = (backgroundImage, bookmarksFile, isDarkMode) => {
-    
-    if (bookmarksFile) {
-      handleUploadBookmarks(bookmarksFile);
-    }
+  const handleEditSettings = async (imageFileObject, bookmarksFile, isDarkMode) => {
     console.log(isDarkMode);
-    props.handleEditSettings(backgroundImage, isDarkMode);
+    let savedFile = state.backgroundImage;
+    if (imageFileObject) {
+      savedFile = await readFileAsync(imageFileObject);
+    }
+
+    if (bookmarksFile) {
+      console.log("had to also handle bookmarks");
+      handleUploadBookmarksAndSettings(bookmarksFile, isDarkMode, savedFile);
+    } else {
+      console.log("only had to handle bookmarks file and isDarkMode");
+      setState({
+        ...state,
+          backgroundImage: savedFile,
+          isDarkMode: isDarkMode,
+      });
+    }
+
+    post("/api/edit/settings", { backgroundImage: savedFile, isDarkMode: isDarkMode })
+      .then((result) => {
+        //console.log("result from editing settings: " + Object.keys(result) + " \nv: " + Object.values(result));
+      })
+      .catch((e) => console.log("error occurred: " + e));
   };
 
   return (
-    <Sidebar.Pushable style = {{fontFamily: "'Quicksand', sans-serif !important"}}>
+    <Sidebar.Pushable style={{ fontFamily: "'Quicksand', sans-serif !important" }}>
       <HomeSidebar
         visible={state.sidebarVisible}
         onHide={() => setState({ ...state, sidebarVisible: false })}
@@ -671,14 +710,17 @@ const Home = (props) => {
         handleCreateGroup={handleCreateGroup}
         handleLogout={props.handleLogout}
         googleClientId={props.googleClientId}
-        userName = {props.userName}
-        handleEditSettings = {handleEditSettings}
-        isDarkMode={props.isDarkMode}
+        userName={props.userName}
+        handleEditSettings={handleEditSettings}
+        isDarkMode={state.isDarkMode}
       />
 
       <Sidebar.Pusher dimmed={state.sidebarVisible}>
-        
-        <div className="Home-root" style={{ backgroundImage: `url(${props.backgroundImage})` }}>
+        <div className="Home-root" style={{ backgroundImage: (state.backgroundImage && `url(${state.backgroundImage})`) }}>
+        {!state.backgroundImage && <Placeholder as="h1" style={{color: "grey"}} inverted fluid>
+            Loading...
+            <Placeholder.Image rectangular />
+            </Placeholder>}
           {!props.userId && <Redirect to={"/"} noThrow />}
 
           {/*The logout button*/}
@@ -727,7 +769,7 @@ const Home = (props) => {
                   transform: "translateX(-50%)",
                 }}
               >
-                Page {state.currentPage+1}
+                Page {state.currentPage + 1}
               </div>
               <div style={{ display: "flex" }}>
                 <div className="Home-toggleEdit">
@@ -750,13 +792,13 @@ const Home = (props) => {
 
                 {/*The freaking bookmark bar*/}
                 <div className={"Home-edit-dropdown"}>
-                  <Button 
+                  <Button
                     inverted
                     animated
                     size="medium"
                     onClick={() => setState({ ...state, sidebarVisible: !state.sidebarVisible })}
                   >
-                    <div className="icon-button" >
+                    <div className="icon-button">
                       <Button.Content visible>
                         <Icon name="bars" />
                       </Button.Content>
@@ -767,7 +809,7 @@ const Home = (props) => {
               </div>
             </div>
           </div>
-
+          
           {/*<Button content="add test bookmark" onClick={() => handleCreateBookmark({url: "https://google.com", bookmarkName: "Test Bookmark", selectedIcon: "https://www.google.com/s2/favicons?sz=256&domain_url=https://www.google.com", selectedCustomIcon: null})}/>*/}
 
           {/*{console.log("YOOOOOOOO")}*/}
@@ -791,6 +833,7 @@ const Home = (props) => {
             indexHasNoBookmarks={indexHasNoBookmarks}
             indexHasNoElements={indexHasNoElements}
           />
+          
         </div>
       </Sidebar.Pusher>
     </Sidebar.Pushable>

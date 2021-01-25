@@ -23,8 +23,6 @@ class App extends Component {
     this.state = {
       name: undefined,
       userId: undefined,
-      backgroundImage: undefined,
-      isDarkMode: true,
     };
   }
 
@@ -33,8 +31,8 @@ class App extends Component {
       if (user._id) {
         // they are registered in the database, and currently logged in.
         console.log("already logged in");
-        console.log("user settings are: isDarkMode: " + user.isDarkMode + " \nbackgroundimage," + user.backgroundImage + " \n") ;
-        this.setState({ name: user.name, userId: user._id, backgroundImage: user.backgroundImage, isDarkMode: user.isDarkMode });
+        //console.log("user settings are: isDarkMode: " + user.isDarkMode + " \nbackgroundimage," + user.backgroundImage + " \n") ;
+        this.setState({ name: user.name, userId: user._id });
       }
     });
   }
@@ -43,8 +41,8 @@ class App extends Component {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
-      console.log("user settings are: isDarkMode: " + user.isDarkMode + " \nbackgroundimage," + user.backgroundImage + " \n") ;
-      this.setState({name: user.name, userId: user._id, backgroundImage: user.backgroundImage, isDarkMode: user.isDarkMode });
+      //console.log("user settings are: isDarkMode: " + user.isDarkMode + " \nbackgroundimage," + user.backgroundImage + " \n") ;
+      this.setState({ name: user.name, userId: user._id });
       post("/api/initsocket", { socketid: socket.id });
     });
   };
@@ -52,21 +50,6 @@ class App extends Component {
   handleLogout = () => {
     this.setState({name: undefined, userId: undefined });
     post("/api/logout");
-  };
-
-  handleEditSettings = async (imageFileObject, isDarkMode) => {
-    console.log(isDarkMode);
-    let savedFile = this.state.backgroundImage;
-    if (imageFileObject) {
-      savedFile = await readFileAsync(imageFileObject);   
-    } 
-
-    this.setState({ ...this.state, backgroundImage: savedFile, isDarkMode: isDarkMode});
-
-    post("/api/edit/settings", {backgroundImage: savedFile, isDarkMode: isDarkMode}).then(result => {
-      console.log("result " + Object.keys(result) + " " + Object.values(result));
-      
-    }).catch(e => console.log("error occurred: " + e));
   };
 
   render() {
@@ -85,9 +68,6 @@ class App extends Component {
             googleClientId={GOOGLE_CLIENT_ID}
             userName = {this.state.name}
             userId={this.state.userId}
-            backgroundImage={this.state.backgroundImage}
-            isDarkMode={this.state.isDarkMode}
-            handleEditSettings={this.handleEditSettings}
           />
           <NotFound default />
         </Router>

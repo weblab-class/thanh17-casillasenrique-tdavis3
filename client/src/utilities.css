@@ -103,3 +103,12 @@ form {
 .u-grow:hover {
   transform: scale(1.2);
 }
+
+
+.u-grow-small {
+  transition: all 0.2s ease-in-out;
+}
+
+.u-grow-small:hover {
+  transform: scale(1.1);
+}

@@ -31,8 +31,8 @@ function getOrCreateUser(user) {
     const newUser = new User({
       name: user.name,
       googleid: user.sub,
-      backgroundImage: background.default,
-      isDarkMode: true,
+      // backgroundImage: background.default,
+      // isDarkMode: true,
     });
 
     return newUser.save();

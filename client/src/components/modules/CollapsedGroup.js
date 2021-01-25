@@ -30,18 +30,20 @@ const CollapsedGroup = ({
   })
   return (
     <div
+      
       style={{
         opacity: isDragging ? 0 : 1,
         cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer",
       }}
-      className="u-grow"
+      
     >
-      <div ref={drag}>
-        <div style={{ display: "flex", justifyContent: "flex-end", outline: "none !important" }}>
+      <div style={{ display: "flex", justifyContent: "flex-end", outline: "none !important" }}>
           {inEditMode && (
             <Button size="mini" circular compact={true} icon="close" onClick={onRemove} />
           )}
         </div>
+      <div className="u-grow-small" ref={drag}>
+        
         <button
           style={{ cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer" }}
           className="CollapsedGroup-button u-flex-alignCenter"
@@ -98,8 +100,9 @@ const CollapsedGroup = ({
             {/*  TODO: show/edit URL on right click*/}
           </Menu>
         </Popup>
+        <p className="Bookmark-text u-bold ">{name}</p>
       </div>
-      <p className="Bookmark-text u-bold ">{name}</p>
+      
     </div>
   );
 };
