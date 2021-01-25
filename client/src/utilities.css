@@ -16,14 +16,15 @@
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
 /*@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");*/
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
+/*@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");*/
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 :root {
-  --primary: #396dff;
-  --primary--dim: #6987db;
-  --darkgrey: #d4d4d4;
-  --medgrey: #e0e0e0;
-  --grey: #f7f7f7;
-  --white: #fff;
+  --primary: #03045e;
+  --primary--dim: #0077b6;
+  --darkgrey: #00b4d8;
+  --medgrey: #48cae4;
+  --grey: #90e0ef;
+  --white: #caf0f8;
 
   --xs: 4px;
   --s: 8px;
@@ -36,7 +37,8 @@ body {
   margin: 0;
   padding: 0;
   /*font-family: "Roboto", sans-serif;*/
-  font-family: "Source Sans Pro", sans-serif;
+  /*font-family: "Source Sans Pro", sans-serif;*/
+  font-family: 'Quicksand', sans-serif;
   font-weight: 300;
   /*background-image: url("./public/images/backgroundGreen.jpg");*/
   /*background-size: cover;*/
