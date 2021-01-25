@@ -15,7 +15,8 @@ const HomeSidebar = ({
   handleCreateGroup,
   googleClientId,
   handleLogout,
-  handleUploadBookmarks,
+  handleEditSettings,
+  isDarkMode,
 }) => {
   //State
   const [state, setState] = useState({
@@ -45,11 +46,13 @@ const HomeSidebar = ({
         isOpen={state.settingsModalOpened}
         form={
           <SettingsForm
-            uploadBookmarks={handleUploadBookmarks}
+            handleEditSettings={handleEditSettings}
             onSubmit={() => setState({ ...state, settingsModalOpened: false })}
             closeForm={() => console.log("closing form")}
-            googleClientId={googleClientId}
-            handleLogout={handleLogout}
+            isDarkMode={isDarkMode}
+
+            // googleClientId={googleClientId}
+            // handleLogout={handleLogout}
           />
         }
         close={() => setState({ ...state, settingsModalOpened: false })}

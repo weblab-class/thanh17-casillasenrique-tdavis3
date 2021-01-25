@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Form, Icon, Menu, Header, Button, Radio } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
 import standardIcon from "../../public/images/globe.png";
@@ -12,10 +12,6 @@ const URL_REGEX =
   "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]" +
   "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
 
-const initialState = {
-  bookmarksFile: undefined,
-  backgroundFile: undefined,
-};
 
 /** A bookmark form to be used for handling the creating of a new bookmark
  *
@@ -24,10 +20,19 @@ const initialState = {
  * @returns {JSX.Element} A bookmark form that has options for URLs, name, and icons
  * @constructor
  */
-const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploadBookmarks }) => {
-  const [state, setState] = useState(initialState);
+const SettingsForm = ({ onSubmit, closeForm, handleEditSettings, isDarkMode }) => {
+  const [state, setState] = useState({
+    bookmarksFile: undefined, 
+    backgroundFile: undefined, 
+    darkModeToggle: isDarkMode,
+  });
+  
   const bookmarksInputRef = useRef(null);
   const backgroundInputRef = useRef(null);
+
+  // useEffect(() => {
+  //   setState({ ...state, darkModeToggle: isDarkMode})
+  // }, []);
 
   /** Submits the form to make a new bookmark
    *
@@ -35,7 +40,10 @@ const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploa
   const handleSubmit = () => {
     onSubmit && onSubmit(state);
     closeForm();
-    setState(initialState);
+    
+    handleEditSettings(state.backgroundFile, state.bookmarksFile, state.darkModeToggle) 
+
+    setState({bookmarksFile: undefined, backgroundFile: undefined, darkModeToggle: isDarkMode});
   };
 
   return (
@@ -65,8 +73,12 @@ const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploa
               className="IconSelect-invisibleInput"
               ref={bookmarksInputRef}
               onChange={(event) => {
-                console.log(event.target.files[0]);
-                setState({ ...state, bookmarksFile: event.target.files[0] });
+                //console.log(event.target.files[0]);
+                if(event.target.files[0]) {
+                  setState({ ...state, bookmarksFile: event.target.files[0] });
+                } else {
+                  setState({ ...state, bookmarksFile: null });
+                }
               }}
             />
             <Icon name="upload"></Icon>
@@ -108,7 +120,11 @@ const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploa
               ref={backgroundInputRef}
               onChange={(event) => {
                 console.log(event.target.files[0]);
-                setState({ ...state, backgroundFile: event.target.files[0] });
+                if(event.target.files[0]) {
+                  setState({ ...state, backgroundFile: event.target.files[0] });
+                } else {
+                  setState({ ...state, backgroundFile: null });
+                }
               }}
             />
             <Icon name="upload"></Icon>
@@ -131,9 +147,12 @@ const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploa
       <label>Change Theme</label>
       <Form.Group inline>
         <Form.Field>
-          <Radio toggle onChange={() => console.log("toggled")} />
+          <Radio 
+            toggle 
+            onChange={() => setState({ ...state, darkModeToggle: !state.darkModeToggle })}
+            checked={state.darkModeToggle} />
         </Form.Field>
-        <p style={{ fontSize: "small", color: "rgb(200,200,200)" }}>Dark mode</p>
+        <p style={{ fontSize: "small", color: "rgb(200,200,200)" }}>{(state.darkModeToggle) ? "Dark mode" : "Light mode"}</p>
       </Form.Group>
 
       <Form.Button
@@ -141,7 +160,7 @@ const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploa
         primary
         size="large"
         type="button"
-        onClick={() => uploadBookmarks(state.bookmarksFile)}
+        onClick={handleSubmit}
       >
         Save Changes
       </Form.Button>

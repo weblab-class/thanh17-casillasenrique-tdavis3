@@ -5,7 +5,6 @@ import { del, get, post, readFileAsync } from "../../utilities";
 import { Button, Icon, Sidebar } from "semantic-ui-react";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
-import Background from "../../public/images/background.jpg";
 import Board from "../modules/Board";
 import NewComponentModal from "../modules/NewComponentModal";
 import SettingsForm from "../modules/SettingsForm";
@@ -463,6 +462,7 @@ const Home = (props) => {
     setState({ ...state, groups: groups.concat(state.groups) });
 
     //TODO: CONNECT TO PERSISTENCE
+    post("/api/edit/add_multiple_groups", { groups });
   };
 
   /** Helper function that creates bookmark and group objects from the
@@ -473,7 +473,7 @@ const Home = (props) => {
    * @param {List} bookmarks
    */
   const createComponentsFromNodes = (bookmarks) => {
-    let [index, page] = findFirstAvailablePageAndIndex(state.currentPage, null);
+    let [index, page] = findNextPageAndIndex(state.currentPage, null);
     console.log("index and page: ", index, page);
     let newGroups = new Map();
 
@@ -582,10 +582,12 @@ const Home = (props) => {
       const regexMatchIndex = 2;
       let newNodes = linkNodes.map((node) => {
         let icon = node.outerHTML.match(new RegExp('(icon="(.*)")'));
+        console.log(node.outerText + " icon: " + icon);
         if (!icon) {
           console.log("element did not have an icon");
           icon = globe;
         } else {
+
           icon = icon[regexMatchIndex];
         }
 
@@ -621,7 +623,6 @@ const Home = (props) => {
    * @param {File} htmlFile
    */
   const handleUploadBookmarks = (htmlFile) => {
-    chrome.bookmarks.getTree((res) => console.log(red));
     try {
       parseAndUpload(htmlFile);
     } catch (e) {
@@ -652,6 +653,15 @@ const Home = (props) => {
     return indexHasNoBookmarks(index) && filteredGroups.length === 0;
   };
 
+  const handleEditSettings = (backgroundImage, bookmarksFile, isDarkMode) => {
+    
+    if (bookmarksFile) {
+      handleUploadBookmarks(bookmarksFile);
+    }
+    console.log(isDarkMode);
+    props.handleEditSettings(backgroundImage, isDarkMode);
+  };
+
   return (
     <Sidebar.Pushable>
       <HomeSidebar
@@ -661,12 +671,13 @@ const Home = (props) => {
         handleCreateGroup={handleCreateGroup}
         handleLogout={props.handleLogout}
         googleClientId={props.googleClientId}
-        handleUploadBookmarks={handleUploadBookmarks}
+        handleEditSettings = {handleEditSettings}
+        isDarkMode={props.isDarkMode}
       />
 
       <Sidebar.Pusher dimmed={state.sidebarVisible}>
         
-        <div className="Home-root" style={{ backgroundImage: `url(${Background})` }}>
+        <div className="Home-root" style={{ backgroundImage: `url(${props.backgroundImage})` }}>
           {!props.userId && <Redirect to={"/"} noThrow />}
 
           {/*The logout button*/}
@@ -725,7 +736,7 @@ const Home = (props) => {
                     inverted
                     size="medium"
                     animated="fade"
-                    color={state.inEditMode ? "blue" : "white"}
+                    primary={state.inEditMode}
                   >
                     <div className={"icon-button"}>
                       <Button.Content visible>

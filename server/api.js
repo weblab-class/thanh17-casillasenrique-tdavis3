@@ -84,15 +84,15 @@ router.get("/groups", auth.ensureLoggedIn, (req, res) => {
         });
 });
 
-router.post("edit/settings", (req, res) => {
-    User.updateOne({googleid: req.user.googleid}, {
+router.post("/edit/settings", (req, res) => {
+    User.updateOne({_id: req.user._id}, {
         $set: {
             backgroundImage: req.body.backgroundImage,
-            isDarkMode: req.body.isDarkMode
+            isDarkMode: req.body.isDarkMode,
         }
     }).then((result) => {
-        console.log("Updated settings.");
-        res.json(result);
+        //console.log("Updated settings for " + req.user._id + " " + req.user.name + " to \n isDarkMode: " + req.body.isDarkMode + " " + result.isDarkMode);
+        res.send(result);
     });
 });
 
