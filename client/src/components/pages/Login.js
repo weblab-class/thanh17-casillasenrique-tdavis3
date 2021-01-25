@@ -27,7 +27,7 @@ class Login extends Component {
       showCursor: false,
       typeSpeed:  100,
       disableBackTyping: true,
-      strings: ["Your bookmarks", "Your groups", "Your new home."]
+      strings: ["your bookmarks", "your groups", "your shortcuts", "your new home :)"]
     });
   }
 
