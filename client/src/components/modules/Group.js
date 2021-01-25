@@ -191,12 +191,13 @@ const Group = ({
           position: "fixed",
           left: "50%",
           transform: "translateX(-50%)",
-          bottom: "-16%",
+          bottom: "-10%",
           textOverflow: "ellipsis",
           maxWidth: "8em",
-          maxHeight: "1em",
+          // maxHeight: "10em",
           whiteSpace: "nowrap",
           overflow: "hidden",
+          lineHeight: "normal"
         }}
       >
         {name}
