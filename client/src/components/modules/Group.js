@@ -174,7 +174,7 @@ const Group = ({
 
       <div
         style={{
-          fontSize: "larger",
+          fontSize: "x-large",
           color: "white",
           position: "fixed",
           left: "50%",
