@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Sidebar, Menu, Icon, Header } from "semantic-ui-react";
+import { Sidebar, Menu, Icon, Header, ModalDescription } from "semantic-ui-react";
 import newBookmark from "../../public/images/New_Bookmark.png";
 import newGroup from "../../public/images/New_Group.png";
 import newWidget from "../../public/images/New_Widget.png";
@@ -8,6 +8,15 @@ import NewBookmarkForm from "./NewBookmarkForm";
 import NewGroupForm from "./NewGroupForm";
 import SettingsForm from "./SettingsForm";
 import UserForm from "./UserForm";
+
+const modalKeys = {
+  NONE: "none",
+  ADD_BOOKMARK: "bookmark",
+  ADD_GROUP: "group",
+  SETTINGS: "settings",
+  PROFILE: "profile",
+} 
+
 const HomeSidebar = ({
   visible,
   onHide,
@@ -21,46 +30,39 @@ const HomeSidebar = ({
 }) => {
   //State
   const [state, setState] = useState({
-    bookmarkModalOpened: false,
-    widgetModalOpened: false,
-    groupModalOpened: false,
-    settingsModalOpened: false,
-    userModalOpened: false
+    openedModal: modalKeys.NONE,
   });
 
   return (
     <>
       {/* New Bookmark Form */}
       <NewComponentModal
-        isOpen={state.bookmarkModalOpened}
+        isOpen={state.openedModal === modalKeys.ADD_BOOKMARK}
         form={<NewBookmarkForm onSubmit={handleCreateBookmark} />}
-        close={() => setState({ ...state, bookmarkModalOpened: false })}
+        close={() => setState({ ...state, openedModal: modalKeys.NONE })}
       />
 
       {/* New Group Form */}
       <NewComponentModal
-        isOpen={state.groupModalOpened}
+        isOpen={state.openedModal === modalKeys.ADD_GROUP}
         form={<NewGroupForm onSubmit={handleCreateGroup} />}
-        close={() => setState({ ...state, groupModalOpened: false })}
+        close={() => setState({ ...state, openedModal: modalKeys.NONE })}
       />
 
       <NewComponentModal
-        isOpen={state.settingsModalOpened}
+        isOpen={state.openedModal === modalKeys.SETTINGS}
         form={
           <SettingsForm
             handleEditSettings={handleEditSettings}
-            onSubmit={() => setState({ ...state, settingsModalOpened: false })}
+            onSubmit={() => setState({ ...state, openedModal: modalKeys.NONE })}
             closeForm={() => console.log("closing form")}
             isDarkMode={isDarkMode}
-
-            // googleClientId={googleClientId}
-            // handleLogout={handleLogout}
           />
         }
-        close={() => setState({ ...state, settingsModalOpened: false })}
+        close={() => setState({ ...state, openedModal: modalKeys.NONE })}
       />
       <NewComponentModal
-        isOpen={state.userModalOpened}
+        isOpen={state.openedModal === modalKeys.PROFILE}
         form={
           <UserForm
             onSubmit={() => setState({ ...state, userModalOpened: false })}
@@ -70,7 +72,7 @@ const HomeSidebar = ({
             userName={userName}
           />
         }
-        close={() => setState({ ...state, userModalOpened: false })}
+        close={() => setState({ ...state, openedModal: modalKeys.NONE })}
       />
 
       {/* <NewComponentModal
@@ -85,10 +87,7 @@ const HomeSidebar = ({
         direction="right"
         animation="overlay"
         visible={
-          visible &&
-          !state.bookmarkModalOpened &&
-          !state.groupModalOpened &&
-          !state.settingsModalOpened
+          visible && state.openedModal === modalKeys.NONE
         }
         onHide={onHide}
         inverted
@@ -108,7 +107,7 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on new bookmark!");
-                setState({ ...state, bookmarkModalOpened: true });
+                setState({ ...state,  openedModal: modalKeys.ADD_BOOKMARK });
               }}
             >
               {/* <img src={newBookmark} /> */}
@@ -118,21 +117,11 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on new group!");
-                setState({ ...state, groupModalOpened: true });
+                setState({ ...state,  openedModal: modalKeys.ADD_GROUP });
               }}
             >
               {/* <img src={newGroup} /> */}
               <Icon name="square outline"></Icon>
-            </Menu.Item>
-            <Menu.Item
-              as="a"
-              onClick={() => {
-                console.log("clicked on new widget!");
-                setState({ ...state, widgetModalOpened: true });
-              }}
-            >
-              {/* <img src={newWidget} /> */}
-              
             </Menu.Item>
           </Menu.Menu>
         </Menu.Item>
@@ -144,7 +133,7 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on settings");
-                setState({ ...state, settingsModalOpened: true });
+                setState({ ...state,  openedModal: modalKeys.SETTINGS });
               }}
             >
               <Icon name="setting"></Icon>
@@ -154,7 +143,7 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on profile");
-                setState({ ...state, userModalOpened: true });
+                setState({ ...state,  openedModal: modalKeys.PROFILE });
               }}
             >
               <Icon name="user outline"></Icon>
