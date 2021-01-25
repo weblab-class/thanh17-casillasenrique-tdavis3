@@ -55,6 +55,13 @@ const HomeSidebar = ({
         close={() => setState({ ...state, settingsModalOpened: false })}
       />
 
+      {/* <NewComponentModal
+        isOpen={state.profileModalOpened}
+      >
+
+
+      </NewComponentModal> */}
+
       <Sidebar
         as={Menu}
         direction="right"

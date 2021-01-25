@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Icon, Menu, Header } from "semantic-ui-react";
+import React, { useState, useRef } from "react";
+import { Form, Icon, Menu, Header, Button, Radio } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
 import standardIcon from "../../public/images/globe.png";
 import fileUpload from "../../public/images/fileUpload.png";
@@ -13,7 +13,8 @@ const URL_REGEX =
   "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
 
 const initialState = {
-  uploadedFile: undefined,
+  bookmarksFile: undefined,
+  backgroundFile: undefined,
 };
 
 /** A bookmark form to be used for handling the creating of a new bookmark
@@ -23,29 +24,10 @@ const initialState = {
  * @returns {JSX.Element} A bookmark form that has options for URLs, name, and icons
  * @constructor
  */
-const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploadBookmarks}) => {
+const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploadBookmarks }) => {
   const [state, setState] = useState(initialState);
-
-  /** Handle the changes that occur while interacting with the new bookmark form
-   *
-   * @param event The specific event defined with a name indicating what change has occurred
-   * when interacting with the form and the specific value indicating the updated states
-   * to be made
-   */
-  const handleChange = (event) => {
-    const targetName = event.target.name;
-    const targetValue = event.target.value;
-    let location = undefined;
-    if (targetName === "url") {
-      if (targetValue.match(URL_REGEX)) {
-        location = FAVICON_URL + targetValue;
-      }
-
-      setState({ ...state, defaultIconURL: location, url: targetValue });
-    } else {
-      setState({ ...state, [targetName]: targetValue });
-    }
-  };
+  const bookmarksInputRef = useRef(null);
+  const backgroundInputRef = useRef(null);
 
   /** Submits the form to make a new bookmark
    *
@@ -56,77 +38,113 @@ const SettingsForm = ({ onSubmit, closeForm, googleClientId, handleLogout, uploa
     setState(initialState);
   };
 
-
   return (
     <Form size="big" inverted style={{ backgroundColor: "rgb(39, 39, 39) !important" }}>
-      <div style={{ textAlign: "center" }}>
-        <Header as="h1" inverted color="grey">
-          Settings
-        </Header>
-      </div>
+      <Header as="h2" inverted color="grey">
+        Settings
+      </Header>
 
-
-      <div style={{ textAlign: "center" }}>
-        <GoogleLogout
-          clientId={googleClientId}
-          buttonText="Logout"
-          onLogoutSuccess={handleLogout}
-          onFailure={(err) => console.log(err)}
-        />
-      </div>
-
-      <div style={{ textAlign: "center" }}>
+      <label>Upload Bookmarks</label>
+      <Form.Group inline>
         <Form.Field>
-          <label style={{ padding: "5% 0 1% 0" }}>Select Icon</label>
-          {/*<IconSelect*/}
-          {/*  onSelect={({ icon, isUpload }) => {*/}
-          {/*    if (!isUpload) {*/}
-          {/*      console.log("set to use icon");*/}
-          {/*      setState({ ...state, selectedIcon: icon, selectedCustomIcon: null });*/}
-          {/*    } else {*/}
-          {/*      console.log("set to use file");*/}
-          {/*      setState({ ...state, selectedIcon: null, selectedCustomIcon: icon });*/}
-          {/*    }*/}
-          {/*  }}*/}
-          {/*  defaultIconURL={state.defaultIconURL}*/}
-          {/*/>*/}
+          <Button
+            icon
+            labelPosition="right"
+            inverted
+            onClick={() => {
+              console.log("clicked on default");
+              bookmarksInputRef.current.click();
+            }}
+          >
+            Choose File
+            <input
+              type="file"
+              hidden
+              id="htmlFile"
+              accept=".html"
+              className="IconSelect-invisibleInput"
+              ref={bookmarksInputRef}
+              onChange={(event) => {
+                console.log(event.target.files[0]);
+                setState({ ...state, bookmarksFile: event.target.files[0] });
+              }}
+            />
+            <Icon name="upload"></Icon>
+          </Button>
         </Form.Field>
-      </div>
-      <label
-        onClick={() => {
-          console.log("clicked on default");
-          console.log(document.getElementById("htmlFile").files[0]);
+        <Form.Field>
+          <Form.Button size="mini" circular inverted icon="question"></Form.Button>
+        </Form.Field>
+      </Form.Group>
+      <p
+        style={{
+          textOverflow: "ellipsis",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
         }}
       >
-        Uploaded: {(state.uploadedFile) && state.uploadedFile.name}
-        <img
-          src={
-            fileUpload
-          }
-          className="IconSelect-fileUploadImage"
-        />
-        <input
-          type="file"
-          id="htmlFile"
-          accept=".html"
-          className="IconSelect-invisibleInput"
-          onChange={(event) => {
-            console.log(event.target.files[0]);
-            setState({...state, uploadedFile: event.target.files[0]});
-          }}
-        />
-      </label>
-      <div style={{ textAlign: "center", padding: "5%" }}>
-        <Form.Button
-          inverted
-          primary
-          size="huge"
-          type="button"
-          onClick={() => uploadBookmarks(state.uploadedFile)}
-        >
-          Upload!
-        </Form.Button>
-      </div>
+        {state.bookmarksFile && state.bookmarksFile.name}
+      </p>
+
+      <label>Change Background </label>
+      <Form.Group inline>
+        <Form.Field>
+          <Button
+            icon
+            labelPosition="right"
+            inverted
+            onClick={() => {
+              console.log("clicked on default");
+              backgroundInputRef.current.click();
+            }}
+          >
+            Choose File
+            <input
+              type="file"
+              hidden
+              id="imgFile"
+              accept="image/*"
+              className="IconSelect-invisibleInput"
+              ref={backgroundInputRef}
+              onChange={(event) => {
+                console.log(event.target.files[0]);
+                setState({ ...state, backgroundFile: event.target.files[0] });
+              }}
+            />
+            <Icon name="upload"></Icon>
+          </Button>
+        </Form.Field>
+        <Form.Field>
+          <Form.Button size="mini" circular inverted icon="question"></Form.Button>
+        </Form.Field>
+      </Form.Group>
+      <p
+        style={{
+          textOverflow: "ellipsis",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {state.backgroundFile && state.backgroundFile.name}
+      </p>
+
+      <label>Change Theme</label>
+      <Form.Group inline>
+        <Form.Field>
+          <Radio toggle onChange={() => console.log("toggled")} />
+        </Form.Field>
+        <p style={{ fontSize: "small", color: "rgb(200,200,200)" }}>Dark mode</p>
+      </Form.Group>
+
+      <Form.Button
+        inverted
+        primary
+        size="large"
+        type="button"
+        onClick={() => uploadBookmarks(state.bookmarksFile)}
+      >
+        Save Changes
+      </Form.Button>
     </Form>
   );
 };
