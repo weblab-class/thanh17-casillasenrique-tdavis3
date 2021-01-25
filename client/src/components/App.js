@@ -28,7 +28,7 @@ class App extends Component {
   componentDidMount() {
     get("/api/whoami").then((user) => {
       if (user._id) {
-        // they are registed in the database, and currently logged in.
+        // they are registered in the database, and currently logged in.
         console.log("already logged in");
         this.setState({ userId: user._id });
       }
