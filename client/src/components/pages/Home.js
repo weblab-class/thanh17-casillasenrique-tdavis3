@@ -604,8 +604,8 @@ const Home = (props) => {
       const parentNameIndex = 0;
       const regexMatchIndex = 2;
       let newNodes = linkNodes.map((node) => {
-        let icon = node.outerHTML.match(new RegExp('(icon="(.*)")'));
-        console.log(node.outerText + " icon: " + icon);
+        let icon = node.outerHTML.match(new RegExp('(icon=\"([^\"]*)\")'));
+        //console.log(node.outerText + " icon: " + icon);
         if (!icon) {
           console.log("element did not have an icon");
           icon = globe;
