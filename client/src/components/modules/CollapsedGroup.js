@@ -56,7 +56,7 @@ const CollapsedGroup = ({
         >
           {/* <Icon name='world' size='huge' color="pink"/> */}
           <div className="CollapsedGroup grid">
-            {bookmarkIcons.reverse().map((icon, i) => {
+            {[...bookmarkIcons].reverse().map((icon, i) => {
               return (
                 <div key={i} style={{ textAlign: "center" }}>
                   <img className="CollapsedGroup-minimizedIcon" src={icon}/>
