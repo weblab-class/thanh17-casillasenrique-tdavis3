@@ -65,7 +65,10 @@ const SettingsForm = ({ isOpen, closeModal, handleEditSettings, onSubmit, isDark
         size="mini"
         className={"NewComponentModal ui modal" + (!state.darkModeToggle ? " light" : "")}
         open={isOpen}
-        onClose={closeModal}
+        onClose={() => {
+          setState({...state, darkModeToggle: isDarkMode});
+          closeModal();
+        }}
       >
         <Modal.Content
           className={"NewComponentModal modal" + (!state.darkModeToggle ? " light" : "")}
