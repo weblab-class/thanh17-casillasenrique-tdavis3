@@ -38,7 +38,10 @@ const HomeSidebar = ({
       {/* New Bookmark Form */}
       <NewComponentModal
         isOpen={state.openedModal === modalKeys.ADD_BOOKMARK}
-        form={<NewBookmarkForm onSubmit={handleCreateBookmark} />}
+        form={
+          <NewBookmarkForm 
+            onSubmit={handleCreateBookmark} 
+        />}
         close={() => setState({ ...state, openedModal: modalKeys.NONE })}
         isDarkMode={isDarkMode}
       />
@@ -70,7 +73,6 @@ const HomeSidebar = ({
             googleClientId={googleClientId}
             handleLogout={handleLogout}
             userName={userName}
-            isDarkMode={isDarkMode}
           />
         }
       />

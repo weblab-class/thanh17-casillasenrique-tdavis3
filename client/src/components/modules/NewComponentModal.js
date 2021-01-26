@@ -35,7 +35,7 @@ const NewComponentModal = ({ isOpen, form, close, isDarkMode }) => {
       size={"mini"}
     >
       <Modal.Content className={"NewComponentModal modal" + (!isDarkMode ? " light" : "")}>
-        {React.cloneElement(form, { closeForm: close })}
+        {React.cloneElement(form, { closeForm: close, isDarkMode: isDarkMode })}
       </Modal.Content>
     </Modal>
   );

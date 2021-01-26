@@ -23,7 +23,7 @@ const SELECTION = {
  * @returns {JSX.Element} selections of icons to choose from for the bookmark
  * @constructor
  */
-const IconSelect = ({ onSelect, defaultIconURL }) => {
+const IconSelect = ({ onSelect, defaultIconURL, isDarkMode }) => {
   const [selected, setSelected] = useState(SELECTION.STANDARD);
 
   useEffect(() => {
