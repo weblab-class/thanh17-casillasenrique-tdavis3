@@ -53,6 +53,27 @@
 }
 
 
+@media (max-width: 1400px) {
+  .Bookmark-container {
+    width: 14vh;
+    height:14vh;
+  }
+  .Bookmark-button {
+    width: 8vh;
+    height:8vh;
+  }
+  .Bookmark-text {
+    width: 100px;
+    font-size: 20px;
+
+  }
+  .Bookmark-image {
+    width: 7vh;
+    height:7vh;
+  }
+}
+
+
 @media (max-width: 1000px) {
   .Bookmark-container {
     width: 14vh;
@@ -68,7 +89,7 @@
 
   }
   .Bookmark-image {
-    width: 8vh;
-    height:8vh;
+    width: 7vh;
+    height:7vh;
   }
 }
