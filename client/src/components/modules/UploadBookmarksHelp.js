@@ -6,19 +6,31 @@ import step3Image from "../../public/images/upload_file.png";
 
 const Content1 = (
   <>
-    <p>On Chrome, open the <i>Bookmarks Manager</i> found in the browser options</p>
+    <p>
+      On Chrome, open the <i>Bookmarks Manager</i> found in the browser options
+    </p>
     <p>Ctrl+Shift+O (in Windows/Chrome OS) or Command+Shift+O (in macOS)</p>
     <Image src={step1Image} fluid />
   </>
 );
 const Content2 = (
   <>
-    <p>In the bookmarks manager, <i>export</i> your bookmarks by opening the options menu in the top right</p>
-    <p>A <i>Chrome HTML Document (.html)</i> file will be downloaded</p>
+    <p>
+      In the bookmarks manager, <i>export</i> your bookmarks by opening the options menu in the top
+      right
+    </p>
+    <p>
+      A <i>Chrome HTML Document (.html)</i> file will be downloaded
+    </p>
     <Image src={step2Image} fluid />
   </>
 );
-const Content3 = <><p>Upload your bookmarks file to MarcX and save your changes!</p><Image src={step3Image} fluid /></>;
+const Content3 = (
+  <>
+    <p>Upload your bookmarks file to MarcX and save your changes!</p>
+    <Image src={step3Image} fluid />
+  </>
+);
 
 const step = {
   STEP_1: 1,

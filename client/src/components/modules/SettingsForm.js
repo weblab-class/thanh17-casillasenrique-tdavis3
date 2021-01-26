@@ -1,6 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form, Icon, Menu, Header, Button, Radio, Modal, Step, Input, Segment } from "semantic-ui-react";
+import {
+  Form,
+  Icon,
+  Menu,
+  Header,
+  Button,
+  Radio,
+  Modal,
+  Step,
+  Input,
+  Segment,
+} from "semantic-ui-react";
 import UploadBookmarksHelp from "./UploadBookmarksHelp";
+import UploadBackgroundHelp from "./UploadBackgroundHelp";
 import IconSelect from "./IconSelect";
 import standardIcon from "../../public/images/globe.png";
 import fileUpload from "../../public/images/fileUpload.png";
@@ -54,7 +66,12 @@ const SettingsForm = ({ onSubmit, closeForm, handleEditSettings, isDarkMode }) =
         onClose={() => setState({ ...state, uploadBookmarksHelpToggle: false })}
         open={state.uploadBookmarksHelpToggle}
       />
-      
+
+      <UploadBackgroundHelp
+        onClose={() => setState({ ...state, uploadBackgroundHelpToggle: false })}
+        open={state.uploadBackgroundHelpToggle}
+      />
+
       <Form size="big" inverted style={{ backgroundColor: "rgb(39, 39, 39) !important" }}>
         <Header as="h2" inverted color="grey">
           Settings
@@ -145,7 +162,13 @@ const SettingsForm = ({ onSubmit, closeForm, handleEditSettings, isDarkMode }) =
             </Button>
           </Form.Field>
           <Form.Field>
-            <Form.Button size="mini" circular inverted icon="question"></Form.Button>
+            <Form.Button
+              onClick={() => setState({ ...state, uploadBackgroundHelpToggle: true })}
+              size="mini"
+              circular
+              inverted
+              icon="question"
+            ></Form.Button>
           </Form.Field>
         </Form.Group>
         <p
