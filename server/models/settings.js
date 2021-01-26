@@ -4,6 +4,7 @@ const SettingsSchema = new mongoose.Schema({
   userId: String,
   isDarkMode: Boolean,
   backgroundImage: String,
+  firstLogin: Boolean,
 });
 
 // compile model from schema

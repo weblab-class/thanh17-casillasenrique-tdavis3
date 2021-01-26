@@ -51,11 +51,12 @@ const Bookmark = ({
     }
   });
 
-  useEffect(() => {
-    watchBookmark();
-  }, [inEditMode]);
-
-  const watchBookmark = () => {};
+  const getURL = () => {
+    if (url.toLowerCase().includes("https://") || url.toLowerCase().includes("http://")) {
+      return url;
+    }
+    return "http://" + url.replace(new RegExp("((http|https)://)?(www.)?"), "");
+  }
 
   /**
    * Turns a Bookmark into a dragable component
@@ -95,7 +96,7 @@ const Bookmark = ({
         )}
       </div>
       <form
-        action={"http://" + url.replace(new RegExp("((http|https)://)?(www.)?"), "")}
+        action={getURL()}
         target="_blank"
       >
         <button

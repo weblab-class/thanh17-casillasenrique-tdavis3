@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
 import { del, get, post, readFileAsync } from "../../utilities";
-import { Button, Icon, Sidebar, Placeholder } from "semantic-ui-react";
+import { Button, Icon, Sidebar, Placeholder, Modal } from "semantic-ui-react";
 import EditBar from "../modules/EditBar";
 import "./Home.css";
 import Board from "../modules/Board";
 import NewComponentModal from "../modules/NewComponentModal";
+import FirstLoginDialogue from "../modules/FirstLoginDialogue";
 import SettingsForm from "../modules/SettingsForm";
 import background from "../../public/images/background.jpg";
 import globe from "../../public/images/globe.png";
@@ -39,6 +40,7 @@ const Home = (props) => {
     sidebarVisible: false,
     isDarkMode: false,
     backgroundImage: undefined,
+    isFirstLogin: false,
   });
 
   /** Loads user home page data from the database
@@ -62,6 +64,7 @@ const Home = (props) => {
           groups: groups,
           isDarkMode: settings.isDarkMode,
           backgroundImage: settings.backgroundImage,
+          isFirstLogin: settings.firstLogin,
         });
       })
       .catch((err) => console.log("an error occurred while fetching home page data: " + err));
@@ -420,9 +423,9 @@ const Home = (props) => {
 
   const handleMoveBookmarkOut = (groupID, _id) => {
     const group = state.groups.filter((group) => group._id === groupID)[0];
-    const bookmark = group.bookmarks.filter((bookmark) => bookmark._id=== _id)[0]
-    removeBookmarkFromGroup(groupID,_id)
-    const [newIndex, newPage] = findFirstAvailablePageAndIndex(state.currentPage)
+    const bookmark = group.bookmarks.filter((bookmark) => bookmark._id === _id)[0];
+    removeBookmarkFromGroup(groupID, _id);
+    const [newIndex, newPage] = findFirstAvailablePageAndIndex(state.currentPage);
     const newBookmark = {
       name: bookmark.name,
       url: bookmark.url,
@@ -446,8 +449,7 @@ const Home = (props) => {
       .catch((err) => {
         console.log("error occurred in post request to api on add bookmark: " + err);
       });
-
-  }
+  };
   /** Adds a bookmark to the group
    *
    * @param bookmarkId the ID of the bookmark that is being moved
@@ -524,6 +526,7 @@ const Home = (props) => {
         groups: result.concat(state.groups),
         backgroundImage: background,
         isDarkMode: isDarkMode,
+        isFirstLogin: false,
       });
     });
   };
@@ -731,6 +734,7 @@ const Home = (props) => {
         ...state,
         backgroundImage: savedFile,
         isDarkMode: isDarkMode,
+        isFirstLogin: false,
       });
     }
 
@@ -740,6 +744,7 @@ const Home = (props) => {
       })
       .catch((e) => console.log("error occurred: " + e));
   };
+
 
   return (
     <Sidebar.Pushable style={{ fontFamily: "'Quicksand', sans-serif !important" }}>
@@ -776,7 +781,12 @@ const Home = (props) => {
             </Placeholder>
           )}
           {!props.userId && <Redirect to={"/"} noThrow />}
-
+          <FirstLoginDialogue
+            open={state.isFirstLogin}
+            handleSubmitDialogue={handleEditSettings}
+            closeForm={() => console.log("closing form")}
+            isDarkMode={state.isDarkMode}
+          />
           {/*The logout button*/}
           <div className={"Home-top"}>
             {/*<GoogleLogout*/}
@@ -880,7 +890,7 @@ const Home = (props) => {
             handleMoveBookmark={handleMoveBookmark}
             handleMoveBookmarkToNewPage={handleMoveBookmarkToNewPage}
             handleMoveGroupToNewPage={handleMoveGroupToNewPage}
-            handleMoveBookmarkOut = {handleMoveBookmarkOut}
+            handleMoveBookmarkOut={handleMoveBookmarkOut}
             moveBookmarksInGroup={moveBookmarksInGroup}
             handleRemoveBookmark={handleRemoveBookmark}
             handleRemoveGroup={handleRemoveGroup}

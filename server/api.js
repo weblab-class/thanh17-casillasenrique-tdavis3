@@ -95,6 +95,7 @@ router.get("/settings", auth.ensureLoggedIn, (req, res) => {
         userId: req.user._id,
         backgroundImage: defaultBackground.default,
         isDarkMode: true,
+        firstLogin: true,
       });
 
       newSettings
@@ -115,6 +116,7 @@ router.post("/edit/settings", (req, res) => {
     userId: req.user._id,
     isDarkMode: req.body.isDarkMode,
     backgroundImage: req.body.backgroundImage,
+    firstLogin: false,
   };
 
   Settings.updateOne({ userId: req.user._id }, updatedSettings)

@@ -58,7 +58,7 @@ const getStepContent = (step) => {
   return content;
 };
 
-const UploadBookmarksHelp = ({ onClose, open }) => {
+const UploadBookmarksHelp = ({ onClose, open, isDarkMode }) => {
   const [state, setState] = useState({
     currentStep: step.STEP_1,
   });
@@ -67,13 +67,13 @@ const UploadBookmarksHelp = ({ onClose, open }) => {
     <Modal
       closeIcon
       dimmer="blurring"
-      className="NewComponentModal ui modal"
+      className={"NewComponentModal ui modal" + (!isDarkMode ? " light" : "")}
       onClose={onClose}
       open={open}
     >
-      <Modal.Header className="NewComponentModal modal" content="How to upload bookmarks" />
-      <Modal.Content className="NewComponentModal modal">
-        <Menu widths="3" inverted pointing>
+      <Modal.Header className={"NewComponentModal modal" + (!isDarkMode ? " light" : "")} content="How to upload bookmarks" />
+      <Modal.Content className={"NewComponentModal modal" + (!isDarkMode ? " light" : "")}>
+        <Menu widths="3" inverted={isDarkMode} pointing>
           <Menu.Item
             onClick={() => setState({ ...state, currentStep: step.STEP_1 })}
             name="Open Chrome Bookmarks Manager"
