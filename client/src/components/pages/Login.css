@@ -10,6 +10,7 @@
   background-repeat: no-repeat;
   font-family: 'Quicksand', sans-serif;
   /*background-repeat: no-repeat;*/
+  background-image:url("../../public/images/background3.png");
 }
 .title {
   position: fixed;
@@ -28,6 +29,8 @@
   transform: translate(-50%, -50%);
   font-size: 4vw;
   color: whitesmoke;
+  align-items: center;
+  text-align: center;
 }
 .loginButton {
   position: fixed;
@@ -37,3 +40,42 @@
   transform: translate(-50%, -50%);
 }
 
+@media (max-width: 1400px) {
+  .root{
+    background-image:url("../../public/images/mobileBackground.png");
+  }
+  .title {
+    font-size: 24vw;
+  }
+  .description {
+    /*height:  10em;*/
+    width:10em;
+    font-size: 8vw;
+    top: 48%;
+  }
+  .loginButton {
+    top: 64%;
+  }
+
+}
+
+@media (max-width: 1000px) {
+  .root{
+    background-image:url("../../public/images/mobileBackground.png");
+  }
+  .title {
+    font-size: 24vw;
+  }
+  .description {
+    /*height:  10em;*/
+    width:10em;
+    font-size: 10vw;
+    top: 48%;
+    /*left: 64%;*/
+    transform: translate(-50%, -50%);
+  }
+  .loginButton {
+    top: 64%;
+  }
+
+}

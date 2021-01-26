@@ -37,7 +37,7 @@ class Login extends Component {
    */
   render() {
     return (
-      <div className={"root"} style={{backgroundImage: `url(${Background})`}}>
+      <div className={"root"} >
         <div className={"title"}>MarcX</div>
         <div className={"description"}><div id="myElement"/></div>
 
@@ -46,9 +46,9 @@ class Login extends Component {
             <Redirect to={"/home"} noThrow />
           ) : (
             <GoogleLogin
+              className={"google-login-button"}
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Sign in with Google"
-              style={{color: "blue!important"}}
               onSuccess={this.props.handleLogin}
               onFailure={(err) => console.log(err)}
             />
