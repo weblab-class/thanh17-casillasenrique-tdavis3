@@ -10,7 +10,7 @@ const PLACEHOLDER_NAME = "Group 1";
  * @returns {JSX.Element} A group form that has options for name
  * @constructor
  */
-const NewGroupForm = ({ onSubmit, closeForm }) => {
+const NewGroupForm = ({ onSubmit, closeForm, isDarkMode }) => {
 
   const [state, setState] = useState({
     groupName: "",
@@ -36,9 +36,9 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
   };
 
   return (
-    <Form size="huge" inverted>
+    <Form size="huge" inverted={isDarkMode}>
       <div style = {{textAlign: "center"}}>
-        <Header as='h1' inverted color="grey">Add New Group!</Header>
+        <Header as='h1' inverted={isDarkMode} color="grey">Add New Group!</Header>
       </div>
       <Form.Field>
         <label style={{textAlign: "center", padding: "5% 0 1% 0"}}>Group Name</label>
@@ -51,7 +51,7 @@ const NewGroupForm = ({ onSubmit, closeForm }) => {
       </Form.Field>
       <div style={{textAlign: "center", padding: "5%"}}>
       <Form.Button
-        inverted
+        inverted={isDarkMode}
         primary
         size="huge"
         type="button"
