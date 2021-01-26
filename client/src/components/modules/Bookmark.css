@@ -3,6 +3,7 @@
   height: 72px;
   /*outline-color: white;*/
   text-align: center;
+  align-items: center;
 }
 
 .Bookmark-button {
@@ -11,6 +12,7 @@
   background: transparent;
   border: none !important;
   border-radius: 10%;
+  text-align: center;
 }
 
 .Bookmark-button:hover {
@@ -53,8 +55,8 @@
 
 @media (max-width: 1000px) {
   .Bookmark-container {
-    width: 10vh;
-    height:10vh;
+    width: 14vh;
+    height:14vh;
     }
   .Bookmark-button {
     width: 8vh;
