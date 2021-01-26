@@ -75,7 +75,7 @@ const CollapsedGroup = ({
               }}
             >
               Delete
-              <Icon name={"remove"} />
+              <Icon name={"trash"} />
             </Menu.Item>
             <Menu.Item>
               <Input

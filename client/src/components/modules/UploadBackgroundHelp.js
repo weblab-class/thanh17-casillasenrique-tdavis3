@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Icon, Menu, Modal, Segment, Image } from "semantic-ui-react";
-import exampleBackground from "../../public/images/background.jpg";
+import exampleBackground from "../../public/images/example.png";
 
 const UploadBackgroundHelp = ({ onClose, open, isDarkMode }) => {
 
