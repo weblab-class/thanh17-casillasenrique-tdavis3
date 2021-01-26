@@ -137,7 +137,6 @@
     font-size: xxx-large;
     top: -32%;
   }
-
   .group-description {
     font-size: xxx-large;
     bottom: -32%;
@@ -157,11 +156,11 @@
   }
 
   .right-arrow {
-    transform: translateX(400%);
+    transform: translateX(720%);
   }
 
   .left-arrow {
-    transform: translateX(-480%);
+    transform: translateX(-800%);
   }
   .group-description {
     font-size: xxx-large;
