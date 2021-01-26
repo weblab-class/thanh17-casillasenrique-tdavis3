@@ -52,3 +52,7 @@
 .IconSelect-default-loader {
   font-size: small;
 }
+
+.IconSelect.ui.loader.light:after {
+  border-color: black lightgrey lightgrey !important;
+}

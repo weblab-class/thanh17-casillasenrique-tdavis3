@@ -7,9 +7,7 @@ import fileUpload_dark from "../../public/images/fileUpload_dark.png";
 import "./IconSelect.css";
 
 const defaultIconLoader = (
-  <Loader className="ui active centered inline" size="small">
-    <p className="IconSelect-default-loader">Enter a URL</p>
-  </Loader>
+  ""
 );
 
 const SELECTION = {
@@ -60,7 +58,12 @@ const IconSelect = ({ onSelect, defaultIconURL, isDarkMode }) => {
       </div>
       <div>
         {!defaultIconURL ? (
-          defaultIconLoader
+          <Loader 
+          className={"IconSelect ui active centered inline IconSelect ui loader" + (!isDarkMode ? " light" : "")} 
+          size="small"
+        >
+          <p className="IconSelect-default-loader" style={{color: (isDarkMode ? "white" : "black")}}>Enter a URL</p>
+          </Loader>
         ) : (
           <div className={"IconSelect-option" + (selected === SELECTION.DEFAULT ? "-selected" : "")}>
             <img
