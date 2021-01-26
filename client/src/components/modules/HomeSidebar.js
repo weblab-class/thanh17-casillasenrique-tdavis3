@@ -49,7 +49,15 @@ const HomeSidebar = ({
         close={() => setState({ ...state, openedModal: modalKeys.NONE })}
       />
 
-      <NewComponentModal
+      <SettingsForm 
+        isOpen={state.openedModal === modalKeys.SETTINGS}
+        closeModal={() => setState({ ...state, openedModal: modalKeys.NONE })}
+        handleEditSettings={handleEditSettings}
+        onSubmit={() => setState({ ...state, openedModal: modalKeys.NONE })}
+        isDarkMode={isDarkMode}
+      />
+
+      {/* <NewComponentModal
         isOpen={state.openedModal === modalKeys.SETTINGS}
         form={
           <SettingsForm
@@ -60,7 +68,7 @@ const HomeSidebar = ({
           />
         }
         close={() => setState({ ...state, openedModal: modalKeys.NONE })}
-      />
+      /> */}
       <NewComponentModal
         isOpen={state.openedModal === modalKeys.PROFILE}
         form={
@@ -90,7 +98,7 @@ const HomeSidebar = ({
           visible && state.openedModal === modalKeys.NONE
         }
         onHide={onHide}
-        inverted
+        inverted={isDarkMode}
         vertical
         icon="labeled"
       >

@@ -59,6 +59,7 @@ const Home = (props) => {
         let settings = results[2];
 
         //console.log("from component did mount: \nbookmarks: " + bookmarks + "\ngroups: " + groups + "\nsettings: " + settings.isDarkMode + "," + settings.backgroundImage);
+        console.log("from database, retrieved that dark mode is "+ settings.isDarkMode);
         setState({
           ...state,
           bookmarks: bookmarks,
