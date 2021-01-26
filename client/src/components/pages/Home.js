@@ -417,6 +417,37 @@ const Home = (props) => {
 
     post("/api/edit/edit_group", group);
   };
+
+  const handleMoveBookmarkOut = (groupID, _id) => {
+    const group = state.groups.filter((group) => group._id === groupID)[0];
+    const bookmark = group.bookmarks.filter((bookmark) => bookmark._id=== _id)[0]
+    removeBookmarkFromGroup(groupID,_id)
+    const [newIndex, newPage] = findFirstAvailablePageAndIndex(state.currentPage)
+    const newBookmark = {
+      name: bookmark.name,
+      url: bookmark.url,
+      icon: bookmark.icon,
+      customIcon: bookmark.customIcon,
+      index: newIndex,
+      pageIndex: newPage,
+    };
+
+    //Send post request with new bookmark
+    post("/api/edit/add_bookmark", newBookmark)
+      .then((result) => {
+        //Sets the custom icon to be the image buffer as the result holds the
+        //binary form.
+        result.customIcon = bookmark.customIcon;
+        setState({
+          ...state,
+          bookmarks: [result].concat(state.bookmarks),
+        });
+      })
+      .catch((err) => {
+        console.log("error occurred in post request to api on add bookmark: " + err);
+      });
+
+  }
   /** Adds a bookmark to the group
    *
    * @param bookmarkId the ID of the bookmark that is being moved
@@ -849,6 +880,7 @@ const Home = (props) => {
             handleMoveBookmark={handleMoveBookmark}
             handleMoveBookmarkToNewPage={handleMoveBookmarkToNewPage}
             handleMoveGroupToNewPage={handleMoveGroupToNewPage}
+            handleMoveBookmarkOut = {handleMoveBookmarkOut}
             moveBookmarksInGroup={moveBookmarksInGroup}
             handleRemoveBookmark={handleRemoveBookmark}
             handleRemoveGroup={handleRemoveGroup}

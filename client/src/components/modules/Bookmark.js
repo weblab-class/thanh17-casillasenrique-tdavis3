@@ -32,6 +32,7 @@ const Bookmark = ({
   onRemove,
   removeBookmarkFromGroup,
   handleMoveBookmarkToNewPage,
+  handleMoveBookmarkOut,
   groupID,
   _id,
 }) => {
@@ -139,7 +140,7 @@ const Bookmark = ({
             }}
           >
             Delete
-            <Icon name={"remove"} />
+            <Icon name={"trash"} />
           </Menu.Item>
           <Menu.Item>
             <Input
@@ -161,6 +162,18 @@ const Bookmark = ({
             {/*</Input>*/}
           </Menu.Item>
           {/*  TODO: show/edit URL on right click*/}
+          {groupID?
+            <Menu.Item
+              onClick={() => {
+                handleMoveBookmarkOut(groupID, _id);
+                setOpen(false);
+                console.log(groupID);
+              }}
+            >
+              Move Out of Group
+              <Icon name={"share square"} />
+            </Menu.Item>: null}
+
         </Menu>
       </Popup>
     </div>
