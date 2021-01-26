@@ -59,7 +59,7 @@ const CollapsedGroup = ({
             {bookmarkIcons.reverse().map((icon, i) => {
               return (
                 <div key={i} style={{ textAlign: "center" }}>
-                  <img className="CollapsedGroup-minimizedIcon" src={icon} />
+                  <img className="CollapsedGroup-minimizedIcon" src={icon}/>
                 </div>
               );
             })}

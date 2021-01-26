@@ -12,6 +12,7 @@ import SettingsForm from "../modules/SettingsForm";
 import background from "../../public/images/background.jpg";
 import globe from "../../public/images/globe.png";
 import HomeSidebar from "../modules/HomeSidebar";
+const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
 
 const ELEMENTS_PER_PAGE = 48;
 const ELEMENTS_PER_GROUP = 9;
@@ -653,7 +654,8 @@ const Home = (props) => {
           console.log("element did not have an icon");
           icon = globe;
         } else {
-          icon = icon[regexMatchIndex];
+          //icon = icon[regexMatchIndex];
+          icon = FAVICON_URL + node.href;
         }
 
         return {
