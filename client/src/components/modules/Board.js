@@ -49,7 +49,8 @@ const Board = ({
                  removeBookmarkFromGroup,
                  indexHasNoBookmarks,
                  indexHasNoElements,
-                 indexHasNoBookmarksInGroup}) =>{
+                 indexHasNoBookmarksInGroup,
+                 isDarkMode}) =>{
   const [state, setState] = useState({
     squares: []
   });
@@ -106,7 +107,8 @@ const Board = ({
           removeBookmarkFromGroup = {removeBookmarkFromGroup}
           indexHasNoBookmarks={indexHasNoBookmarks}
           indexHasNoElements={indexHasNoElements}
-          indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}/>
+          indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}
+          isDarkMode={isDarkMode}/>
     );
   }
 

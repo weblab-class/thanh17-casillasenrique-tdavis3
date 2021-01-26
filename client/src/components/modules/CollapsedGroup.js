@@ -21,7 +21,8 @@ const CollapsedGroup = ({
   isDragging,
   inEditMode,
   onRemove,
-  handleMoveGroupToNewPage
+  handleMoveGroupToNewPage,
+  isDarkMode
 }) => {
   const contextRef = useRef();
   const [open, setOpen] = useState(false);
@@ -45,7 +46,7 @@ const CollapsedGroup = ({
       <div className="u-grow-small" ref={drag}>
         
         <button
-          style={{ cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer" }}
+          style={{ cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer", backgroundColor: isDarkMode? "#1F222280":"#f5f5f580"}}
           className="CollapsedGroup-button u-flex-alignCenter"
           onClick={onClick}
           onContextMenu={(e) => {
@@ -65,10 +66,9 @@ const CollapsedGroup = ({
             })}
           </div>
         </button>
-        <Popup inverted basic context={contextRef} onClose={() => setOpen(false)} open={open} closeOnPortalMouseLeave={false}>
-          <Menu inverted secondary vertical>
+        <Popup inverted={!!isDarkMode} basic context={contextRef} onClose={() => setOpen(false)} open={open} closeOnPortalMouseLeave={false}>
+          <Menu inverted={!!isDarkMode} secondary vertical>
             <Menu.Item
-
               onClick={() => {
                 onRemove();
                 setOpen(false);
@@ -79,7 +79,7 @@ const CollapsedGroup = ({
             </Menu.Item>
             <Menu.Item>
               <Input
-                inverted={true}
+                inverted={!!isDarkMode}
                 min="1"
                 style={{ width: "11em" }}
                 type="number"
@@ -90,7 +90,7 @@ const CollapsedGroup = ({
               >
                 <input />
                 <Button
-                  inverted={true}
+                  inverted={!!isDarkMode}
                   type="submit"
                   icon={"paper plane"}
                   onClick={() => handleMoveGroupToNewPage(_id,parseInt(state.newPageValue)-1)}
@@ -103,7 +103,7 @@ const CollapsedGroup = ({
             {/*  TODO: show/edit URL on right click*/}
           </Menu>
         </Popup>
-        <p className="Bookmark-text u-bold ">{name}</p>
+        <p className="Bookmark-text u-bold " style={{color: isDarkMode? "whitesmoke":"black"}}>{name}</p>
       </div>
       
     </div>

@@ -35,6 +35,7 @@ const Bookmark = ({
   handleMoveBookmarkOut,
   groupID,
   _id,
+  isDarkMode
 }) => {
 
   const contextRef = useRef();
@@ -140,14 +141,14 @@ const Bookmark = ({
 
           {/*</div>*/}
         </button>
-        <p className="Bookmark-text u-bold " style={{ opacity: isDragging ? 0 : 1 }}>
+        <p className="Bookmark-text u-bold " style={{ opacity: isDragging ? 0 : 1,  color: isDarkMode? "whitesmoke":"black"}}>
           {name}
         </p>
       </form>
 
       {/*//TODO: make popup not blurry*/}
-      <Popup basic context={contextRef} onClose={() => setState({ ...state, open: false})} open={state.open} closeOnPortalMouseLeave={false}>
-        <Menu secondary vertical>
+      <Popup inverted={!!isDarkMode} basic context={contextRef} onClose={() => setState({ ...state, open: false})} open={state.open} closeOnPortalMouseLeave={false}>
+        <Menu secondary vertical inverted={!!isDarkMode}>
           <Menu.Item
             onClick={() => {
               groupID ? removeBookmarkFromGroup(groupID, _id) : onRemove();
@@ -160,6 +161,7 @@ const Bookmark = ({
           </Menu.Item>
           <Menu.Item>
             <Input
+              inverted={!!isDarkMode}
               min="1"
               style={{ width: "11em" }}
               type="number"
@@ -168,6 +170,7 @@ const Bookmark = ({
             >
               <input />
               <Button
+                inverted={!!isDarkMode}
                 type="submit"
                 icon={"paper plane"}
                 onClick={() => handleMoveBookmarkToNewPage(_id,parseInt(state.newPageValue)-1,groupID)}
