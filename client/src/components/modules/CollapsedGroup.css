@@ -9,7 +9,8 @@
 }
 
 .CollapsedGroup-button {
-  background-color: #1F222280;
+  /*background-color: #1F222280;*/
+  /*background-color: whitesmoke;*/
   width: 80px;
   height: 80px;
   border: none !important;

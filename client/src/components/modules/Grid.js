@@ -45,7 +45,8 @@ const Grid = ({
                 removeBookmarkFromGroup,
                 indexHasNoBookmarks,
                 indexHasNoElements,
-                indexHasNoBookmarksInGroup}) => {
+                indexHasNoBookmarksInGroup,
+                isDarkMode}) => {
 
   // useEffect(() => {
   // },[])
@@ -114,6 +115,7 @@ const Grid = ({
         handleMoveBookmarkOut={handleMoveBookmarkOut}
         removeBookmarkFromGroup={removeBookmarkFromGroup}
         handleMoveBookmarkToNewPage = {handleMoveBookmarkToNewPage}
+        isDarkMode={isDarkMode}
       /> : null}
       {type === ItemTypes.GROUP?
       <Group
@@ -131,6 +133,7 @@ const Grid = ({
         removeBookmarkFromGroup={removeBookmarkFromGroup}
         indexHasNoBookmarks={indexHasNoBookmarks}
         indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}
+        isDarkMode={isDarkMode}
         />: null
       }
     </div>

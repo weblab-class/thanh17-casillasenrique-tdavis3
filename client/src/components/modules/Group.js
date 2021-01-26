@@ -36,6 +36,7 @@ const Group = ({
   handleMoveBookmarkOut,
   handleMoveGroupToNewPage,
   indexHasNoBookmarks,
+  isDarkMode
 }) => {
   const [open, setOpen] = React.useState(false);
   useEffect(() => {}, [bookmarks]);
@@ -82,6 +83,7 @@ const Group = ({
   };
   return (
     <Modal
+      style={{backgroundColor: isDarkMode? "#1F222290":"#f5f5f590"}}
       className="Group modal"
       size="small"
       onClose={() => {
@@ -90,6 +92,7 @@ const Group = ({
       }}
       // onOpen={() => setOpen(true)}
       open={open}
+      dimmer={isDarkMode?null:"inverted"}
       // dimmer="blurring"
       trigger={
         <div
@@ -114,6 +117,7 @@ const Group = ({
               .filter((bookmark) => bookmark.pageIndex === 0)
               .map((bookmark) => (bookmark.customIcon ? bookmark.customIcon : bookmark.icon))}
             onClick={() => setOpen(true)}
+            isDarkMode={ isDarkMode}
           />
         </div>
       }
@@ -121,6 +125,7 @@ const Group = ({
     >
       <div className={"Group grid"}>
         <Board
+          isDarkMode = {isDarkMode}
           groupID={_id}
           inEditMode={inEditMode}
           size={9}
@@ -137,7 +142,7 @@ const Group = ({
       </div>
       <div
         style={{
-          color: "white",
+          color: isDarkMode? "whitesmoke":"black",
           position: "fixed",
           left: "50%",
           transform: "translateX(-50%)",
@@ -150,7 +155,7 @@ const Group = ({
           <Button
             disabled={page === 0}
             size={"huge"}
-            inverted
+            inverted={!!isDarkMode}
             icon="angle left"
             onClick={() => setPage(page - 1)}
           />
@@ -158,14 +163,14 @@ const Group = ({
         <div
           className={"right-arrow"}
         >
-          <Button inverted icon="angle right" size={"huge"} onClick={() => setPage(page + 1)} />
+          <Button inverted={!!isDarkMode} icon="angle right" size={"huge"} onClick={() => setPage(page + 1)} />
         </div>
       </div>
 
       <div
         className={"group-page-number"}
         style={{
-          color: "white",
+          color: isDarkMode? "whitesmoke":"black",
         }}
       >
         Page {page+1}
@@ -173,7 +178,7 @@ const Group = ({
       <header
         className={ "group-description"}
         style={{
-          color: "white"
+          color: isDarkMode? "whitesmoke":"black"
         }}
       >
         {name}

@@ -12,11 +12,13 @@
     /*grid-template-rows: repeat(6,1fr);*/
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));;
+    grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));
     row-gap: 24px;
     padding: 8px;
     /*overflow-y: inherit;*/
     overflow:inherit;
+    overflow-y: scroll;
+    /*overflow-x: hidden;*/
 }
 
 /*@media (max-width: 1100px) {*/
@@ -28,26 +30,24 @@
 /*    }*/
 /*}*/
 
-/*@media (max-width: 900px) {*/
+/*@media (max-width: 1400px) {*/
 /*    .home-board {*/
-/*        grid-template-columns: repeat(4,1fr);*/
+/*        grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));*/
 /*    !*    grid-template-rows: repeat(7,1fr);*!*/
-/*        overflow-y: inherit;*/
 /*    }*/
 /*}*/
 
 
-/*@media (max-width: 300px) {*/
+/*@media (max-width: 1000px) {*/
 /*    .home-board {*/
-/*        grid-template-columns: repeat(2,1fr);*/
-/*        grid-template-rows: repeat(6,1fr);*/
+/*        grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));*/
+/*        grid-template-rows: repeat(auto-fit, minmax(120px, 1fr));*/
 /*    }*/
 /*}*/
 
-/*@media (max-width: 100px) {*/
+/*@media (max-width: 980px) {*/
 /*    .home-board {*/
-/*        grid-template-columns: repeat(1,1fr);*/
-/*        grid-template-rows: repeat(48,1fr);*/
+/*        grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));*/
 /*    }*/
 /*}*/
 
