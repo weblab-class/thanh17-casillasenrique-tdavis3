@@ -59,7 +59,7 @@ const Home = (props) => {
         let settings = results[2];
 
         //console.log("from component did mount: \nbookmarks: " + bookmarks + "\ngroups: " + groups + "\nsettings: " + settings.isDarkMode + "," + settings.backgroundImage);
-        console.log("from database, retrieved that dark mode is "+ settings.isDarkMode);
+        console.log("from database, retrieved that dark mode is " + settings.isDarkMode);
         setState({
           ...state,
           bookmarks: bookmarks,
@@ -750,164 +750,170 @@ const Home = (props) => {
       .catch((e) => console.log("error occurred: " + e));
   };
 
-
   return (
-    <Sidebar.Pushable style={{ fontFamily: "'Quicksand', sans-serif !important" }}>
-      <HomeSidebar
-        visible={state.sidebarVisible}
-        onHide={() => setState({ ...state, sidebarVisible: false })}
-        handleCreateBookmark={handleCreateBookmark}
-        handleCreateGroup={handleCreateGroup}
-        handleLogout={props.handleLogout}
-        googleClientId={props.googleClientId}
-        userName={props.userName}
-        handleEditSettings={handleEditSettings}
-        isDarkMode={state.isDarkMode}
-      />
-
-      <Sidebar.Pusher dimmed={state.sidebarVisible}>
-        <div
-          className="Home-root"
-          style={{ backgroundImage: state.backgroundImage && `url(${state.backgroundImage})` }}
-        >
-          {!state.backgroundImage && (
-            <Placeholder as="h1" style={{ color: "grey" }} inverted fluid>
-              <div
-                style={{
-                  position: "fixed",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  bottom: "50%",
-                }}
-              >
-                Loading...
-              </div>
-              <Placeholder.Image rectangular />
-            </Placeholder>
-          )}
-          {!props.userId && <Redirect to={"/"} noThrow />}
-          <FirstLoginDialogue
-            open={state.isFirstLogin}
-            handleSubmitDialogue={handleEditSettings}
-            closeForm={() => console.log("closing form")}
-            isDarkMode={state.isDarkMode}
+    <>
+      {!state.backgroundImage ? (
+        <Placeholder as="h1" style={{ color: "grey" }} inverted fluid>
+          <Placeholder.Image
+            style={{ height: "100vh", backgroundSize: "cover" }}
           />
-          {/*The logout button*/}
-          <div className={"Home-top"}>
-            {/*<GoogleLogout*/}
-            {/*  clientId={props.googleClientId}*/}
-            {/*  buttonText="Logout"*/}
-            {/*  onLogoutSuccess={props.handleLogout}*/}
-            {/*  onFailure={(err) => console.log(err)}*/}
-            {/*/>*/}
-            <div
-              style={{
-                display: "flex",
-                paddingTop: "1em",
-                paddingLeft: "1em",
-                paddingRight: "1em",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <Button
-                  disabled={state.currentPage === 0}
-                  inverted={state.isDarkMode}
-                  // content='Previous'
-                  icon="angle left"
-                  // labelPosition='left'
-                  size={"medium"}
-                  onClick={() => setState({ ...state, currentPage: state.currentPage - 1 })}
-                />
-                <Button
-                  inverted={state.isDarkMode}
-                  // content='Next'
-                  size={"medium"}
-                  icon="angle right"
-                  // labelPosition='right'
-                  onClick={() => setState({ ...state, currentPage: state.currentPage + 1 })}
-                />
-              </div>
-
-              <div
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "larger",
-                  color: state.isDarkMode? "whitesmoke":"black",
-                  position: "fixed",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                }}
-              >
-                Page {state.currentPage + 1}
-              </div>
-              <div style={{ display: "flex" }}>
-                <div className="Home-toggleEdit">
-                  <Button
-                    toggle={state.inEditMode}
-                    onClick={() => setState({ ...state, inEditMode: !state.inEditMode })}
-                    inverted={state.isDarkMode}
-                    size="medium"
-                    animated="fade"
-                    primary={state.inEditMode}
-                  >
-                    <div className={"icon-button"}>
-                      <Button.Content visible>
-                        <Icon name="move" />
-                      </Button.Content>
-                    </div>
-                    <Button.Content hidden>Edit</Button.Content>
-                  </Button>
-                </div>
-
-                {/*The freaking bookmark bar*/}
-                <div className={"Home-edit-dropdown"}>
-                  <Button
-                    inverted={state.isDarkMode}
-                    animated
-                    size="medium"
-                    onClick={() => setState({ ...state, sidebarVisible: !state.sidebarVisible })}
-                  >
-                    <div className="icon-button">
-                      <Button.Content visible>
-                        <Icon name="bars" />
-                      </Button.Content>
-                    </div>
-                    <Button.Content hidden>Options</Button.Content>
-                  </Button>
-                </div>
-              </div>
-            </div>
+          <div
+            style={{
+              position: "fixed",
+              left: "50%",
+              transform: "translateX(-50%)",
+              bottom: "50%",
+            }}
+          >
+            Loading...
           </div>
-
-          {/*<Button content="add test bookmark" onClick={() => handleCreateBookmark({url: "https://google.com", bookmarkName: "Test Bookmark", selectedIcon: "https://www.google.com/s2/favicons?sz=256&domain_url=https://www.google.com", selectedCustomIcon: null})}/>*/}
-
-          {/*{console.log("YOOOOOOOO")}*/}
-          {/*{console.log(state.bookmarks)}*/}
-          <Board
-            size={ELEMENTS_PER_PAGE}
-            userId={props.userId}
-            inEditMode={state.inEditMode}
-            bookmarks={state.bookmarks.filter(
-              (bookmark) => bookmark.pageIndex === state.currentPage
-            )}
-            groups={state.groups.filter((group) => group.pageIndex === state.currentPage)}
-            handleMoveGroup={handleMoveGroup}
-            handleMoveBookmark={handleMoveBookmark}
-            handleMoveBookmarkToNewPage={handleMoveBookmarkToNewPage}
-            handleMoveGroupToNewPage={handleMoveGroupToNewPage}
-            handleMoveBookmarkOut={handleMoveBookmarkOut}
-            moveBookmarksInGroup={moveBookmarksInGroup}
-            handleRemoveBookmark={handleRemoveBookmark}
-            handleRemoveGroup={handleRemoveGroup}
-            removeBookmarkFromGroup={removeBookmarkFromGroup}
-            indexHasNoBookmarks={indexHasNoBookmarks}
-            indexHasNoElements={indexHasNoElements}
+        </Placeholder>
+      ) : (
+        <Sidebar.Pushable style={{ fontFamily: "'Quicksand', sans-serif !important" }}>
+          <HomeSidebar
+            visible={state.sidebarVisible}
+            onHide={() => setState({ ...state, sidebarVisible: false })}
+            handleCreateBookmark={handleCreateBookmark}
+            handleCreateGroup={handleCreateGroup}
+            handleLogout={props.handleLogout}
+            googleClientId={props.googleClientId}
+            userName={props.userName}
+            handleEditSettings={handleEditSettings}
             isDarkMode={state.isDarkMode}
           />
-        </div>
-      </Sidebar.Pusher>
-    </Sidebar.Pushable>
+
+          <Sidebar.Pusher dimmed={state.sidebarVisible}>
+            <div
+              className="Home-root"
+              style={{ backgroundImage: state.backgroundImage && `url(${state.backgroundImage})` }}
+            >
+              {!props.userId && <Redirect to={"/"} noThrow />}
+              <FirstLoginDialogue
+                open={state.isFirstLogin}
+                handleSubmitDialogue={handleEditSettings}
+                closeForm={() => console.log("closing form")}
+                isDarkMode={state.isDarkMode}
+              />
+              {/*The logout button*/}
+              <div className={"Home-top"}>
+                {/*<GoogleLogout*/}
+                {/*  clientId={props.googleClientId}*/}
+                {/*  buttonText="Logout"*/}
+                {/*  onLogoutSuccess={props.handleLogout}*/}
+                {/*  onFailure={(err) => console.log(err)}*/}
+                {/*/>*/}
+                <div
+                  style={{
+                    display: "flex",
+                    paddingTop: "1em",
+                    paddingLeft: "1em",
+                    paddingRight: "1em",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>
+                    <Button
+                      disabled={state.currentPage === 0}
+                      inverted={state.isDarkMode}
+                      // content='Previous'
+                      icon="angle left"
+                      // labelPosition='left'
+                      size={"medium"}
+                      onClick={() => setState({ ...state, currentPage: state.currentPage - 1 })}
+                    />
+                    <Button
+                      inverted={state.isDarkMode}
+                      // content='Next'
+                      size={"medium"}
+                      icon="angle right"
+                      // labelPosition='right'
+                      onClick={() => setState({ ...state, currentPage: state.currentPage + 1 })}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "larger",
+                      color: state.isDarkMode ? "whitesmoke" : "black",
+                      position: "fixed",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    Page {state.currentPage + 1}
+                  </div>
+                  <div style={{ display: "flex" }}>
+                    <div className="Home-toggleEdit">
+                      <Button
+                        toggle={state.inEditMode}
+                        onClick={() => setState({ ...state, inEditMode: !state.inEditMode })}
+                        inverted={state.isDarkMode}
+                        size="medium"
+                        animated="fade"
+                        primary={state.inEditMode}
+                      >
+                        <div className={"icon-button"}>
+                          <Button.Content visible>
+                            <Icon name="move" />
+                          </Button.Content>
+                        </div>
+                        <Button.Content hidden>Edit</Button.Content>
+                      </Button>
+                    </div>
+
+                    {/*The freaking bookmark bar*/}
+                    <div className={"Home-edit-dropdown"}>
+                      <Button
+                        inverted={state.isDarkMode}
+                        animated
+                        size="medium"
+                        onClick={() =>
+                          setState({ ...state, sidebarVisible: !state.sidebarVisible })
+                        }
+                      >
+                        <div className="icon-button">
+                          <Button.Content visible>
+                            <Icon name="bars" />
+                          </Button.Content>
+                        </div>
+                        <Button.Content hidden>Options</Button.Content>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/*<Button content="add test bookmark" onClick={() => handleCreateBookmark({url: "https://google.com", bookmarkName: "Test Bookmark", selectedIcon: "https://www.google.com/s2/favicons?sz=256&domain_url=https://www.google.com", selectedCustomIcon: null})}/>*/}
+
+              {/*{console.log("YOOOOOOOO")}*/}
+              {/*{console.log(state.bookmarks)}*/}
+              <Board
+                size={ELEMENTS_PER_PAGE}
+                userId={props.userId}
+                inEditMode={state.inEditMode}
+                bookmarks={state.bookmarks.filter(
+                  (bookmark) => bookmark.pageIndex === state.currentPage
+                )}
+                groups={state.groups.filter((group) => group.pageIndex === state.currentPage)}
+                handleMoveGroup={handleMoveGroup}
+                handleMoveBookmark={handleMoveBookmark}
+                handleMoveBookmarkToNewPage={handleMoveBookmarkToNewPage}
+                handleMoveGroupToNewPage={handleMoveGroupToNewPage}
+                handleMoveBookmarkOut={handleMoveBookmarkOut}
+                moveBookmarksInGroup={moveBookmarksInGroup}
+                handleRemoveBookmark={handleRemoveBookmark}
+                handleRemoveGroup={handleRemoveGroup}
+                removeBookmarkFromGroup={removeBookmarkFromGroup}
+                indexHasNoBookmarks={indexHasNoBookmarks}
+                indexHasNoElements={indexHasNoElements}
+                isDarkMode={state.isDarkMode}
+              />
+            </div>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      )}
+    </>
   );
 };
 
