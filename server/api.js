@@ -26,6 +26,7 @@ const defaultBackground = require("./defaultBackground.js");
 
 //initialize socket
 const socketManager = require("./server-socket");
+const {convertFileToBinary} = require("./utilities");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -191,8 +192,6 @@ router.delete("/edit/delete_group", (req, res) => {
 });
 
 router.post("/edit/add_bookmark", (req, res) => {
-  console.log("in api, request: " + req.body);
-  // console.log("type: ", typeof req.body.customIcon);  // String
   const newBookmark = Bookmark({
     userId: req.user._id,
     name: req.body.name,
