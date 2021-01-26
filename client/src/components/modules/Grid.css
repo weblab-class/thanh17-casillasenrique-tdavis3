@@ -18,3 +18,9 @@
     text-align: center;
     align-items: center;
 }
+@media (max-width: 1000px) {
+    .grid-individual {
+        width: 10vh;
+        height:10vh;
+    }
+}
