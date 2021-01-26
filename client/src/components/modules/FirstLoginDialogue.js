@@ -54,7 +54,6 @@ const FirstLoginDialogue = ({ onClose, open, handleSubmitDialogue, closeForm, is
   const handleSubmit = () => {
     closeForm();
     handleSubmitDialogue(state.backgroundFile, state.bookmarksFile, state.darkModeToggle);
-    setState({ bookmarksFile: undefined, backgroundFile: undefined, darkModeToggle: isDarkMode });
   };
 
   return (

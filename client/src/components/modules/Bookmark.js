@@ -36,26 +36,39 @@ const Bookmark = ({
   groupID,
   _id,
 }) => {
+
   const contextRef = useRef();
-  const [open, setOpen] = useState(false);
-  const [displayedIcon, setDisplayedIcon] = useState(globe);
-  const [state,setState] = useState({
-    newPageValue: ""
-  })
+  const [state, setState] = useState({
+    open: false,
+    displayedIcon: globe,
+    newPageValue: "",
+    errored: false,
+  });
+  
   useEffect(() => {
     if (customIcon) {
       //console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon + " " + name);
-      setDisplayedIcon(customIcon);
+      setState({ ...state, displayedIcon: customIcon });
     } else if (icon) {
-      setDisplayedIcon(icon);
+      setState({ ...state, displayedIcon: icon });
     }
-  });
+  }, [icon, customIcon]);
 
   const getURL = () => {
     if (url.toLowerCase().includes("https://") || url.toLowerCase().includes("http://")) {
       return url;
     }
     return "http://" + url.replace(new RegExp("((http|https)://)?(www.)?"), "");
+  }
+
+  const handleError = () =>{
+    if (!state.errored) {
+      setState({
+        ...state,
+        displayedIcon: globe,
+        errored: true,
+      });
+    }
   }
 
   /**
@@ -106,11 +119,12 @@ const Bookmark = ({
           onContextMenu={(e) => {
             e.preventDefault();
             contextRef.current = createContextFromEvent(e);
-            setOpen(true);
+            setState({ ...state, open: true });
           }}
         >
           <img
             ref={drag}
+            id="bookmarkImage"
             style={{
               opacity: isDragging ? 0 : 1,
               fontSize: 25,
@@ -119,7 +133,8 @@ const Bookmark = ({
               borderRadius: "20%",
             }}
             className="Bookmark-image u-flex-alignCenter u-grow"
-            src={displayedIcon}
+            src={state.displayedIcon}
+            onError={handleError}
           />
           {/*<div className="Bookmark-text-container u-flex-alignCenter">*/}
 
@@ -131,12 +146,12 @@ const Bookmark = ({
       </form>
 
       {/*//TODO: make popup not blurry*/}
-      <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open} closeOnPortalMouseLeave={false}>
+      <Popup basic context={contextRef} onClose={() => setState({ ...state, open: false})} open={state.open} closeOnPortalMouseLeave={false}>
         <Menu secondary vertical>
           <Menu.Item
             onClick={() => {
               groupID ? removeBookmarkFromGroup(groupID, _id) : onRemove();
-              setOpen(false);
+              setState({ ...state, open: false});
               console.log(groupID);
             }}
           >
@@ -149,7 +164,7 @@ const Bookmark = ({
               style={{ width: "11em" }}
               type="number"
               placeholder="Move to page..."
-              onChange={(event, data) => setState({ newPageValue: data.value })}
+              onChange={(event, data) => setState({ ...state, newPageValue: data.value })}
             >
               <input />
               <Button
@@ -167,7 +182,7 @@ const Bookmark = ({
             <Menu.Item
               onClick={() => {
                 handleMoveBookmarkOut(groupID, _id);
-                setOpen(false);
+                setState({ ...state, open: false});
                 console.log(groupID);
               }}
             >
