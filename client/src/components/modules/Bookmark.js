@@ -112,8 +112,8 @@ const Bookmark = ({
           />
         )}
       </div>
-      <form
-        action={getURL()}
+      <a
+        href={getURL()}
         target="_blank"
       >
         <button
@@ -147,7 +147,7 @@ const Bookmark = ({
         <p className="Bookmark-text u-bold " style={{ opacity: isDragging ? 0 : 1,  color: isDarkMode? "whitesmoke":"black"}}>
           {name}
         </p>
-      </form>
+      </a>
 
       {/*//TODO: make popup not blurry*/}
       <Popup inverted={!!isDarkMode} basic context={contextRef} onClose={() => setState({ ...state, open: false})} open={state.open} closeOnPortalMouseLeave={false}>
