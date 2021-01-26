@@ -105,6 +105,32 @@
 /*    max-width: 15em;*/
 /*  }*/
 /*}*/
+@media (min-width: 2000px) {
+  .Group.modal {
+    width: 56vh !important;
+    height: 56vh !important;
+  }
+
+  .right-arrow {
+    transform: translateX(800%);
+  }
+
+  .left-arrow {
+    transform: translateX(-890%);
+  }
+
+  .group-page-number {
+    font-size: xxx-large;
+    top: -20%;
+  }
+
+  .group-description {
+    font-size: xxx-large;
+    bottom: -24%;
+    max-width: 15em;
+  }
+}
+
 
 @media (max-width: 1400px) {
     .Group.modal {
