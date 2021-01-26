@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Icon, Menu, Header } from "semantic-ui-react";
 import IconSelect from "./IconSelect";
-import standardIcon from "../../public/images/globe.png";
+import standardIcon_light from "../../public/images/globe_light.png";
 
 const PLACEHOLDER_URL = "https://www.google.com/";
 const PLACEHOLDER_NAME = "Google";
@@ -14,7 +14,7 @@ const URL_REGEX =
 const initialState = {
   url: "",
   bookmarkName: "",
-  selectedIcon: standardIcon,
+  selectedIcon: standardIcon_light,
   selectedCustomIcon: undefined,
   defaultIconURL: undefined,
 };

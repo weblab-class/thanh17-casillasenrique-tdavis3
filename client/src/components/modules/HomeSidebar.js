@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar, Menu, Icon, Header, ModalDescription } from "semantic-ui-react";
-import newBookmark from "../../public/images/New_Bookmark.png";
-import newGroup from "../../public/images/New_Group.png";
-import newWidget from "../../public/images/New_Widget.png";
 import NewComponentModal from "./NewComponentModal";
 import NewBookmarkForm from "./NewBookmarkForm";
 import NewGroupForm from "./NewGroupForm";

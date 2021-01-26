@@ -2,28 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   Form,
   Icon,
-  Menu,
   Header,
   Button,
   Radio,
   Modal,
-  Step,
-  Input,
-  Segment,
 } from "semantic-ui-react";
 import UploadBookmarksHelp from "./UploadBookmarksHelp";
 import UploadBackgroundHelp from "./UploadBackgroundHelp";
-import IconSelect from "./IconSelect";
-import standardIcon from "../../public/images/globe.png";
-import fileUpload from "../../public/images/fileUpload.png";
-import { GoogleLogout } from "react-google-login";
-const PLACEHOLDER_URL = "https://www.google.com/";
-const PLACEHOLDER_NAME = "Google";
-const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
-const URL_REGEX =
-  "((http|https)://)?(www.)?" +
-  "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]" +
-  "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+
 
 /** A bookmark form to be used for handling the creating of a new bookmark
  *

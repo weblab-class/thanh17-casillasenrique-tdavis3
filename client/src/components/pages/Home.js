@@ -10,7 +10,7 @@ import NewComponentModal from "../modules/NewComponentModal";
 import FirstLoginDialogue from "../modules/FirstLoginDialogue";
 import SettingsForm from "../modules/SettingsForm";
 import background from "../../public/images/background.jpg";
-import globe from "../../public/images/globe.png";
+import globe_light from "../../public/images/globe_light.png";
 import HomeSidebar from "../modules/HomeSidebar";
 const FAVICON_URL = "https://www.google.com/s2/favicons?sz=256&domain_url=";
 
@@ -508,7 +508,7 @@ const Home = (props) => {
    *
    * @param {List} groups
    */
-  const uploadToHome = (groups, isDarkMode, background) => {
+  const uploadToHome = (groups, isDarkMode, background, startingPage) => {
     setState({ ...state, backgroundImage: null });
 
     post("/api/edit/add_multiple_groups", { groups }).then((result) => {
@@ -529,6 +529,7 @@ const Home = (props) => {
         backgroundImage: background,
         isDarkMode: isDarkMode,
         isFirstLogin: false,
+        currentPage: startingPage,
       });
     });
   };
@@ -541,7 +542,8 @@ const Home = (props) => {
    * @param {List} bookmarks
    */
   const createComponentsFromNodes = (bookmarks) => {
-    let [index, page] = findNextPageAndIndex(state.currentPage, null);
+    let [index, startingPage] = findNextPageAndIndex(state.currentPage, null);
+    let page = startingPage;
     console.log("index and page: ", index, page);
     let newGroups = new Map();
 
@@ -600,7 +602,7 @@ const Home = (props) => {
 
     //console.log(newGroups);
 
-    return newGroups;
+    return [newGroups, startingPage];
   };
 
   /** Helper function of handleUploadBookmarks
@@ -653,7 +655,7 @@ const Home = (props) => {
         //console.log(node.outerText + " icon: " + icon);
         if (!icon) {
           console.log("element did not have an icon");
-          icon = globe;
+          icon = globe_light;
         } else {
           //icon = icon[regexMatchIndex];
           icon = FAVICON_URL + node.href;
@@ -672,10 +674,10 @@ const Home = (props) => {
       //console.log(newNodes);
 
       //Creates groups and uploads to the home page
-      let groups = createComponentsFromNodes(newNodes);
+      let [groups, startingPage] = createComponentsFromNodes(newNodes);
       groups = Array.from(groups.values()).map((groupData) => groupData.group);
       console.log(groups);
-      uploadToHome(groups, isDarkMode, background);
+      uploadToHome(groups, isDarkMode, background, startingPage);
     };
 
     reader.readAsText(htmlFile);

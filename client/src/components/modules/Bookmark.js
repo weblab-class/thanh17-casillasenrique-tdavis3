@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Bookmark.css";
 import "../../utilities.css";
 import { Button, Icon, Input, Menu, Popup } from "semantic-ui-react";
-import globe from "../../public/images/globe.png";
+import globe_light from "../../public/images/globe_light.png";
+import globe_dark from "../../public/images/globe_dark.png";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "../pages/Home";
 import { createContextFromEvent } from "../../utilities";
@@ -41,19 +42,21 @@ const Bookmark = ({
   const contextRef = useRef();
   const [state, setState] = useState({
     open: false,
-    displayedIcon: globe,
+    displayedIcon: globe_light,
     newPageValue: "",
     errored: false,
   });
   
   useEffect(() => {
+    let displayedIcon =  icon;
     if (customIcon) {
       //console.log("the custom icon object (should not a binary file) in the bookmark: " + customIcon + " " + name);
-      setState({ ...state, displayedIcon: customIcon });
-    } else if (icon) {
-      setState({ ...state, displayedIcon: icon });
+      displayedIcon = customIcon;
+    } else if (icon && icon === globe_light) {
+      displayedIcon = (isDarkMode ? globe_light : globe_dark); 
     }
-  }, [icon, customIcon]);
+    setState({ ...state, displayedIcon: displayedIcon })
+  }, [isDarkMode, icon, customIcon]);
 
   const getURL = () => {
     if (url.toLowerCase().includes("https://") || url.toLowerCase().includes("http://")) {
@@ -66,7 +69,7 @@ const Bookmark = ({
     if (!state.errored) {
       setState({
         ...state,
-        displayedIcon: globe,
+        displayedIcon: (isDarkMode ? globe_light : globe_dark),
         errored: true,
       });
     }

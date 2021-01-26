@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { Form, Icon, Menu, Header, HeaderContent } from "semantic-ui-react";
-import IconSelect from "./IconSelect";
-import standardIcon from "../../public/images/globe.png";
-import fileUpload from "../../public/images/fileUpload.png";
 import { GoogleLogout } from "react-google-login";
 import HeaderSubHeader from "semantic-ui-react/dist/commonjs/elements/Header/HeaderSubheader";
 const PLACEHOLDER_URL = "https://www.google.com/";

@@ -3,6 +3,8 @@ import "./Bookmark.css";
 import { Button, Icon, Input, Menu, Popup } from "semantic-ui-react";
 import { createContextFromEvent } from "../../utilities";
 import "./CollapsedGroup.css";
+import globe_light from "../../public/images/globe_light.png";
+import globe_dark from "../../public/images/globe_dark.png";
 
 /**
  *
@@ -60,7 +62,7 @@ const CollapsedGroup = ({
             {[...bookmarkIcons].reverse().map((icon, i) => {
               return (
                 <div key={i} style={{ textAlign: "center" }}>
-                  <img className="CollapsedGroup-minimizedIcon" src={icon}/>
+                  <img className="CollapsedGroup-minimizedIcon" src={(icon === globe_light) ? (isDarkMode ? globe_light : globe_dark): icon}/>
                 </div>
               );
             })}
