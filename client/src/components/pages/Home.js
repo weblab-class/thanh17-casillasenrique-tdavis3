@@ -474,14 +474,23 @@ const Home = (props) => {
    * @param {List} groups
    */
   const uploadToHome = (groups, isDarkMode, background) => {
-    // setState({ ...state, groups: groups.concat(state.groups) });
-    
-    //TODO: CONNECT TO PERSISTENCE
+    setState({ ...state, backgroundImage: null });
+
     post("/api/edit/add_multiple_groups", { groups }).then((result) => {
-      console.log("addings groups to state");
-      setState({ 
-        ...state, 
-        groups: groups.concat(state.groups),
+      //console.log("addings groups to state");
+      //console.log("groups result: ", result);
+      result = result.map((group) => {
+        return {
+          ...group,
+          bookmarks: group.bookmarks.map((bookmark) => {
+            return { ...bookmark, customIcon: "" };
+          }),
+        };
+      });
+
+      setState({
+        ...state,
+        groups: result.concat(state.groups),
         backgroundImage: background,
         isDarkMode: isDarkMode,
       });
@@ -604,7 +613,7 @@ const Home = (props) => {
       const parentNameIndex = 0;
       const regexMatchIndex = 2;
       let newNodes = linkNodes.map((node) => {
-        let icon = node.outerHTML.match(new RegExp('(icon=\"([^\"]*)\")'));
+        let icon = node.outerHTML.match(new RegExp('(icon="([^"]*)")'));
         //console.log(node.outerText + " icon: " + icon);
         if (!icon) {
           console.log("element did not have an icon");
@@ -689,8 +698,8 @@ const Home = (props) => {
       console.log("only had to handle bookmarks file and isDarkMode");
       setState({
         ...state,
-          backgroundImage: savedFile,
-          isDarkMode: isDarkMode,
+        backgroundImage: savedFile,
+        isDarkMode: isDarkMode,
       });
     }
 
@@ -716,11 +725,25 @@ const Home = (props) => {
       />
 
       <Sidebar.Pusher dimmed={state.sidebarVisible}>
-        <div className="Home-root" style={{ backgroundImage: (state.backgroundImage && `url(${state.backgroundImage})`) }}>
-        {!state.backgroundImage && <Placeholder as="h1" style={{color: "grey"}} inverted fluid>
-            Loading...
-            <Placeholder.Image rectangular />
-            </Placeholder>}
+        <div
+          className="Home-root"
+          style={{ backgroundImage: state.backgroundImage && `url(${state.backgroundImage})` }}
+        >
+          {!state.backgroundImage && (
+            <Placeholder as="h1" style={{ color: "grey" }} inverted fluid>
+              <div
+                style={{
+                  position: "fixed",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  bottom: "50%",
+                }}
+              >
+                Loading...
+              </div>
+              <Placeholder.Image rectangular />
+            </Placeholder>
+          )}
           {!props.userId && <Redirect to={"/"} noThrow />}
 
           {/*The logout button*/}
@@ -809,7 +832,7 @@ const Home = (props) => {
               </div>
             </div>
           </div>
-          
+
           {/*<Button content="add test bookmark" onClick={() => handleCreateBookmark({url: "https://google.com", bookmarkName: "Test Bookmark", selectedIcon: "https://www.google.com/s2/favicons?sz=256&domain_url=https://www.google.com", selectedCustomIcon: null})}/>*/}
 
           {/*{console.log("YOOOOOOOO")}*/}
@@ -833,7 +856,6 @@ const Home = (props) => {
             indexHasNoBookmarks={indexHasNoBookmarks}
             indexHasNoElements={indexHasNoElements}
           />
-          
         </div>
       </Sidebar.Pusher>
     </Sidebar.Pushable>
