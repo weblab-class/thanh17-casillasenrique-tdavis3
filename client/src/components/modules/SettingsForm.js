@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form, Icon, Menu, Header, Button, Radio, Modal, Step } from "semantic-ui-react";
+import { Form, Icon, Menu, Header, Button, Radio, Modal, Step, Input, Segment } from "semantic-ui-react";
+import UploadBookmarksHelp from "./UploadBookmarksHelp";
 import IconSelect from "./IconSelect";
 import standardIcon from "../../public/images/globe.png";
 import fileUpload from "../../public/images/fileUpload.png";
@@ -49,35 +50,11 @@ const SettingsForm = ({ onSubmit, closeForm, handleEditSettings, isDarkMode }) =
 
   return (
     <>
-      <Modal
-        closeIcon
-        dimmer="blurring"
+      <UploadBookmarksHelp
         onClose={() => setState({ ...state, uploadBookmarksHelpToggle: false })}
         open={state.uploadBookmarksHelpToggle}
-        className="NewComponentModal ui modal"
-        size={"mini"}
-      >
-        <Modal.Content className="NewComponentModal modal">
-          <Step.Group>
-            <Step
-              // active={active === "Shipping"}
-              icon="truck"
-              link
-              // onClick={this.handleClick}
-              title="Shipping"
-              description="Choose your shipping options"
-            />
-            <Step
-              // active={active === "Billing"}
-              icon="credit card"
-              link
-              // onClick={this.handleClick}
-              title="Billing"
-              description="Enter billing information"
-            />
-          </Step.Group>
-        </Modal.Content>
-      </Modal>
+      />
+      
       <Form size="big" inverted style={{ backgroundColor: "rgb(39, 39, 39) !important" }}>
         <Header as="h2" inverted color="grey">
           Settings
@@ -116,7 +93,13 @@ const SettingsForm = ({ onSubmit, closeForm, handleEditSettings, isDarkMode }) =
             </Button>
           </Form.Field>
           <Form.Field>
-            <Form.Button size="mini" circular inverted icon="question"></Form.Button>
+            <Form.Button
+              size="mini"
+              circular
+              inverted
+              icon="question"
+              onClick={() => setState({ ...state, uploadBookmarksHelpToggle: true })}
+            ></Form.Button>
           </Form.Field>
         </Form.Group>
         <p
