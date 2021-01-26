@@ -84,7 +84,7 @@ const SettingsForm = ({ isOpen, closeModal, handleEditSettings, onSubmit, isDark
         <Modal.Content
           className={"NewComponentModal modal" + (!state.darkModeToggle ? " light" : "")}
         >
-          <Form size="big" inverted={state.darkModeToggle}  style={{ backgroundColor: "rgb(39, 39, 39) !important" }}>
+          <Form size="big" inverted={state.darkModeToggle} >
             <Header as="h2" inverted={state.darkModeToggle} color="grey">
               Settings
             </Header>
@@ -202,7 +202,7 @@ const SettingsForm = ({ isOpen, closeModal, handleEditSettings, onSubmit, isDark
                   checked={state.darkModeToggle}
                 />
               </Form.Field>
-              <p style={{ fontSize: "small", color: "rgb(200,200,200)" }}>
+              <p style={{ fontSize: "small", color: (state.darkModeToggle ? "rgb(200,200,200)" : "rgb(75, 75, 75)") }}>
                 {state.darkModeToggle ? "Dark mode" : "Light mode"}
               </p>
             </Form.Group>

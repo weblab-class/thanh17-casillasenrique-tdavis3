@@ -40,6 +40,7 @@ const HomeSidebar = ({
         isOpen={state.openedModal === modalKeys.ADD_BOOKMARK}
         form={<NewBookmarkForm onSubmit={handleCreateBookmark} />}
         close={() => setState({ ...state, openedModal: modalKeys.NONE })}
+        isDarkMode={isDarkMode}
       />
 
       {/* New Group Form */}
@@ -47,6 +48,7 @@ const HomeSidebar = ({
         isOpen={state.openedModal === modalKeys.ADD_GROUP}
         form={<NewGroupForm onSubmit={handleCreateGroup} />}
         close={() => setState({ ...state, openedModal: modalKeys.NONE })}
+        isDarkMode={isDarkMode}
       />
 
       <SettingsForm 
@@ -57,20 +59,10 @@ const HomeSidebar = ({
         isDarkMode={isDarkMode}
       />
 
-      {/* <NewComponentModal
-        isOpen={state.openedModal === modalKeys.SETTINGS}
-        form={
-          <SettingsForm
-            handleEditSettings={handleEditSettings}
-            onSubmit={() => setState({ ...state, openedModal: modalKeys.NONE })}
-            closeForm={() => console.log("closing form")}
-            isDarkMode={isDarkMode}
-          />
-        }
-        close={() => setState({ ...state, openedModal: modalKeys.NONE })}
-      /> */}
       <NewComponentModal
         isOpen={state.openedModal === modalKeys.PROFILE}
+        isDarkMode={isDarkMode}
+        close={() => setState({ ...state, openedModal: modalKeys.NONE })}
         form={
           <UserForm
             onSubmit={() => setState({ ...state, userModalOpened: false })}
@@ -78,17 +70,10 @@ const HomeSidebar = ({
             googleClientId={googleClientId}
             handleLogout={handleLogout}
             userName={userName}
+            isDarkMode={isDarkMode}
           />
         }
-        close={() => setState({ ...state, openedModal: modalKeys.NONE })}
       />
-
-      {/* <NewComponentModal
-        isOpen={state.profileModalOpened}
-      >
-
-
-      </NewComponentModal> */}
 
       <Sidebar
         as={Menu}

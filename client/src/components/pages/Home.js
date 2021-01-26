@@ -810,7 +810,7 @@ const Home = (props) => {
               <div>
                 <Button
                   disabled={state.currentPage === 0}
-                  inverted
+                  inverted={state.isDarkMode}
                   // content='Previous'
                   icon="angle left"
                   // labelPosition='left'
@@ -818,7 +818,7 @@ const Home = (props) => {
                   onClick={() => setState({ ...state, currentPage: state.currentPage - 1 })}
                 />
                 <Button
-                  inverted
+                  inverted={state.isDarkMode}
                   // content='Next'
                   size={"medium"}
                   icon="angle right"
@@ -843,7 +843,7 @@ const Home = (props) => {
                   <Button
                     toggle={state.inEditMode}
                     onClick={() => setState({ ...state, inEditMode: !state.inEditMode })}
-                    inverted
+                    inverted={state.isDarkMode}
                     size="medium"
                     animated="fade"
                     primary={state.inEditMode}
@@ -860,7 +860,7 @@ const Home = (props) => {
                 {/*The freaking bookmark bar*/}
                 <div className={"Home-edit-dropdown"}>
                   <Button
-                    inverted
+                    inverted={state.isDarkMode}
                     animated
                     size="medium"
                     onClick={() => setState({ ...state, sidebarVisible: !state.sidebarVisible })}
@@ -900,6 +900,7 @@ const Home = (props) => {
             removeBookmarkFromGroup={removeBookmarkFromGroup}
             indexHasNoBookmarks={indexHasNoBookmarks}
             indexHasNoElements={indexHasNoElements}
+            isDarkMode={state.isDarkMode}
           />
         </div>
       </Sidebar.Pusher>

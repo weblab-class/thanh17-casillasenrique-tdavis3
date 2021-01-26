@@ -12,7 +12,7 @@ import "./NewComponentModal.css";
  * @returns {JSX.Element}
  * @constructor
  */
-const NewComponentModal = ({ isOpen, form, close }) => {
+const NewComponentModal = ({ isOpen, form, close, isDarkMode }) => {
   //const [open, setOpen] = useState(false);
 
   // const formWithProps = React.Children.map(form.children, child => {
@@ -31,12 +31,11 @@ const NewComponentModal = ({ isOpen, form, close }) => {
       onClose={() => close()}
       onOpen={() => setOpen(true)}
       open={isOpen}
-      className="NewComponentModal ui modal"
+      className={"NewComponentModal ui modal" + (!isDarkMode ? " light" : "")}
       size={"mini"}
     >
-      <Modal.Content className="NewComponentModal modal">
+      <Modal.Content className={"NewComponentModal modal" + (!isDarkMode ? " light" : "")}>
         {React.cloneElement(form, { closeForm: close })}
-        {}
       </Modal.Content>
     </Modal>
   );

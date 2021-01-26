@@ -24,7 +24,7 @@ const initialState = {
  * @returns {JSX.Element} A bookmark form that has options for URLs, name, and icons
  * @constructor
  */
-const UserForm = ({ onSubmit, closeForm, userName, googleClientId, handleLogout}) => {
+const UserForm = ({ onSubmit, closeForm, userName, googleClientId, handleLogout, isDarkMode }) => {
   const [state, setState] = useState(initialState);
 
   /** Handle the changes that occur while interacting with the new bookmark form
@@ -45,8 +45,10 @@ const UserForm = ({ onSubmit, closeForm, userName, googleClientId, handleLogout}
   };
 
   return (
-    <Form size="mini" inverted style={{ backgroundColor: "rgb(39, 39, 39) !important" }}>
-      <Header as="h1" inverted color="grey" style={{textAlign: "center", paddingBottom: "5%"}}>
+    <Form size="mini" inverted={isDarkMode} 
+    //style={{ backgroundColor: "rgb(39, 39, 39) !important" }}
+    >
+      <Header as="h1" inverted={isDarkMode} color="grey" style={{textAlign: "center", paddingBottom: "5%"}}>
         Hi, {userName && userName.split(' ')[0]}
       </Header>
       <div style={{ textAlign: "center" }}>
