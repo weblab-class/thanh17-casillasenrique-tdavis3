@@ -72,17 +72,16 @@ const Grid = ({
   return (
     <div
       // key = { element && element.index}
-      className={"grid-individual"}
+      className={groupID? "grid-individual-group": "grid-individual"}
       ref={drop}
       style={{
-        width: width,
-        height: height,
         /*background-color: #396dff;*/
         // outline: "white solid",
-        display: "flex",
+        // display: "flex",
         alignItems: "center",
         textAlign: "center",
         justifyContent: "center",
+        // flexShrink: "0",
       }}
     >
       {/*{isOver && (*/}

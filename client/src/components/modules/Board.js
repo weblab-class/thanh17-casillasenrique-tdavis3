@@ -89,8 +89,8 @@ const Board = ({
           key = {i}
           index={i}
           groupID={groupID}
-          width={size === 48? "12.5%": "30%"}
-          height={size === 48? "17%": "30%"}
+          // width={size === 48? "12.5%": "30%"}
+          // height={size === 48? "17%": "30%"}
           handleMoveBookmark={handleMoveBookmark}
           element={element}
           userId={userId}
@@ -114,13 +114,20 @@ const Board = ({
   return (
 
     <DndProvider backend = {HTML5Backend}>
-    <div className={"whole-board"} key = {groups}>
-      {/*{console.log("board")}*/}
-      {/*{console.log(squares)}*/}
-      {state.squares}
-      {/*{state.squares.map((square) => <div className={"grid-individual"} key={square}>*/}
-      {/*  {square} </div>)}*/}
-    </div>
+      {
+        size ===48?
+          <div className={"home-board"} key = {groups}>
+            {/*{console.log("board")}*/}
+            {/*{console.log(squares)}*/}
+            {state.squares}
+            {/*{state.squares.map((square) => <div className={"grid-individual"} key={square}>*/}
+            {/*  {square} </div>)}*/}
+          </div>:
+          <div className={"group-board"} key = {groups}>
+            {state.squares}
+          </div>
+      }
+
     </DndProvider>
   )
 }

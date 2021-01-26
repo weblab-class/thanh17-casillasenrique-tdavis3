@@ -56,7 +56,7 @@ const CollapsedGroup = ({
         >
           {/* <Icon name='world' size='huge' color="pink"/> */}
           <div className="CollapsedGroup grid">
-            {bookmarkIcons.map((icon, i) => {
+            {bookmarkIcons.reverse().map((icon, i) => {
               return (
                 <div key={i} style={{ textAlign: "center" }}>
                   <img className="CollapsedGroup-minimizedIcon" src={icon} />
@@ -65,9 +65,10 @@ const CollapsedGroup = ({
             })}
           </div>
         </button>
-        <Popup basic context={contextRef} onClose={() => setOpen(false)} open={open} closeOnPortalMouseLeave={false}>
-          <Menu secondary vertical>
+        <Popup inverted basic context={contextRef} onClose={() => setOpen(false)} open={open} closeOnPortalMouseLeave={false}>
+          <Menu inverted secondary vertical>
             <Menu.Item
+
               onClick={() => {
                 onRemove();
                 setOpen(false);
@@ -78,6 +79,7 @@ const CollapsedGroup = ({
             </Menu.Item>
             <Menu.Item>
               <Input
+                inverted={true}
                 min="1"
                 style={{ width: "11em" }}
                 type="number"
@@ -88,6 +90,7 @@ const CollapsedGroup = ({
               >
                 <input />
                 <Button
+                  inverted={true}
                   type="submit"
                   icon={"paper plane"}
                   onClick={() => handleMoveGroupToNewPage(_id,parseInt(state.newPageValue)-1)}

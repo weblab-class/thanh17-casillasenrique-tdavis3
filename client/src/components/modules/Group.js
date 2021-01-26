@@ -145,13 +145,7 @@ const Group = ({
         }}
       >
         <div
-          style={{
-            color: "white",
-            position: "fixed",
-            left: "50%",
-            transform: "translateX(-800%)",
-            bottom: "50%",
-          }}
+          className={"left-arrow"}
         >
           <Button
             disabled={page === 0}
@@ -162,44 +156,24 @@ const Group = ({
           />
         </div>
         <div
-          style={{
-            color: "white",
-            position: "fixed",
-            left: "50%",
-            transform: "translateX(720%)",
-            bottom: "50%",
-          }}
+          className={"right-arrow"}
         >
           <Button inverted icon="angle right" size={"huge"} onClick={() => setPage(page + 1)} />
         </div>
       </div>
 
       <div
+        className={"group-page-number"}
         style={{
-          fontSize: "x-large",
           color: "white",
-          position: "fixed",
-          left: "50%",
-          transform: "translateX(-50%)",
-          top: "-5%",
         }}
       >
         Page {page+1}
       </div>
       <header
+        className={ "group-description"}
         style={{
-          fontSize: "xxx-large",
-          color: "white",
-          position: "fixed",
-          left: "50%",
-          transform: "translateX(-50%)",
-          bottom: "-10%",
-          textOverflow: "ellipsis",
-          maxWidth: "8em",
-          // maxHeight: "10em",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          lineHeight: "normal"
+          color: "white"
         }}
       >
         {name}

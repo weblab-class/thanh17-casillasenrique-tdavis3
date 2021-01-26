@@ -1,11 +1,13 @@
 .Bookmark-container {
-  width: 6vw;
-  height: 5vw;
+  width: 90px;
+  height: 72px;
+  /*outline-color: white;*/
+  text-align: center;
 }
 
 .Bookmark-button {
-  width: 5vw;
-  height: 5vw;
+  width: 80px;
+  height: 72px;
   background: transparent;
   border: none !important;
   border-radius: 10%;
@@ -29,17 +31,17 @@
   overflow: hidden;
   white-space: nowrap;
   align-items: center;
-  width: 8vw;
+  width: 160px;
   text-align: center;
   justify-content: center;
-  font-size: 1.1vw;
+  font-size: 20px;
   margin: auto;
   color: white;
 }
 
 .Bookmark-image {
-  width: 3.5vw;
-  height: 3.5vw;
+  width: 72px;
+  height: 72px;
   /*width: 120%;*/
   /*height: 120%;*/
   margin: auto;
@@ -47,4 +49,25 @@
 
 .Bookmark-image:hover {
   margin: auto;
+}
+
+
+@media (max-width: 1000px) {
+  .Bookmark-container {
+    width: 90px;
+    height: 72px;
+    }
+  .Bookmark-button {
+    width: 80px;
+    height: 72px;
+  }
+  .Bookmark-text {
+    width: 160px;
+    font-size: 20px;
+
+  }
+  .Bookmark-image {
+    width: 72px;
+    height: 72px;
+  }
 }
