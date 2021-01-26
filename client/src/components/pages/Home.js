@@ -752,11 +752,16 @@ const Home = (props) => {
 
   return (
     <>
+      <FirstLoginDialogue
+        open={state.isFirstLogin}
+        handleSubmitDialogue={handleEditSettings}
+        closeForm={() => console.log("closing form")}
+        isDarkMode={state.isDarkMode}
+      />
+      {!props.userId && <Redirect to={"/"} noThrow />}
       {!state.backgroundImage ? (
         <Placeholder as="h1" style={{ color: "grey" }} inverted fluid>
-          <Placeholder.Image
-            style={{ height: "100vh", backgroundSize: "cover" }}
-          />
+          <Placeholder.Image style={{ height: "100vh", backgroundSize: "cover" }} />
           <div
             style={{
               position: "fixed",
@@ -787,13 +792,7 @@ const Home = (props) => {
               className="Home-root"
               style={{ backgroundImage: state.backgroundImage && `url(${state.backgroundImage})` }}
             >
-              {!props.userId && <Redirect to={"/"} noThrow />}
-              <FirstLoginDialogue
-                open={state.isFirstLogin}
-                handleSubmitDialogue={handleEditSettings}
-                closeForm={() => console.log("closing form")}
-                isDarkMode={state.isDarkMode}
-              />
+              
               {/*The logout button*/}
               <div className={"Home-top"}>
                 {/*<GoogleLogout*/}
