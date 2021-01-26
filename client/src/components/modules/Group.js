@@ -33,6 +33,7 @@ const Group = ({
   removeBookmarkFromGroup,
   moveBookmarksInGroup,
   handleMoveBookmarkToNewPage,
+  handleMoveBookmarkOut,
   handleMoveGroupToNewPage,
   indexHasNoBookmarks,
 }) => {
@@ -128,6 +129,7 @@ const Group = ({
           groups={[]}
           moveBookmarksInGroup={moveBookmarksInGroup}
           handleMoveBookmarkToNewPage={handleMoveBookmarkToNewPage}
+          handleMoveBookmarkOut={handleMoveBookmarkOut}
           removeBookmarkFromGroup={removeBookmarkFromGroup}
           indexHasNoBookmarks={indexHasNoBookmarks}
           indexHasNoBookmarksInGroup={indexHasNoBookmarksInGroup}
