@@ -1,25 +1,4 @@
-.Home-grid {
-  /*position: relative;*/
-  height: 95%;
-  /*min-height: 100%;*/
-  flex: 1;
-  /*width: 100%;*/
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(6, 1fr);
-  /*grid-template-areas:*/
-  /*    "a a . ."*/
-  /*    "a a . ."*/
-  /*    ". . . ."*/
-  /*    ". . . .";*/
-  /*grid-template-areas: "a a a" "b c c" "b c c";*/
-  display: grid;
-  grid-gap: 4px;
-  text-align: center;
-  align-items: center;
-  width: 96vw;
 
-
-}
 .Home-group {
   position: relative;
   /*grid-area: a;*/
@@ -40,19 +19,7 @@
 }
 
 .Home-toggleEdit {
-  /*display: flex;*/
-  /*align-items: center;*/
-  /*position:absolute;*/
-  /*height: auto;*/
-  /*top:2%;*/
-  /*right:7em;*/
-  /*width: 5em;*/
-  /*display: flex;*/
-  /*justify-content: center;*/
-  /*align-items: center;*/
-  /*text-align: center;*/
-  /*border-radius: 20%!important;*/
-  /*padding-left: .8%;*/
+
 }
 
 .Home-edit-dropdown {

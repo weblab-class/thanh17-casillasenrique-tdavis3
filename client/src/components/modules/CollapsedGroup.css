@@ -29,8 +29,8 @@
 }
 
 .CollapsedGroup-minimizedIcon {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 }
 @media (max-width: 1000px) {
   .CollapsedGroup-button{
@@ -39,7 +39,7 @@
   }
 
   .CollapsedGroup-minimizedIcon{
-    width: 24px;
-    height: 24px;
+    width: 1.4vh;
+    height: 1.4vh;
   }
 }

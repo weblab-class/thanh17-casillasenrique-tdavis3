@@ -829,8 +829,9 @@ const Home = (props) => {
 
               <div
                 style={{
+                  fontWeight: "bold",
                   fontSize: "larger",
-                  color: "white",
+                  color: state.isDarkMode? "whitesmoke":"black",
                   position: "fixed",
                   left: "50%",
                   transform: "translateX(-50%)",

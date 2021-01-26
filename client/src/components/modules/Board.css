@@ -34,7 +34,7 @@
     .home-board {
         grid-template-columns: repeat(auto-fit, minmax(10vh, 1fr));
         grid-template-rows: repeat(auto-fit, minmax(10vh, 1fr));
-        padding-left: 32px;
+        padding-left: 56px;
         flex-shrink: 0;
         row-gap: 72px;
         column-gap: 72px;
