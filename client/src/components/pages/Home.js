@@ -3,7 +3,6 @@ import { GoogleLogout } from "react-google-login";
 import { Redirect } from "@reach/router";
 import { del, get, post, readFileAsync } from "../../utilities";
 import { Button, Icon, Sidebar, Placeholder, Modal } from "semantic-ui-react";
-import EditBar from "../modules/EditBar";
 import "./Home.css";
 import Board from "../modules/Board";
 import NewComponentModal from "../modules/NewComponentModal";
