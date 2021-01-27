@@ -43,12 +43,12 @@ const CollapsedGroup = ({
             <Button size="mini" circular compact={true} icon="close" onClick={onRemove} />
           )}
         </div>
-      <div className="u-grow-small">
+      <div>
         
         <button
           ref={drag}
           style={{ cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer", backgroundColor: isDarkMode? "#1F222280":"#f5f5f580"}}
-          className="CollapsedGroup-button u-flex-alignCenter"
+          className="CollapsedGroup-button u-flex-alignCenter u-grow-small"
           onClick={onClick}
           onContextMenu={(e) => {
             e.preventDefault();
@@ -67,6 +67,8 @@ const CollapsedGroup = ({
             })}
           </div>
         </button>
+        <p className="Bookmark-text u-bold " style={{color: isDarkMode? "whitesmoke":"black"}}>{name}</p>
+      </div>
         <Popup inverted={!!isDarkMode} basic context={contextRef} onClose={() => setOpen(false)} open={open} closeOnPortalMouseLeave={false}>
           <Menu inverted={!!isDarkMode} secondary vertical>
             <Menu.Item
@@ -104,9 +106,6 @@ const CollapsedGroup = ({
             {/*  TODO: show/edit URL on right click*/}
           </Menu>
         </Popup>
-        <p className="Bookmark-text u-bold " style={{color: isDarkMode? "whitesmoke":"black"}}>{name}</p>
-      </div>
-      
     </div>
   );
 };
