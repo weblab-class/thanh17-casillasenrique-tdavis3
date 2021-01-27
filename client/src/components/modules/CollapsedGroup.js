@@ -33,21 +33,20 @@ const CollapsedGroup = ({
   })
   return (
     <div
-      
       style={{
         opacity: isDragging ? 0 : 1,
-        cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer",
       }}
-      
+
     >
       <div style={{ display: "flex", justifyContent: "flex-end", outline: "none !important" }}>
           {inEditMode && (
             <Button size="mini" circular compact={true} icon="close" onClick={onRemove} />
           )}
         </div>
-      <div className="u-grow-small" ref={drag}>
+      <div className="u-grow-small">
         
         <button
+          ref={drag}
           style={{ cursor: isDragging ? "grabbing" : inEditMode ? "grab" : "pointer", backgroundColor: isDarkMode? "#1F222280":"#f5f5f580"}}
           className="CollapsedGroup-button u-flex-alignCenter"
           onClick={onClick}
