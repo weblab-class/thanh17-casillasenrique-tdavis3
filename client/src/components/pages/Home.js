@@ -833,7 +833,7 @@ const Home = (props) => {
                     style={{
                       fontWeight: "bold",
                       fontSize: "larger",
-                      color: state.isDarkMode ? "whitesmoke" : "black",
+                      color: state.isDarkMode ? "whitesmoke" : "darkgray",
                       position: "fixed",
                       left: "50%",
                       transform: "translateX(-50%)",
