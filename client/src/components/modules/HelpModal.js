@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Form, Icon, Menu, Modal, Segment, Image } from "semantic-ui-react";
-import step1Image from "../../public/images/google_settings.png";
-import step2Image from "../../public/images/bookmarks_manager.png";
-import step3Image from "../../public/images/upload_file.png";
+import options from "../../public/images/Sidebar.png";
+import group from "../../public/images/group.png";
+import homescreen from "../../public/images/homescreen.png";
+
 
 const HOME_CONTENT = (
   <>
@@ -16,7 +17,7 @@ const HOME_CONTENT = (
       Use the <i>Options</i> button to access other important features, such as adding bookmarks,
       groups, and personalizing your home page!
     </p>
-    <Image src={step1Image} fluid />
+    <Image src={homescreen} fluid />
   </>
 );
 const GROUP_CONTENT = (
@@ -28,7 +29,7 @@ const GROUP_CONTENT = (
       Groups also contain <i>pages</i> that you can navigate between using the arrows on the left
       and right of the group
     </p>
-    <Image src={step2Image} fluid />
+    <Image src={group} fluid />
   </>
 );
 const RIGHT_CLICK_CONTENT = (
@@ -49,7 +50,7 @@ const RIGHT_CLICK_CONTENT = (
       <i>out</i> of the group. The bookmark will be sent to the first available spot in your home
       pages
     </p>
-    <Image src={step3Image} fluid />
+    <Image src={homescreen} fluid />
   </>
 );
 
@@ -72,7 +73,7 @@ const EDIT_CONTENT = (
       You can also drag and drop bookmarks into groups, and they will automatically be added to that
       group!
     </p>
-    <Image src={step3Image} fluid />
+    <Image src={homescreen} fluid />
   </>
 );
 
@@ -93,7 +94,7 @@ const OPTIONS_CONTENT = (
       Click the profile icon under the Settings submenu to access your profile, where you can sign
       out of MarcX
     </p>
-    <Image src={step3Image} fluid />
+    <Image src={options} fluid />
   </>
 );
 
