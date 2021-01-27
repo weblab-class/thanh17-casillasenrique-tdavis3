@@ -484,7 +484,7 @@ const Home = (props) => {
     );
 
     //Adds the bookmark to the group
-    groupsCopy[groupsListIndex].bookmarks.push(targetBookmark);
+    groupsCopy[groupsListIndex].bookmarks = [targetBookmark].concat(groupsCopy[groupsListIndex].bookmarks);
     //console.log("new group with bookmark: " + Object.values(groupsCopy[groupsListIndex]));
     //console.log("new index of bookmark: " + newIndex);
     //Optimistic

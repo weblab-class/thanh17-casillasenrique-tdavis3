@@ -4,28 +4,59 @@ import step1Image from "../../public/images/google_settings.png";
 import step2Image from "../../public/images/bookmarks_manager.png";
 import step3Image from "../../public/images/upload_file.png";
 
-const Content1 = (
+const HOME_CONTENT = (
   <>
     <p>
-      On Chrome, open the <i>Bookmarks Manager</i> found in the browser options
+      Use the arrows in the top left to switch between different <i>pages</i>
     </p>
-    <p>Ctrl+Shift+O (in Windows/Chrome OS) or Command+Shift+O (in macOS)</p>
+    <p>
+      Use the <i>Edit Mode</i> button to toggle edit mode on and off
+    </p>
+    <p>
+      Use the <i>Options</i> button to access other important features, such as adding bookmarks,
+      groups, and personalizing your home page!
+    </p>
     <Image src={step1Image} fluid />
   </>
 );
-const Content2 = (
+const GROUP_CONTENT = (
   <>
     <p>
-      In the bookmarks manager, <i>export</i> your bookmarks by opening the options menu in the top
-      right
+      Click on a <i>group</i> to access even more of your bookmarks
     </p>
     <p>
-      A <i>Chrome HTML Document (.html)</i> file will be downloaded
+      Groups also contain <i>pages</i> that you can navigate between using the arrows on the left
+      and right of the group
     </p>
     <Image src={step2Image} fluid />
   </>
 );
-const Content3 = (
+const RIGHT_CLICK_CONTENT = (
+  <>
+    <p><i>Right click</i> on a bookmark or group at any time to access several options</p>
+    <p>
+      Clicking the <i>delete</i> button will delete your bookmark from the page
+    </p>
+    <p>
+      Move the bookmark/group to a different page by entering the page number in the input field and
+      pressing the send button. If the destination page is full, the bookmark will be sent to the next available spot in later pages
+    </p>
+    <p>Right click on a bookmark <i>within</i> a group to access an additional option of moving it <i>out</i> of the group. The bookmark will be sent to the first available spot in your home pages</p>
+    <Image src={step3Image} fluid />
+  </>
+);
+
+const EDIT_CONTENT = (
+  <>
+    <p>Click the <i>edit</i> button to toggle edit mode</p>
+    <p>In edit mode, you have access to additional edit options apart from the right-click options</p>
+    <p>Clicking the <i>"x"</i> icon will delete your bookmark</p>
+    <p>You can also <i>drag and drop</i> bookmarks and groups into different available </p>
+    <Image src={step3Image} fluid />
+  </>
+);
+
+const OPTIONS_CONTENT = (
   <>
     <p>Upload your bookmarks file to MarcX and save your changes!</p>
     <Image src={step3Image} fluid />
@@ -33,22 +64,30 @@ const Content3 = (
 );
 
 const step = {
-  STEP_1: 1,
-  STEP_2: 2,
-  STEP_3: 3,
+  HOME: 1,
+  GROUP: 2,
+  RIGHT_CLICK: 3,
+  EDIT: 4,
+  OPTIONS: 5,
 };
 
 const getStepContent = (step) => {
   let content = undefined;
   switch (step) {
     case 1:
-      content = Content1;
+      content = HOME_CONTENT;
       break;
     case 2:
-      content = Content2;
+      content = GROUP_CONTENT;
       break;
     case 3:
-      content = Content3;
+      content = RIGHT_CLICK_CONTENT;
+      break;
+    case 4:
+      content = EDIT_CONTENT;
+      break;
+    case 5:
+      content = OPTIONS_CONTENT;
       break;
     default:
       console.log(step);
@@ -60,12 +99,13 @@ const getStepContent = (step) => {
 
 const HelpModal = ({ onClose, open, isDarkMode }) => {
   const [state, setState] = useState({
-    currentStep: step.STEP_1,
+    currentStep: step.HOME,
   });
 
   return (
     <Modal
       closeIcon
+      size="large"
       dimmer="blurring"
       className={"NewComponentModal ui modal" + (!isDarkMode ? " light" : "")}
       onClose={onClose}
@@ -76,21 +116,31 @@ const HelpModal = ({ onClose, open, isDarkMode }) => {
         content="Help"
       />
       <Modal.Content className={"NewComponentModal modal" + (!isDarkMode ? " light" : "")}>
-        <Menu widths="3" inverted={isDarkMode} pointing>
+        <Menu widths="5" inverted={isDarkMode} pointing>
           <Menu.Item
-            onClick={() => setState({ ...state, currentStep: step.STEP_1 })}
+            onClick={() => setState({ ...state, currentStep: step.HOME })}
             name="Navigating your Home Page"
-            active={state.currentStep === step.STEP_1}
+            active={state.currentStep === step.HOME}
           />
           <Menu.Item
-            onClick={() => setState({ ...state, currentStep: step.STEP_2 })}
-            name="Adding bookmarks and groups"
-            active={state.currentStep === step.STEP_2}
+            onClick={() => setState({ ...state, currentStep: step.GROUP })}
+            name="Navigating Groups"
+            active={state.currentStep === step.GROUP}
           />
           <Menu.Item
-            onClick={() => setState({ ...state, currentStep: step.STEP_3 })}
-            name="Upload to MarcX"
-            active={state.currentStep === step.STEP_3}
+            onClick={() => setState({ ...state, currentStep: step.RIGHT_CLICK })}
+            name="Instant Editing"
+            active={state.currentStep === step.RIGHT_CLICK}
+          />
+          <Menu.Item
+            onClick={() => setState({ ...state, currentStep: step.EDIT })}
+            name="Edit Mode"
+            active={state.currentStep === step.EDIT}
+          />
+          <Menu.Item
+            onClick={() => setState({ ...state, currentStep: step.OPTIONS })}
+            name="Navigating Options"
+            active={state.currentStep === step.OPTIONS}
           />
         </Menu>
         {getStepContent(state.currentStep)}
