@@ -54,6 +54,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm, isDarkMode }) => {
    *
    */
   const handleSubmit = () => {
+    console.log(state);
     onSubmit && onSubmit(state);
     closeForm();
     setState(initialState);
@@ -101,15 +102,20 @@ const NewBookmarkForm = ({ onSubmit, closeForm, isDarkMode }) => {
           <IconSelect
             onSelect={({ icon, isUpload }) => {
               if (!isUpload) {
-                console.log("set to use icon");
                 setState({ ...state, selectedIcon: icon, selectedCustomIcon: null });
               } else {
-                console.log("set to use file");
                 setState({ ...state, selectedIcon: null, selectedCustomIcon: icon });
               }
             }}
             defaultIconURL={state.defaultIconURL}
             isDarkMode={isDarkMode}
+            onError={(isDefault) => {
+              if (isDefault) {
+                setState({ ...state, selectedIcon: standardIcon_light, selectedCustomIcon: null, defaultIconURL: null });
+              } else {
+                setState({ ...state, defaultIconURL: null });
+              }
+            }}
           />
         </Form.Field>
       </div>

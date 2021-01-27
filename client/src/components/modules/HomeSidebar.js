@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Sidebar, Menu, Icon, Header, ModalDescription } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Sidebar, Menu, Icon } from "semantic-ui-react";
 import NewComponentModal from "./NewComponentModal";
 import NewBookmarkForm from "./NewBookmarkForm";
 import NewGroupForm from "./NewGroupForm";
 import SettingsForm from "./SettingsForm";
 import UserForm from "./UserForm";
+import HelpModal from "./HelpModal";
 
 const modalKeys = {
   NONE: "none",
@@ -12,7 +13,8 @@ const modalKeys = {
   ADD_GROUP: "group",
   SETTINGS: "settings",
   PROFILE: "profile",
-} 
+  HELP: "help",
+};
 
 const HomeSidebar = ({
   visible,
@@ -35,10 +37,7 @@ const HomeSidebar = ({
       {/* New Bookmark Form */}
       <NewComponentModal
         isOpen={state.openedModal === modalKeys.ADD_BOOKMARK}
-        form={
-          <NewBookmarkForm 
-            onSubmit={handleCreateBookmark} 
-        />}
+        form={<NewBookmarkForm onSubmit={handleCreateBookmark} />}
         close={() => setState({ ...state, openedModal: modalKeys.NONE })}
         isDarkMode={isDarkMode}
       />
@@ -51,13 +50,20 @@ const HomeSidebar = ({
         isDarkMode={isDarkMode}
       />
 
-      <SettingsForm 
+      <SettingsForm
         isOpen={state.openedModal === modalKeys.SETTINGS}
         closeModal={() => setState({ ...state, openedModal: modalKeys.NONE })}
         handleEditSettings={handleEditSettings}
         onSubmit={() => setState({ ...state, openedModal: modalKeys.NONE })}
         isDarkMode={isDarkMode}
       />
+
+      <HelpModal
+        onClose={() => setState({ ...state, openedModal: modalKeys.NONE })}
+        open={state.openedModal === modalKeys.HELP}
+        isDarkMode={isDarkMode}
+      />
+
 
       <NewComponentModal
         isOpen={state.openedModal === modalKeys.PROFILE}
@@ -78,18 +84,13 @@ const HomeSidebar = ({
         as={Menu}
         direction="right"
         animation="overlay"
-        visible={
-          visible && state.openedModal === modalKeys.NONE
-        }
+        visible={visible && state.openedModal === modalKeys.NONE}
         onHide={onHide}
         inverted={isDarkMode}
         vertical
         icon="labeled"
       >
-        <Menu.Item
-          as="a"
-          onClick={onHide}
-        >
+        <Menu.Item as="a" onClick={onHide}>
           <Icon name="arrow right"></Icon>
         </Menu.Item>
         <Menu.Item>
@@ -99,7 +100,7 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on new bookmark!");
-                setState({ ...state,  openedModal: modalKeys.ADD_BOOKMARK });
+                setState({ ...state, openedModal: modalKeys.ADD_BOOKMARK });
               }}
             >
               {/* <img src={newBookmark} /> */}
@@ -109,7 +110,7 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on new group!");
-                setState({ ...state,  openedModal: modalKeys.ADD_GROUP });
+                setState({ ...state, openedModal: modalKeys.ADD_GROUP });
               }}
             >
               {/* <img src={newGroup} /> */}
@@ -125,7 +126,7 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on settings");
-                setState({ ...state,  openedModal: modalKeys.SETTINGS });
+                setState({ ...state, openedModal: modalKeys.SETTINGS });
               }}
             >
               <Icon name="setting"></Icon>
@@ -135,10 +136,24 @@ const HomeSidebar = ({
               as="a"
               onClick={() => {
                 console.log("clicked on profile");
-                setState({ ...state,  openedModal: modalKeys.PROFILE });
+                setState({ ...state, openedModal: modalKeys.PROFILE });
               }}
             >
               <Icon name="user outline"></Icon>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu.Item>
+        <Menu.Item>
+          <Menu.Header>Help</Menu.Header>
+          <Menu.Menu>
+            <Menu.Item
+              as="a"
+              onClick={() => {
+                console.log("clicked on help");
+                setState({ ...state, openedModal: modalKeys.HELP});
+              }}
+            >
+              <Icon name="question circle"></Icon>
             </Menu.Item>
           </Menu.Menu>
         </Menu.Item>

@@ -6,15 +6,13 @@ import fileUpload_light from "../../public/images/fileUpload_light.png";
 import fileUpload_dark from "../../public/images/fileUpload_dark.png";
 import "./IconSelect.css";
 
-const defaultIconLoader = (
-  ""
-);
+const defaultIconLoader = "";
 
 const SELECTION = {
   STANDARD: "standard",
   DEFAULT: "default",
   UPLOAD: "upload",
-}
+};
 
 /**
  *
@@ -23,16 +21,25 @@ const SELECTION = {
  * @returns {JSX.Element} selections of icons to choose from for the bookmark
  * @constructor
  */
-const IconSelect = ({ onSelect, defaultIconURL, isDarkMode }) => {
+const IconSelect = ({ onSelect, defaultIconURL, isDarkMode, onError }) => {
   const [selected, setSelected] = useState(SELECTION.STANDARD);
 
   useEffect(() => {
     if (selected === SELECTION.DEFAULT && defaultIconURL === undefined) {
       console.log("changing selection as default url doesnt exist anymore");
-      onSelect({icon: standardIcon_light, isUpload: false});
+      onSelect({ icon: standardIcon_light, isUpload: false });
       setSelected(SELECTION.STANDARD);
     }
   }, [selected, defaultIconURL]);
+
+  const handleError = () => {
+    if (selected === SELECTION.DEFAULT) {
+      console.log("error, selected was default");
+      onError(true);
+      setSelected(SELECTION.STANDARD);
+    } 
+    onError(false);
+  };
 
   return (
     <div className="IconSelect-container">
@@ -47,10 +54,9 @@ const IconSelect = ({ onSelect, defaultIconURL, isDarkMode }) => {
         >
           <img
             className={"IconSelect-bookmarkImage"}
-            src={(isDarkMode ? standardIcon_light : standardIcon_dark)}
+            src={isDarkMode ? standardIcon_light : standardIcon_dark}
             onClick={() => {
-              console.log("clicked on standard");
-              onSelect({icon: standardIcon_light, isUpload: false});
+              onSelect({ icon: standardIcon_light, isUpload: false });
               setSelected(SELECTION.STANDARD);
             }}
           />
@@ -58,14 +64,24 @@ const IconSelect = ({ onSelect, defaultIconURL, isDarkMode }) => {
       </div>
       <div>
         {!defaultIconURL ? (
-          <Loader 
-          className={"IconSelect ui active centered inline IconSelect ui loader" + (!isDarkMode ? " light" : "")} 
-          size="small"
-        >
-          <p className="IconSelect-default-loader" style={{color: (isDarkMode ? "white" : "black")}}>Enter a URL</p>
+          <Loader
+            className={
+              "IconSelect ui active centered inline IconSelect ui loader" +
+              (!isDarkMode ? " light" : "")
+            }
+            size="small"
+          >
+            <p
+              className="IconSelect-default-loader"
+              style={{ color: isDarkMode ? "white" : "black" }}
+            >
+              Enter a URL
+            </p>
           </Loader>
         ) : (
-          <div className={"IconSelect-option" + (selected === SELECTION.DEFAULT ? "-selected" : "")}>
+          <div
+            className={"IconSelect-option" + (selected === SELECTION.DEFAULT ? "-selected" : "")}
+          >
             <img
               style={{
                 width: "4vw",
@@ -74,10 +90,10 @@ const IconSelect = ({ onSelect, defaultIconURL, isDarkMode }) => {
               }}
               src={defaultIconURL}
               onClick={() => {
-                console.log("clicked on default");
-                onSelect({icon: defaultIconURL, isUpload: false});
+                onSelect({ icon: defaultIconURL, isUpload: false });
                 setSelected(SELECTION.DEFAULT);
               }}
+              onError={handleError}
             />
           </div>
         )}
@@ -85,16 +101,15 @@ const IconSelect = ({ onSelect, defaultIconURL, isDarkMode }) => {
       <label
         className={"IconSelect-option" + (selected === SELECTION.UPLOAD ? "-selected" : "")}
         onClick={() => {
-          console.log("clicked on upload");
-          
-          
         }}
       >
         <img
           src={
             selected === SELECTION.UPLOAD && document.getElementById("fileElem").files.length > 0
               ? URL.createObjectURL(document.getElementById("fileElem").files[0])
-              : (isDarkMode ? fileUpload_light : fileUpload_dark)
+              : isDarkMode
+              ? fileUpload_light
+              : fileUpload_dark
           }
           className="IconSelect-fileUploadImage"
         />
@@ -106,7 +121,7 @@ const IconSelect = ({ onSelect, defaultIconURL, isDarkMode }) => {
           onChange={(event) => {
             if (event.target.files[0]) {
               console.log("set selected to upload");
-              onSelect({icon: event.target.files[0], isUpload: true});
+              onSelect({ icon: event.target.files[0], isUpload: true });
               setSelected(SELECTION.UPLOAD);
             }
           }}
