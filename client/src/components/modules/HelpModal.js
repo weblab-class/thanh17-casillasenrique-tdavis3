@@ -33,32 +33,66 @@ const GROUP_CONTENT = (
 );
 const RIGHT_CLICK_CONTENT = (
   <>
-    <p><i>Right click</i> on a bookmark or group at any time to access several options</p>
+    <p>
+      <i>Right click</i> on a bookmark or group at any time to access several options
+    </p>
     <p>
       Clicking the <i>delete</i> button will delete your bookmark from the page
     </p>
     <p>
       Move the bookmark/group to a different page by entering the page number in the input field and
-      pressing the send button. If the destination page is full, the bookmark will be sent to the next available spot in later pages
+      pressing the send button. If the destination page is full, the bookmark will be sent to the
+      next available spot in later pages
     </p>
-    <p>Right click on a bookmark <i>within</i> a group to access an additional option of moving it <i>out</i> of the group. The bookmark will be sent to the first available spot in your home pages</p>
+    <p>
+      Right click on a bookmark <i>within</i> a group to access an additional option of moving it{" "}
+      <i>out</i> of the group. The bookmark will be sent to the first available spot in your home
+      pages
+    </p>
     <Image src={step3Image} fluid />
   </>
 );
 
 const EDIT_CONTENT = (
   <>
-    <p>Click the <i>edit</i> button to toggle edit mode</p>
-    <p>In edit mode, you have access to additional edit options apart from the right-click options</p>
-    <p>Clicking the <i>"x"</i> icon will delete your bookmark</p>
-    <p>You can also <i>drag and drop</i> bookmarks and groups into different available </p>
+    <p>
+      Click the <i>edit</i> button to toggle edit mode
+    </p>
+    <p>
+      In edit mode, you have access to additional edit options apart from the right-click options
+    </p>
+    <p>
+      Clicking the <i>"x"</i> icon will delete your bookmark
+    </p>
+    <p>
+      You can <i>drag and drop</i> bookmarks and groups into any available spot in the current page
+      to organize your home page however you want{" "}
+    </p>
+    <p>
+      You can also drag and drop bookmarks into groups, and they will automatically be added to that
+      group!
+    </p>
     <Image src={step3Image} fluid />
   </>
 );
 
 const OPTIONS_CONTENT = (
   <>
-    <p>Upload your bookmarks file to MarcX and save your changes!</p>
+    <p>
+      Click the <i>Options</i> sidebar to access more MarcX tools and settings 
+    </p>
+    <p>
+      Create new bookmarks and groups by clicking the menu items under the <i>Create Item</i>{" "}
+      submenu. Click these to add custom bookmarks and groups to your home pages!
+    </p>
+    <p>
+      Click the gear icon under the <i>Settings</i> submenu to access general settings. In settings you can
+      change your theme, background image, and upload additional bookmarks
+    </p>
+    <p>
+      Click the profile icon under the Settings submenu to access your profile, where you can sign
+      out of MarcX
+    </p>
     <Image src={step3Image} fluid />
   </>
 );
@@ -123,6 +157,11 @@ const HelpModal = ({ onClose, open, isDarkMode }) => {
             active={state.currentStep === step.HOME}
           />
           <Menu.Item
+            onClick={() => setState({ ...state, currentStep: step.OPTIONS })}
+            name="Navigating Options"
+            active={state.currentStep === step.OPTIONS}
+          />
+          <Menu.Item
             onClick={() => setState({ ...state, currentStep: step.GROUP })}
             name="Navigating Groups"
             active={state.currentStep === step.GROUP}
@@ -136,11 +175,6 @@ const HelpModal = ({ onClose, open, isDarkMode }) => {
             onClick={() => setState({ ...state, currentStep: step.EDIT })}
             name="Edit Mode"
             active={state.currentStep === step.EDIT}
-          />
-          <Menu.Item
-            onClick={() => setState({ ...state, currentStep: step.OPTIONS })}
-            name="Navigating Options"
-            active={state.currentStep === step.OPTIONS}
           />
         </Menu>
         {getStepContent(state.currentStep)}
