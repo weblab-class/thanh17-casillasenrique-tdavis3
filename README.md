@@ -1,52 +1,72 @@
-# Project Skeleton
+# MarcX
 
-## What we provide
+MarcX is a bookmarks manager that seek to provide a more customizable and user friendly experience! The idea is simple: to bring a modern home screen experience from your desktop, phone, or tablet to Chrome! Visit https://marcx.herokuapp.com to get started today!
 
-- Google Auth (Skeleton.js & auth.js)
-  - Disclaimer: Auth isn't being taught until the second week.
-- Socket Infrastructure (client-socket.js & server-socket.js)
-  - Disclaimer: Socket isn't being taught until the second week.
-- User Model (auth.js & user.js)
+## Features of MarcX
 
-## What you need to change
+- To get started, follow the instructions posted on our welcome page! Personalize your homepage by uploading bookmarks, background, and color theme! 
 
-- Change the font in utilities.css
-- Change the Frontend CLIENT_ID for Google Auth (Skeleton.js) (we'll talk about it at the end of week 2)
-- Change the Server CLIENT_ID for Google Auth (auth.js) (we'll talk about it at the end of week 2)
-- Change the Database SRV for Atlas (server.js)
-- Change the Database Name for MongoDB (server.js)
-- Add a favicon to your website at the path client/dist/favicon.ico
-- Update website title in client/dist/index.html
-- Update this README file ;)
-- Update the package.json file with your app name :) (line 2)
+  ![Start up page](/client/src/public/images/startupPage.png)
 
-## Socket stuff
-Note: we'll be getting to this in lecture in week 2, so don't worry if you don't know it yet
+- **Navigating your Home Page**
+  - Use the arrows in the top left to switch between different *pages*
+  - Use the *Edit Mode* button to toggle edit mode on and off
+  - Use the *Options* button to access other important features, such as adding bookmarks, groups, and personalizing your home page!
+  
+    ![Home Page](/client/src/public/images/homescreen.png)
+ 
+- **Navigating Options**
+  - Click the *Options* sidebar to access more MarcX tools and settings
+  - Create new bookmarks and groups by clicking the menu items under the *Create Item* submenu. Click these to add custom bookmarks and groups to your home pages!
+  - Click the gear icon under the *Settings* submenu to access general settings. In settings you can change your theme, background image, and upload additional bookmarks
+  - Click the profile icon under the *Settings* submenu to access your profile, where you can sign out of MarcX
+  - Lastly, you can come back to these instructions under *Help*
+  
+    ![Home Page](/client/src/public/images/Sidebar.png)
+ 
+- **Navigating Groups**
+  - Click on a *group* to access even more of your bookmarks
+  - Groups also contain *pages* that you can navigate between using the arrows on the left and right of the group
+  
+    ![Home Page](/client/src/public/images/group.png)
+    
+- **Instant Editing**
+  - *Right click* on a bookmark or group at any time to access several options
+  - Clicking the *delete* button will delete your bookmark from the page
+  - Move the bookmark/group to a different page by entering the page number in the input field and pressing the send button. If the destination page is full, the bookmark will be sent to the next available spot in later pages
+  - Right click on a bookmark within a group to access an additional option of moving it out of the group. The bookmark will be sent to the first available spot in your home pages
+  
+    ![Home Page](/client/src/public/images/sidebySide.png)
 
-- If you're not using realtime updating or don't need server->client communication, you can remove socket entirely! (server-socket.js, client-socket.js, and anything that imports them)
-- If you are using socket, consider what you want to do with the FIXME in server-socket.js
+- **Edit Mode**
+  - Click the *edit* button to toggle edit mode
+  - In edit mode, you have access to additional edit options apart from the right-click options
+  - Clicking the "x" icon will delete your bookmark
+  - You can *drag and drop* bookmarks and groups into any available spot in the current page to organize your home page however you want
+  - You can also drag and drop bookmarks into groups, and they will automatically be added to that group!
+  
+    ![Home Page](/client/src/public/images/editmode.png)
+  
+  
+## Running MarcX Locally
+
+- After cloning project, run `npm install`  
+  - MarcX uses a `React.js` fontend 
+  - MarcX uses `Node.js` that connects to a `MongoDB` database
+- Running the app 
+  - Start a server in terminal using `npm start`
+  - Start the hotloader for the website using `npm run hotloader`
+  - Navigate to `http://localhost:5000/` to see the webpage
+- Feel free to mess around with features as you'd like! Let us know if you want certain features to be added!
 
 
-## How to integrate into your own project
+## Privacy
 
-On GitHub download this repository as a zip file, then extract the files into your own repository.
-Warning: make sure you copy the hidden files too: .babelrc, .gitignore, .npmrc, and .prettierrc
+- It's simple. We will not sell your private informations to any third party apps and services. Period. 
 
-## don't touch
+## Contact Us:
 
-the following files students do not need to edit. feel free to read them if you would like.
-
-```
-client/src/index.js
-client/src/utilities.js
-client/src/client-socket.js
-server/validator.js
-server/server-socket.js
-.babelrc
-.npmrc
-.prettierrc
-package-lock.json
-webpack.config.js
-```
-
-## Good luck on your project :)
+- Found a bug? Want to chat? You can contact us in the emails below:
+  - Enrique Casillas: enriquec@mit.edu
+  - Tyrone Davis III: td3@mit.edu
+  - Thanh Nguyen: thanh_n@mit.edu
