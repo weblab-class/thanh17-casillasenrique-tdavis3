@@ -45,12 +45,12 @@
     background-image:url("../../public/images/mobileBackground.png");
   }
   .title {
-    font-size: 24vw;
+    font-size: 16vw;
   }
   .description {
     /*height:  10em;*/
     width:10em;
-    font-size: 8vw;
+    font-size: 6vw;
     top: 48%;
   }
   .loginButton {
@@ -64,12 +64,12 @@
     background-image:url("../../public/images/mobileBackground.png");
   }
   .title {
-    font-size: 24vw;
+    font-size: 16vw;
   }
   .description {
     /*height:  10em;*/
     width:10em;
-    font-size: 10vw;
+    font-size: 6vw;
     top: 48%;
     /*left: 64%;*/
     transform: translate(-50%, -50%);
