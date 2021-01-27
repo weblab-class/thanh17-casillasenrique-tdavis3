@@ -71,13 +71,13 @@ const FirstLoginDialogue = ({ onClose, open, handleSubmitDialogue, closeForm, is
             <Form.Group inline>
               <Form.Field>
                 <Button.Group>
-                  <Button primary={!state.bookmarksFile} inverted={state.darkModeToggle}>
+                  <Button primary={(state.bookmarksFile) ? false: true} inverted={state.darkModeToggle}>
                     No thanks!
                   </Button>
                   <Button.Or />
                   <Button
                     icon
-                    primary={state.bookmarksFile}
+                    primary={(state.bookmarksFile) ? true : false}
                     labelPosition="right"
                     inverted={state.darkModeToggle}
                     onClick={() => {

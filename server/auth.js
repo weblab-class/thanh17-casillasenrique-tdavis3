@@ -27,7 +27,7 @@ function getOrCreateUser(user) {
   return User.findOne({ googleid: user.sub }).then((existingUser) => {
     
     if (existingUser) return existingUser;
-    console.log("making new user");
+    console.log("making new user, googleId: " + user.sub + "\nname: " + user.name);
     const newUser = new User({
       name: user.name,
       googleid: user.sub,

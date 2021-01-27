@@ -68,7 +68,7 @@ const EDIT_CONTENT = (
     </p>
     <p>
       You can <i>drag and drop</i> bookmarks and groups into any available spot in the current page
-      to organize your home page however you want{" "}
+      to organize your home page however you want
     </p>
     <p>
       You can also drag and drop bookmarks into groups, and they will automatically be added to that

@@ -8,6 +8,7 @@ import Bookmark from "./Bookmark";
 import CollapsedGroup from "./CollapsedGroup";
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../pages/Home";
+import invisible from "../../public/images/invisible.png";
 import Board from "./Board";
 import { del, post } from "../../utilities";
 
@@ -81,6 +82,25 @@ const Group = ({
     // console.log(filteredBookmarks.length)
     return filteredBookmarks.length === 0;
   };
+
+  const createBookmarksList = () => {
+    let firstPageBookmarks = bookmarks.filter(bookmark => bookmark.pageIndex === 0);
+    let displayedIcons = [];
+    for (let i = 0; i<9; i++) {
+      
+      let bookmarkAtIndex = firstPageBookmarks.filter(bookmark => bookmark.index === i);
+      if (bookmarkAtIndex.length === 0) {
+        //console.log("had to add invisible bookmark");
+        displayedIcons.push(invisible);
+      } else {
+        let b = bookmarkAtIndex[0]; 
+        displayedIcons.push(b.customIcon ? b.customIcon : b.icon);
+      }
+    }
+    //console.log("displayed icons: ", displayedIcons)
+    return displayedIcons.reverse();
+  };
+
   return (
     <Modal
       style={{backgroundColor: isDarkMode? "#1F222290":"#f5f5f590"}}
@@ -113,9 +133,7 @@ const Group = ({
             drag={drag}
             isDragging={isDragging}
             name={name}
-            bookmarkIcons={bookmarks
-              .filter((bookmark) => bookmark.pageIndex === 0)
-              .map((bookmark) => (bookmark.customIcon ? bookmark.customIcon : bookmark.icon))}
+            bookmarkIcons={createBookmarksList()}
             onClick={() => setOpen(true)}
             isDarkMode={ isDarkMode}
           />
