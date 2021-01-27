@@ -13,7 +13,7 @@ MarcX is a bookmarks manager that seek to provide a more customizable and user f
   - Use the *Edit Mode* button to toggle edit mode on and off
   - Use the *Options* button to access other important features, such as adding bookmarks, groups, and personalizing your home page!
   
-    ![Home Page](/client/src/public/images/homescreen.png)
+  ![Home Page](/client/src/public/images/homescreen.png)
  
 - **Navigating Options**
   - Click the *Options* sidebar to access more MarcX tools and settings
@@ -22,13 +22,13 @@ MarcX is a bookmarks manager that seek to provide a more customizable and user f
   - Click the profile icon under the *Settings* submenu to access your profile, where you can sign out of MarcX
   - Lastly, you can come back to these instructions under *Help*
   
-    ![Home Page](/client/src/public/images/Sidebar.png)
+  ![Home Page](/client/src/public/images/Sidebar.png)
  
 - **Navigating Groups**
   - Click on a *group* to access even more of your bookmarks
   - Groups also contain *pages* that you can navigate between using the arrows on the left and right of the group
   
-    ![Home Page](/client/src/public/images/group.png)
+  ![Home Page](/client/src/public/images/group.png)
     
 - **Instant Editing**
   - *Right click* on a bookmark or group at any time to access several options
@@ -36,7 +36,7 @@ MarcX is a bookmarks manager that seek to provide a more customizable and user f
   - Move the bookmark/group to a different page by entering the page number in the input field and pressing the send button. If the destination page is full, the bookmark will be sent to the next available spot in later pages
   - Right click on a bookmark within a group to access an additional option of moving it out of the group. The bookmark will be sent to the first available spot in your home pages
   
-    ![Home Page](/client/src/public/images/sidebySide.png)
+  ![Home Page](/client/src/public/images/sidebySide.png)
 
 - **Edit Mode**
   - Click the *edit* button to toggle edit mode
@@ -45,7 +45,7 @@ MarcX is a bookmarks manager that seek to provide a more customizable and user f
   - You can *drag and drop* bookmarks and groups into any available spot in the current page to organize your home page however you want
   - You can also drag and drop bookmarks into groups, and they will automatically be added to that group!
   
-    ![Home Page](/client/src/public/images/editmode.png)
+  ![Home Page](/client/src/public/images/editmode.png)
   
   
 ## Running MarcX Locally
