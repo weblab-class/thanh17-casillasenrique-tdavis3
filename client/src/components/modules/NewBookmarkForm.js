@@ -68,7 +68,7 @@ const NewBookmarkForm = ({ onSubmit, closeForm, isDarkMode }) => {
     >
       <div style={{ textAlign: "center" }}>
         <Header as="h1" inverted={isDarkMode} color="grey">
-          Add a Bookmark!
+          Add a Bookmark
         </Header>
       </div>
 

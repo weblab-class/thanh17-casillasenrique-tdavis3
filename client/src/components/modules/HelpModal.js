@@ -3,7 +3,8 @@ import { Form, Icon, Menu, Modal, Segment, Image } from "semantic-ui-react";
 import options from "../../public/images/Sidebar.png";
 import group from "../../public/images/group.png";
 import homescreen from "../../public/images/homescreen.png";
-
+import editmode from "../../public/images/editmode.png";
+import instantEdit from "../../public/images/sidebySide.png";
 
 const HOME_CONTENT = (
   <>
@@ -50,7 +51,7 @@ const RIGHT_CLICK_CONTENT = (
       <i>out</i> of the group. The bookmark will be sent to the first available spot in your home
       pages
     </p>
-    <Image src={homescreen} fluid />
+    <Image src={instantEdit} fluid />
   </>
 );
 
@@ -73,7 +74,7 @@ const EDIT_CONTENT = (
       You can also drag and drop bookmarks into groups, and they will automatically be added to that
       group!
     </p>
-    <Image src={homescreen} fluid />
+    <Image src={editmode} fluid />
   </>
 );
 

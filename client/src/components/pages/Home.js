@@ -465,26 +465,21 @@ const Home = (props) => {
     const groupsListIndex = groupsCopy.map((group) => group._id).indexOf(groupId);
 
     //Replaces the bookmark's old index with new index within the group
-    const targetGroup = groupsCopy[groupsListIndex];
-    const newIndex =
-      targetGroup.bookmarks.length === 0
-        ? 0
-        : Math.max.apply(
-            Math,
-            targetGroup.bookmarks.map(
-              (bookmark) => Number(bookmark.pageIndex) * ELEMENTS_PER_GROUP + Number(bookmark.index)
-            )
-          ) + 1;
-    console.log(targetGroup.bookmarks.map((bookmark) => bookmark.index));
+    //const targetGroup = groupsCopy[groupsListIndex];
+    const [newIndex, newPage] = findFirstAvailablePageAndIndex(0, groupId);
+    
+    // console.log(targetGroup.bookmarks.map((bookmark) => bookmark.index));
 
-    targetBookmark.index = newIndex % ELEMENTS_PER_GROUP;
-    targetBookmark.pageIndex = Math.floor(newIndex / ELEMENTS_PER_GROUP);
+    targetBookmark.index = newIndex;
+    targetBookmark.pageIndex = newPage;
     console.log(
-      "new index: " + (newIndex % ELEMENTS_PER_GROUP) + " New page: " + targetBookmark.pageIndex
+      "new index: " + (newIndex) + " New page: " + targetBookmark.pageIndex
     );
 
     //Adds the bookmark to the group
-    groupsCopy[groupsListIndex].bookmarks = [targetBookmark].concat(groupsCopy[groupsListIndex].bookmarks);
+    groupsCopy[groupsListIndex].bookmarks = [targetBookmark].concat(
+      groupsCopy[groupsListIndex].bookmarks
+    );
     //console.log("new group with bookmark: " + Object.values(groupsCopy[groupsListIndex]));
     //console.log("new index of bookmark: " + newIndex);
     //Optimistic
@@ -791,7 +786,6 @@ const Home = (props) => {
               className="Home-root"
               style={{ backgroundImage: state.backgroundImage && `url(${state.backgroundImage})` }}
             >
-              
               {/*The logout button*/}
               <div className={"Home-top"}>
                 {/*<GoogleLogout*/}

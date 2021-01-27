@@ -38,7 +38,7 @@ const NewGroupForm = ({ onSubmit, closeForm, isDarkMode }) => {
   return (
     <Form size="huge" inverted={isDarkMode}>
       <div style = {{textAlign: "center"}}>
-        <Header as='h1' inverted={isDarkMode} color="grey">Add New Group!</Header>
+        <Header as='h1' inverted={isDarkMode} color="grey">Add New Group</Header>
       </div>
       <Form.Field>
         <label style={{textAlign: "center", padding: "5% 0 1% 0"}}>Group Name</label>
