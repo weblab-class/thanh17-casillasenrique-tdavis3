@@ -66,7 +66,4 @@ MarcX is a bookmarks manager that seek to provide a more customizable and user f
 
 ## Contact Us:
 
-- Found a bug? Want to chat? You can contact us in the emails below:
-  - Enrique Casillas: enriquec@mit.edu
-  - Tyrone Davis III: td3@mit.edu
-  - Thanh Nguyen: thanh_n@mit.edu
+- Found a bug? Want to chat? You can contact us [here](thanh_n@mit.edu)
