@@ -22,6 +22,11 @@
     /*overflow-x: hidden;*/
 }
 
+@media (max-height: 990px) {
+    .home-board {
+        overflow-y: scroll;
+    }
+}
 
 @media (max-width: 1800px) {
     .home-board {
